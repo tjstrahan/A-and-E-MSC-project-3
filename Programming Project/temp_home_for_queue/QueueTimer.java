@@ -169,7 +169,7 @@ public class QueueTimer {
 
 			if (treatmentTime2 > TREATMENT_ROOM_TIME) {
 
-				TheQueue.TreatmentRoom.get(0).setEndTimeTreat1(currentTime);
+				TheQueue.TreatmentRoom.get(0).setEndTimeTreat2(currentTime);
 				TheQueue.Treated.add(TheQueue.TreatmentRoom.get(0));
 				System.out.println("Treatment Room 1 ready for next patient");
 				TheQueue.TreatmentRoom.remove(0);

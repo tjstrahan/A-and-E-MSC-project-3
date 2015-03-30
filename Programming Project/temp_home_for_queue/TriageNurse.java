@@ -64,7 +64,7 @@ public class TriageNurse implements Runnable {
 		for (int loop = 0; loop == 20; loop++) {
 			hospQueue.addToQueue(null);
 			try {
-				Thread.sleep(1200000 / TheQueue.TIME_FACTOR);
+				Thread.sleep(61000 / TheQueue.TIME_FACTOR);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

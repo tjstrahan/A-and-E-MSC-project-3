@@ -53,13 +53,12 @@ public class TheQueue {
 		// if waiting list size is less than 10
 		if (WaitingList.size() < 10) {
 
-			
 			// add patient initially to the waiting list
 			WaitingList.add(patient);
-			
+
 			// immediately start to try and fill the treatment rooms
 			fillTreatmentRoom();
-			
+
 			// sort waiting list so that the highest priority patient is at the
 			// top of the list
 			sortListByTriage(WaitingList);
@@ -161,7 +160,7 @@ public class TheQueue {
 			}
 
 		}
-		// } new 
+		// } new
 	}
 
 	public synchronized void fillTreatmentRoom() {
@@ -257,8 +256,7 @@ public class TheQueue {
 				TreatmentRoom.get(4).setStartTimeTreat1(new Date().getTime());
 			}
 			temp.clear();
-		
-			
+
 		}
 	}
 
@@ -440,25 +438,21 @@ public class TheQueue {
 				Collections.swap(tempList, 3, 4);
 			}
 		}
-		
+
 		// was trying something - awaiting reply from Aidan
 		/*
-		if (tempList.get(4).isMovedFromTreatRoom()) {
-			indexOfElement = tempList.get(3).getTreatmentRoom();
-
-			if (tempList.get(3).isMovedFromTreatRoom()) {
-				indexOfElement = tempList.get(2).getTreatmentRoom();
-
-				if (tempList.get(2).isMovedFromTreatRoom()) {
-					indexOfElement = tempList.get(1).getTreatmentRoom();
-
-					if (tempList.get(1).isMovedFromTreatRoom()) {
-						indexOfElement = tempList.get(0).getTreatmentRoom();
-					}
-				}
-			}
-		}
-		*/
+		 * if (tempList.get(4).isMovedFromTreatRoom()) { indexOfElement =
+		 * tempList.get(3).getTreatmentRoom();
+		 * 
+		 * if (tempList.get(3).isMovedFromTreatRoom()) { indexOfElement =
+		 * tempList.get(2).getTreatmentRoom();
+		 * 
+		 * if (tempList.get(2).isMovedFromTreatRoom()) { indexOfElement =
+		 * tempList.get(1).getTreatmentRoom();
+		 * 
+		 * if (tempList.get(1).isMovedFromTreatRoom()) { indexOfElement =
+		 * tempList.get(0).getTreatmentRoom(); } } } }
+		 */
 
 		// get treatment room number of last element
 		indexOfElement = tempList.get(4).getTreatmentRoom();
@@ -500,6 +494,10 @@ public class TheQueue {
 			TreatmentRoom.get(index).setMovedFromTreatRoom(true);
 			TreatmentRoom.get(index).setEndTimeTreat1(new Date().getTime());
 
+			if (TreatmentRoom.get(index).getEndTimeWait1() != 0) {
+				TreatmentRoom.get(index).setSecondTimeOnWaitingList(true);
+			}
+			
 			// copy patient in treatment room to be moved list to temp arraylist
 			tempList.add(TreatmentRoom.get(index));
 
@@ -508,24 +506,23 @@ public class TheQueue {
 			newPatNum--;
 
 			tempList.get(0).setAdmissionNumber(newPatNum);
-
-			if (tempList.get(0).isSecondTimeOnWaitingList()) {
-				tempList.get(0).setStartTimeWait2(new Date().getTime());
-			} else {
-				tempList.get(0).setStartTimeWait1(new Date().getTime());
-			}
-
+			/*
+			 * if (tempList.get(0).isSecondTimeOnWaitingList()) {
+			 * tempList.get(0).setStartTimeWait2(new Date().getTime()); } else {
+			 * tempList.get(0).setStartTimeWait1(new Date().getTime()); }
+			 */
 			if (WaitingList.get(0).isMovedFromTreatRoom()) {
 				WaitingList.get(0).setStartTimeTreat2(new Date().getTime());
 			} else {
 				WaitingList.get(0).setStartTimeTreat1(new Date().getTime());
 			}
 
+			if (tempList.get(0).isSecondTimeOnWaitingList()) {
+				tempList.get(0).setStartTimeWait2(new Date().getTime());
+			} else {
+				tempList.get(0).setStartTimeWait1(new Date().getTime());
+			}
 			/*
-			 * if (tempList.get(0).isMovedFromTreatRoom()) {
-			 * tempList.get(0).setStartTimeTreat2(new Date().getTime()); } else
-			 * { tempList.get(0).setStartTimeTreat1(new Date().getTime()); }
-			 * 
 			 * if (WaitingList.get(0).isSecondTimeOnWaitingList()) {
 			 * WaitingList.get(0).setEndTimeWait2(new Date().getTime()); } else
 			 * { WaitingList.get(0).setEndTimeWait1(new Date().getTime()); }
@@ -565,12 +562,11 @@ public class TheQueue {
 			// the default value
 			tempList.get(0).setTreatmentRoom(-1);
 
-			if (tempList.get(0).isSecondTimeOnWaitingList()) {
-				tempList.get(0).setStartTimeWait2(new Date().getTime());
-			} else {
-				tempList.get(0).setStartTimeWait1(new Date().getTime());
-			}
-
+			/*
+			 * if (tempList.get(0).isSecondTimeOnWaitingList()) {
+			 * tempList.get(0).setStartTimeWait2(new Date().getTime()); } else {
+			 * tempList.get(0).setStartTimeWait1(new Date().getTime()); }
+			 */
 			// copy patient from temp arraylist to first element of waiting list
 			WaitingList.addFirst(tempList.get(0));
 
