@@ -74,7 +74,7 @@ INSERT INTO Staff VALUES ("700310", "Nurse", "Miss", "Nuala", null, "O'Neill", "
 
 "122 Bluebell Close", null, null, "Belfast", "BT12 7YF", "447876757023", "447876757023" ); 
 
-INSERT INTO Staff VALUES ("700311", "Nurse", "Mr", "David", null, "Keeler", "1977-12-07", "M", "8 
+INSERT INTO Staff VALUES ("700311", "Receptionist", "Mr", "David", null, "Keeler", "1977-12-07", "M", "8 
 
 Bluebell Gardens", null, null, "Belfast", "BT13 8HG", "447912121213", "447912121213" );
 
@@ -106,6 +106,6 @@ INSERT INTO Staff VALUES ("700318", "Doctor", "Dr", "Sinead", null, "Fitzpatrick
 
 "108 Brick Street", null, null, "Belfast", "BT20 9UD", "447766544321", "447766544321");
 
-INSERT INTO Staff VALUES ("700319", "Nurse", "Mrs", "Denise", null, "Toner", "1980-07-05", "F", "44 
+INSERT INTO Staff VALUES ("700319", "Receptionist", "Mrs", "Denise", null, "Toner", "1980-07-05", "F", "44 
 
 Stone Road", null, null, "Belfast", "BT21 6YR", "447988123456", "447988123456");
