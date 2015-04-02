@@ -51,7 +51,7 @@ public class Receptionist extends Staff {
 	public void lookUpPatient() {
 		
 		JDBC.ConnectToDatabase lookup = new ConnectToDatabase();
-		
+
 		System.out.println("Look up Patient");
 		Scanner scanner = new Scanner(System.in);
 		
@@ -65,6 +65,7 @@ public class Receptionist extends Staff {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 	}
 
@@ -72,8 +73,15 @@ public class Receptionist extends Staff {
 	 * Method to allow the receptionist to admit a patient
 	 */
 	public void admitPatient() {
-		
-		
+
+		JDBC.ConnectToDatabase admitOne = new ConnectToDatabase();
+
+		try {
+			admitOne.admitPatient();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }
