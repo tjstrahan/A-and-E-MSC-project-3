@@ -1,0 +1,263 @@
+package hospitalTests;
+
+import static org.junit.Assert.*;
+import hospital.Patient;
+import hospital.Person;
+import hospital.Staff;
+
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * JUnit testing basic instance vars for abstract class person, implemented through patient and
+ * staff subclasses and get/sets tested.
+ * Each specialisation is tested in its own right to ensure abstract gets/sets function as desired.
+ * @author naveedagahi
+ *
+ */
+public class PersonTest {
+
+	// test data
+	String title, firstName, middleName, lastName, dateOfBirth, addressLineOne,
+			addressLineTwo, addressLineThree, city, postcode;
+
+	@Before
+	public void setUp() throws Exception {
+
+	// test data initialised
+		
+		title = "Ms";
+		firstName = "Tess";
+		middleName = "Tee";
+		lastName = "McCode";
+		dateOfBirth = "1990";
+		addressLineOne = "30";
+		addressLineTwo = "Main Street";
+		addressLineThree = "Finaghy";
+		city = "Belfast";
+		postcode = "BT1 1BT";
+
+	}
+
+	/**
+	 * Default constructor patient inheritance
+	 */
+	@Test
+	public void testPersonDefaultConstructorPatient() {
+		Person person = new Patient();
+		assertNotNull(person);
+	}
+
+	/**
+	 * Default constructor staff inheritance
+	 */
+	@Test
+	public void testPersonDefaultConstructorStaff() {
+		Person person = new Staff();
+		assertNotNull(person);
+	}
+
+	/**
+	 * Testing title get/set methods for patient instance
+	 */
+	@Test
+	public void testGetSetTitlePatient() {
+		Person person = new Patient();
+		person.setTitle(title);
+		assertEquals(title, person.getTitle());
+	}
+
+	/**
+	 * Testing title get/set methods for staff instance
+	 */
+	@Test
+	public void testGetSetTitleStaff() {
+		Person person = new Staff();
+		person.setTitle(title);
+		assertEquals(title, person.getTitle());
+	}
+
+	/**
+	 * Testing first name get/set methods for patient instance
+	 */
+	@Test
+	public void testGetSetFirstNamePatient() {
+		Person person = new Patient();
+		person.setFirstName(firstName);
+		assertEquals(firstName, person.getFirstName());
+	}
+
+	/**
+	 * Testing first name get/set methods for staff instance
+	 */
+	@Test
+	public void testSetSetFirstNameStaff() {
+		Person person = new Staff();
+		person.setFirstName(firstName);
+		assertEquals(firstName, person.getFirstName());
+	}
+
+	/**
+	 * Testing middle name get/set methods for patient instance
+	 */
+	@Test
+	public void testGetSetMiddleNamePatient() {
+		Person person = new Patient();
+		person.setMiddleName(middleName);
+		assertEquals(middleName, person.getMiddleName());
+	}
+
+	/**
+	 * Testing middle name get/set methods for staff instance
+	 */
+	@Test
+	public void testGetSetMiddleNameStaff() {
+		Person person = new Staff();
+		person.setMiddleName(middleName);
+		assertEquals(middleName, person.getMiddleName());
+	}
+
+	/**
+	 * Testing last name get/set methods for patient instance
+	 */
+	@Test
+	public void testGetSetLastNamePatient() {
+		Person person = new Patient();
+		person.setLastName(lastName);
+		assertEquals(lastName, person.getLastName());
+	}
+
+	/**
+	 * Testing last name get/set methods for staff instance
+	 */
+	@Test
+	public void testGetSetLastNameStaff() {
+		Person person = new Staff();
+		person.setLastName(lastName);
+		assertEquals(lastName, person.getLastName());
+	}
+
+	/**
+	 * Testing date of birth get/set methods for patient instance
+	 */
+	@Test
+	public void testGetSetDateOfBirthPatient() {
+		Person person = new Patient();
+		person.setDateOfBirth(dateOfBirth);
+		assertEquals(dateOfBirth, person.getDateOfBirth());
+	}
+
+	/**
+	 * Testing date of birth get/set methods for staff instance
+	 */
+	@Test
+	public void testGetSetDateOfBirthStaff() {
+		Person person = new Staff();
+		person.setDateOfBirth(dateOfBirth);
+		assertEquals(dateOfBirth, person.getDateOfBirth());
+
+	}
+
+	/**
+	 * Testing address line one get/set methods for patient instance
+	 */
+	@Test
+	public void testGetSetAddressLineOnePatient() {
+		Person person = new Patient();
+		person.setAddressLineOne(addressLineOne);
+		assertEquals(addressLineOne, person.getAddressLineOne());
+	}
+
+	/**
+	 * Testing address line one get/set methods for staff instance
+	 */
+	@Test
+	public void testGetSetAddressLineOneStaff() {
+		Person person = new Staff();
+		person.setAddressLineOne(addressLineOne);
+		assertEquals(addressLineOne, person.getAddressLineOne());
+	}
+
+	/**
+	 * Testing address line two get/set methods for patient instance
+	 */
+	@Test
+	public void testGetSetAddressLineTwoPatient() {
+		Person person = new Patient();
+		person.setAddressLineTwo(addressLineTwo);
+		assertEquals(addressLineTwo, person.getAddressLineTwo());
+
+	}
+
+	/**
+	 * Testing address line two get/set methods for staff instance
+	 */
+	@Test
+	public void testGetSetAddressLineTwoStaff() {
+		Person person = new Staff();
+		person.setAddressLineTwo(addressLineTwo);
+		assertEquals(addressLineTwo, person.getAddressLineTwo());
+	}
+
+	/**
+	 * Testing address line three get/set methods for patient instance
+	 */
+	@Test
+	public void testGetSetAddressLineThreePatient() {
+		Person person = new Patient();
+		person.setAddressLineThree(addressLineThree);
+		assertEquals(addressLineThree, person.getAddressLineThree());
+	}
+
+	/**
+	 * Testing address line three get/set methods for staff instance
+	 */
+	@Test
+	public void testGetSetAddressLineThreeStaff() {
+		Person person = new Staff();
+		person.setAddressLineThree(addressLineThree);
+		assertEquals(addressLineThree, person.getAddressLineThree());
+	}
+
+	/**
+	 * Testing city get/set methods for patient instance
+	 */
+	@Test
+	public void testGetSetCityPatient() {
+		Person person = new Patient();
+		person.setCity(city);
+		assertEquals(city, person.getCity());
+
+	}
+
+	/**
+	 * Testing city get/set methods for staff instance
+	 */
+	@Test
+	public void testGetSetCityStaff() {
+		Person person = new Staff();
+		person.setCity(city);
+		assertEquals(city, person.getCity());
+	}
+
+	/**
+	 * Testing postcode get/set methods for patient instance
+	 */
+	@Test
+	public void testGetSetPostcodePatient() {
+		Person person = new Patient();
+		person.setPostcode(postcode);
+		assertEquals(postcode, person.getPostcode());
+	}
+
+	/**
+	 * Testing postcode get/set methods for staff instance
+	 */
+	@Test
+	public void testGetSetPostcodeStaff() {
+		Person person = new Staff();
+		person.setPostcode(postcode);
+		assertEquals(postcode, person.getPostcode());
+	}
+
+} // end of test
