@@ -1,306 +1,368 @@
 package hospital;
 
+// imports
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+/**
+ * Class to represent the queueing system of both the treatment rooms and
+ * waiting list in a hospital accident and emergency department
+ * 
+ * @author Kieron
+ * 
+ */
 public class TheQueue {
 
-	// system runs 20 times faster than in real life for demo purpose, set this
-	// value to 1 to run in real time
-	// to be able to demo some of the stuff
-	public static final int TIME_FACTOR = 60;
+	/**
+	 * This allows the system to be run faster than real time by the factor set.
+	 * If set to 40 it runs forty times faster than real time. To set to real
+	 * time set this variable to 1.
+	 */
+	public static final int TIME_FACTOR = 30;
 
-	// this ensure that patients moved from Treatment Room to the Waiting List
-	// remain in the correct order
+	/**
+	 * Maximum length of Waiting List as described in specifications
+	 */
+	public static final int MAX_WAITING_LIST_LENGTH = 10;
+
+	/**
+	 * Number of treatment rooms in Accident and Emergency
+	 */
+	public static final int NUMBER_OF_TREATMENT_ROOMS = 5;
+
+	/**
+	 * To ensure that patients moved from Treatment Room to the Waiting List
+	 * remain in the correct order. It has a default value of zero and is
+	 * decremented each time a patient is moved from a treatment room onto the
+	 * waiting list.
+	 */
 	static int newPatNum = 0;
 
+	/**
+	 * Boolean to indicate if the On Call Team has been contacted by SMS.
+	 * Default value is false.
+	 */
 	static boolean onCallTeamContacted = false;
+
+	/**
+	 * Boolean to indicate if the On Call Team is on the site an treating
+	 * patients. Default value is false.
+	 */
 	static boolean onCallInSitu = false;
+
+	/**
+	 * Boolean to indicate that the treatment room ArrayList has been populated
+	 * with null values when the class is first run. These values are then used
+	 * as place holders to ensure that patients do not 'move' treatment rooms
+	 * during the course of their stay.
+	 */
 	static boolean firstRun = true;
 
-	static Date date;
-
+	/**
+	 * LinkedList of patients to represent the Waiting List in the hospital it
+	 * is limited to 10 patients at any given time
+	 */
 	public static LinkedList<Patient> WaitingList = new LinkedList<Patient>();
+
+	/**
+	 * ArrayList of patients to represent the five Treatment Rooms in the
+	 * Accident and Emergency Department at the hospital. There are 5 treatment
+	 * rooms so the ArrayList is allocated an initial size of 5 so that the
+	 * memory space is allocated. It will never change in size
+	 */
 	public static ArrayList<Patient> TreatmentRoom = new ArrayList<Patient>(5);
+
+	/**
+	 * LinkedList that will hold a patient when they are being treated by the on
+	 * call team
+	 */
 	public static LinkedList<Patient> OnCallTeam = new LinkedList<Patient>();
+
+	/**
+	 * LinkedList that patients will move into once they have been treated. It
+	 * will be used as an exit point for patient objects from which pertinent
+	 * details will be written back to the database
+	 */
 	public static LinkedList<Patient> Treated = new LinkedList<Patient>();
+
+	/**
+	 * LinkedList of patients that are turned away from the Accident and
+	 * Emergency Department. Created for statistical reasons. Also to prove
+	 * everything is working during testing
+	 */
 	public static LinkedList<Patient> SentElsewhere = new LinkedList<Patient>();
 
+	/**
+	 * Main Queue class
+	 * 
+	 * @param patient
+	 */
 	public void addToQueue(Patient patient) {
 
-		// on first run assign null values to the five elements of the treatment
-		// room arraylist, this is to ensure that the list stays of a constant
-		// size and that each treatment room has a place holder, ie when a
+		// On first run assign null values to the five elements of the treatment
+		// room ArrayList, this is to ensure that the list stays of a constant
+		// size and that each treatment room has a place holder, that is when a
 		// patient is not in a treatment room the room is reassigned as null so
-		// that the list does not resize and the patients 'move' room. ensure it
+		// that the list does not resize and the patients 'move' room. Ensure it
 		// only happens once by setting a boolean value
 		if (firstRun) {
-			TreatmentRoom.add(0, null);
-			TreatmentRoom.add(1, null);
-			TreatmentRoom.add(2, null);
-			TreatmentRoom.add(3, null);
-			TreatmentRoom.add(4, null);
+			for (int loop = 0; loop < NUMBER_OF_TREATMENT_ROOMS; loop++) {
+				TreatmentRoom.add(loop, null);
+			}
 			firstRun = false;
 		}
 
-		// does the on call team need contacted
-		// needToContactOnCallQuery();
+		System.out.println("New Patient" + patient);
+		System.out.println();
 
-		// if waiting list size is less than 10
-		if (WaitingList.size() < 10) {
+		// If waiting list size is less than the defined size
+		if (WaitingList.size() < MAX_WAITING_LIST_LENGTH) {
 
-			// add patient initially to the waiting list
+			// Add patient initially to the waiting list
 			WaitingList.add(patient);
 
-			// immediately start to try and fill the treatment rooms
+			// Immediately start to try and fill the treatment rooms
 			fillTreatmentRoom();
 
-			// sort waiting list so that the highest priority patient is at the
+			// Sort waiting list so that the highest priority patient is at the
 			// top of the list
 			sortListByTriage(WaitingList);
 
-			// if the waiting list has patients on it
+			// If the waiting list has patients on it
 			if (!WaitingList.isEmpty()) {
 
-				// check if the patient at the top of the waiting list is an
+				// Check if the patient at the top of the waiting list is an
 				// emergency patient
 				if (WaitingList.get(0).getTriageNumber() == 1) {
 
-					// check to see if an emergency patient, triage category 1,
+					// Check to see if an emergency patient, triage category 1,
 					// is on waiting list and swap them with the lowest priority
-					// patient in the treatment room list
+					// patient in the treatment room ArrayList
 					moveEmergencyPatients();
 				}
 
-				// ensure that patient moved from treatment room is put to the
+				// Ensure that patient moved from treatment room is put to the
 				// top of the waiting list regardless of triage category
 				keepMovedPatientsAtTop();
 
-				// take patients of the same triage number and sort by the order
+				// Take patients of the same triage number and sort by the order
 				// they joined the waiting list
 				keepPatientsOfSameTriageInOrder();
 
 			}
 
-		} // new
+		} else if (WaitingList.size() == MAX_WAITING_LIST_LENGTH) {
 
-		if (WaitingList.size() == 10) {
-
+			// If the On Call team has not be contacted
 			if (!onCallTeamContacted) {
 
+				// Set boolean to true
 				onCallTeamContacted = true;
 
-				// sendSMSToOnCallTeam(){}
+				// Send SMS to the On Call Team, do this by instantiating SMS
+				// class and starting it as a new thread, the SMS class will
+				// check back to TheQueue to see if the boolean value
+				// onCallTeamContacted is true. Then if true it will extract the
+				// mobile numbers of the 2 doctors and 3 nurses that are flagged
+				// as on call from the database into an array and send them an
+				// sms message, once message is sent the thread will end, this
+				// structure means that the queue can continue without delay
+
+				// SendSMS sendSMS = new SendSMS();
+				// Thread sms = new Thread(sms);
+				// sms.start();
 
 				// for demo purposes
-				System.out.println("******** On-call team called - SMS");
+				System.out.println("On-call team called - SMS");
 			}
 
-			// new start
-
+			// If the patient arriving from triage has a rating of 1, that is
+			// they are an emergency patient
 			if (patient.getTriageNumber() == 1) {
 
-				System.out.println("herhrerherhehrehrherher");
+				// If the patient of least priority in the Treatment Rooms does
+				// not have a triage rating of 1; achieved by using a bubble
+				// sort sorting technique on the treatment room ArrayList to
+				// obtain the element of least priority
+				if (TreatmentRoom.get(bubbleSortTreatmentRoom())
+						.getTriageNumber() != 1) {
 
-				/*
-				 * 
-				 * &&
-				 * TreatmentRoom.get(bubbleSortTreatmentRoom()).getTriageNumber
-				 * () != 1) } // message that a patient has been asked to leave
-				 * System.out.println("******** New Emergency patient arrives");
-				 * System.out .println(
-				 * "******** Not all treatment room patients are Emergency patients"
-				 * ); System.out.println("******** Patient " +
-				 * WaitingList.getLast().getAdmissionNumber() +
-				 * " has been asked to go elsewhere."); // remove last patient
-				 * from waitinglist WaitingList.removeLast();
-				 * 
-				 * // add the new patient to the waiting list
-				 * WaitingList.add(patient);
-				 * 
-				 * // sort waiting list to move the new emergency patient to the
-				 * top sortListByTriage(WaitingList);
-				 * 
-				 * // move the new emergency patient into the treatment room and
-				 * lowest // priority patient out of the treatment room
-				 * moveEmergencyPatients();
-				 * 
-				 * // ensure that patient moved from treatment room is put to
-				 * the top // of the waiting list regardless of triage category
-				 * keepMovedPatientsAtTop();
-				 * 
-				 * // take patients of the same triage number and sort by the
-				 * order // they joined the waiting list
-				 * keepPatientsOfSameTriageInOrder(); // alert to hospital
-				 * manager System.out .println(
-				 * "******** Alert hospital manager - SMS and Email ?? doesnt say\n"
-				 * );
-				 */
-			}
-			if (onCallInSitu) {
+					// Message that a patient has been asked to leave
+					System.out.println("New Emergency patient arrives");
+					System.out.println("Patient "
+							+ WaitingList.getLast().getAdmissionNumber()
+							+ " has been asked to go elsewhere.");
 
+					// Add last patient on waiting list to send elsewhere list
+					SentElsewhere.add(WaitingList.getLast());
+
+					// Remove last patient from the waiting list
+					WaitingList.removeLast();
+
+					// Add the new patient to the waiting list
+					WaitingList.add(patient);
+
+					// Sort waiting list to move the new emergency patient to
+					// the top
+					sortListByTriage(WaitingList);
+
+					// Move the new emergency patient into the treatment room
+					// and lowest priority patient out of the treatment room
+					moveEmergencyPatients();
+
+					// Ensure that patient moved from treatment room is put to
+					// the top of the waiting list regardless of triage category
+					keepMovedPatientsAtTop();
+
+					// Take patients of the same triage number and sort by the
+					// order they joined the waiting list
+					keepPatientsOfSameTriageInOrder();
+
+					// alert to hospital manager
+
+					// SendSMS sendSMS = new SendSMS();
+					// Thread sms = new Thread(sendSMS);
+					// sms.start();
+
+					// SendEmail sendEmail = new SendEmail();
+					// Thread email = new Thread(sendEmail);
+					// email.start();
+
+					// for demo purposes
+					System.out
+							.println("Alert hospital manager - SMS and Email");
+				}
+
+			} else if (!onCallInSitu) {
+
+				// Set On Call boolean to true
+				onCallInSitu = true;
+
+				// Add patient to On Call LinkedList
+				OnCallTeam.add(0, patient);
+
+				// Set flag in patient that they have been treated by the On
+				// Call Team
+				OnCallTeam.get(0).isTreatedByOnCallTeam();
+
+				// Get a new instance of time
+				Instant onCallStart = Instant.now();
+
+				// Sets patients treatment start time
+				OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
+
+			} else {
+
+				// Patient is sent elsewhere
 				System.out.println("go elsewhere");
 
-			} else {
+				// Add last patient to send elsewhere list
+				SentElsewhere.add(patient);
 
-				// set boolean to true
-				// onCallTeamContacted = true;
+				// alert to hospital manager
 
-				OnCallTeam.add(0, patient);
-				// System.out.println(OnCallTeam);
-				onCallInSitu = true;
-				// System.out.println(onCallInSitu);
-				OnCallTeam.get(0).isTreatedByOnCallTeam();
-				OnCallTeam.get(0).setStartTimeTreat1(new Date().getTime());
-				// System.out.println(OnCallTeam.get(0).getStartTimeTreat1());
+				// SendSMS sendSMS = new SendSMS();
+				// Thread sms = new Thread(sendSMS);
+				// sms.start();
+
+				// SendEmail sendEmail = new SendEmail();
+				// Thread email = new Thread(sendEmail);
+				// email.start();
+
+				// for demo purposes
+				System.out.println("Alert hospital manager - SMS and Email");
+
 			}
 
 		}
-		// } new
+
 	}
 
+	/**
+	 * Method to fill each treatment room if treatment room contains null
+	 */
 	public synchronized void fillTreatmentRoom() {
 
+		// Temporary ArrayList to allow for moving of patient objects around
 		ArrayList<Patient> temp = new ArrayList<Patient>();
 
-		if (TreatmentRoom.get(0) == null && !WaitingList.isEmpty()) {
-			TreatmentRoom.remove(0);
-			temp.add(WaitingList.get(0));
-			if (!temp.get(0).isSecondTimeOnWaitingList()) {
-				temp.get(0).setEndTimeWait1(new Date().getTime());
-			} else {
-				temp.get(0).setEndTimeWait2(new Date().getTime());
-			}
-			WaitingList.remove(0);
-			TreatmentRoom.add(0, temp.get(0));
-			TreatmentRoom.get(0).setTreatmentRoom(0);
-			if (TreatmentRoom.get(0).isMovedFromTreatRoom()) {
-				TreatmentRoom.get(0).setStartTimeTreat2(new Date().getTime());
-			} else {
-				TreatmentRoom.get(0).setStartTimeTreat1(new Date().getTime());
-			}
-			temp.clear();
+		// For loop to iterate through each of the 5 treatment rooms
+		for (int loop = 0; loop < NUMBER_OF_TREATMENT_ROOMS; loop++) {
 
-		} else if (TreatmentRoom.get(1) == null && !WaitingList.isEmpty()) {
-			TreatmentRoom.remove(1);
-			temp.add(WaitingList.get(0));
-			if (!temp.get(0).isSecondTimeOnWaitingList()) {
-				temp.get(0).setEndTimeWait1(new Date().getTime());
-			} else {
-				temp.get(0).setEndTimeWait2(new Date().getTime());
-			}
-			WaitingList.remove(0);
-			TreatmentRoom.add(1, temp.get(0));
-			TreatmentRoom.get(1).setTreatmentRoom(1);
-			if (TreatmentRoom.get(1).isMovedFromTreatRoom()) {
-				TreatmentRoom.get(1).setStartTimeTreat2(new Date().getTime());
-			} else {
-				TreatmentRoom.get(1).setStartTimeTreat1(new Date().getTime());
-			}
-			temp.clear();
+			// If treatment is set to null, in otherwords the room is empty, and
+			// the waiting list is not empty, that is patients have been through
+			// triage
+			if (TreatmentRoom.get(loop) == null && !WaitingList.isEmpty()) {
 
-		} else if (TreatmentRoom.get(2) == null && !WaitingList.isEmpty()) {
-			TreatmentRoom.remove(2);
-			temp.add(WaitingList.get(0));
-			if (!temp.get(0).isSecondTimeOnWaitingList()) {
-				temp.get(0).setEndTimeWait1(new Date().getTime());
-			} else {
-				temp.get(0).setEndTimeWait2(new Date().getTime());
-			}
-			WaitingList.remove(0);
-			TreatmentRoom.add(2, temp.get(0));
-			TreatmentRoom.get(2).setTreatmentRoom(2);
-			if (TreatmentRoom.get(2).isMovedFromTreatRoom()) {
-				TreatmentRoom.get(2).setStartTimeTreat2(new Date().getTime());
-			} else {
-				TreatmentRoom.get(2).setStartTimeTreat1(new Date().getTime());
-			}
-			temp.clear();
+				// Remove element the null element from the Treatment Room
+				TreatmentRoom.remove(loop);
 
-		} else if (TreatmentRoom.get(3) == null && !WaitingList.isEmpty()) {
-			TreatmentRoom.remove(3);
-			temp.add(WaitingList.get(0));
-			if (!temp.get(0).isSecondTimeOnWaitingList()) {
-				temp.get(0).setEndTimeWait1(new Date().getTime());
-			} else {
-				temp.get(0).setEndTimeWait2(new Date().getTime());
-			}
-			WaitingList.remove(0);
-			TreatmentRoom.add(3, temp.get(0));
-			TreatmentRoom.get(3).setTreatmentRoom(3);
-			if (TreatmentRoom.get(3).isMovedFromTreatRoom()) {
-				TreatmentRoom.get(3).setStartTimeTreat2(new Date().getTime());
-			} else {
-				TreatmentRoom.get(3).setStartTimeTreat1(new Date().getTime());
-			}
-			temp.clear();
+				// Copy first patient in Waiting List into the temporary
+				// ArrayList
+				temp.add(WaitingList.get(0));
 
-		} else if (TreatmentRoom.get(4) == null && !WaitingList.isEmpty()) {
-			TreatmentRoom.remove(4);
-			temp.add(WaitingList.get(0));
-			if (!temp.get(0).isSecondTimeOnWaitingList()) {
-				temp.get(0).setEndTimeWait1(new Date().getTime());
-			} else {
-				temp.get(0).setEndTimeWait2(new Date().getTime());
-			}
-			WaitingList.remove(0);
-			TreatmentRoom.add(4, temp.get(0));
-			TreatmentRoom.get(4).setTreatmentRoom(4);
-			if (TreatmentRoom.get(4).isMovedFromTreatRoom()) {
-				TreatmentRoom.get(4).setStartTimeTreat2(new Date().getTime());
-			} else {
-				TreatmentRoom.get(4).setStartTimeTreat1(new Date().getTime());
-			}
-			temp.clear();
+				// Get a new instance of time
+				Instant endWait = Instant.now();
 
+				// Set end waiting time for patient using new instance of date
+				temp.get(0).setEndTimeWait(endWait.toEpochMilli());
+
+				// Remove the first element from the waiting list
+				WaitingList.remove(0);
+
+				// Copy the patient from the temporary ArrayList to the correct
+				// treatment room as defined by the loop iteration
+				TreatmentRoom.add(loop, temp.get(0));
+
+				// Assign set he Treatment Room number in the patient object,
+				// this is required when bubblesorting the treatment room to
+				// find the patient of lowest priority
+				TreatmentRoom.get(loop).setTreatmentRoom(loop);
+
+				// Get a new instance of time
+				Instant startTreat = Instant.now();
+
+				// Set the start time for entry into the treatment room
+				TreatmentRoom.get(loop).setStartTimeTreat(
+						startTreat.toEpochMilli());
+
+				// Clear temp ArrayList
+				temp.clear();
+
+			}
 		}
 	}
 
-	// method to contact on call team according to business rules, that is when
-	// waiting list is full
-	public synchronized void needToContactOnCallQuery() {
-
-		// on call team to be put on standby if waiting list is full
-		if (WaitingList.size() == 10) {
-
-			// set boolean to true
-			onCallTeamContacted = true;
-
-			// for demo purposes
-			System.out.println("******** On-call team called - SMS");
-
-		}
-
-		/*
-		 * 
-		 * // waiting list is no longer full set onCallOnStandby boolean back to
-		 * // false and tell team to stand down if (WaitingList.size() < 9 &&
-		 * onCallTeamContacted) {
-		 * 
-		 * // set boolean to false onCallTeamContacted = false;
-		 * 
-		 * // for demo purposes
-		 * System.out.println("******** On-call team stand down - SMS");
-		 * 
-		 * }
-		 */
-	}
-
-	// list sorting method by triage category
+	/**
+	 * Method to sort a LinkedList of Patient objects by triage category
+	 * 
+	 * @param patient
+	 *            object
+	 */
 	public synchronized void sortListByTriage(LinkedList<Patient> patient) {
 		Collections.sort(patient, new sortByTriage());
 	}
 
-	// list sorting method by triage category
+	/**
+	 * Method to sort a ArrayList of Patient objects by triage category
+	 * 
+	 * @param patient
+	 *            object
+	 */
 	public synchronized void sortListByTriage(ArrayList<Patient> patient) {
 		Collections.sort(patient, new sortByTriage());
 	}
 
-	// Triage category sorting algorithm
+	/**
+	 * Class that implements Comparator to sort Patient objects by triage number
+	 * 
+	 * @author Kieron
+	 * @implements Comparator
+	 */
 	public class sortByTriage implements Comparator<Patient> {
 		@Override
 		public int compare(Patient p1, Patient p2) {
@@ -312,19 +374,33 @@ public class TheQueue {
 		}
 	}
 
-	// list sorting method by patient number - ie order patients based on when
-	// they joined the queue
+	/**
+	 * Method to sort a ArrayList of Patient objects by admission number
+	 * 
+	 * @param patient
+	 *            object
+	 */
 	public void sortListByAdmissionNumber(ArrayList<Patient> patient) {
 		Collections.sort(patient, new sortByAdmissionNumber());
 	}
 
-	// list sorting method by patient number - ie order patients based on when
-	// they joined the queue
+	/**
+	 * Method to sort a LinkedList of Patient objects by admission number
+	 * 
+	 * @param patient
+	 *            object
+	 */
 	public void sortListByAdmissionNumber(LinkedList<Patient> patient) {
 		Collections.sort(patient, new sortByAdmissionNumber());
 	}
 
-	// Patient number sorting algorithm
+	/**
+	 * Class that implements Comparator to sort Patient objects by admission
+	 * number
+	 * 
+	 * @author Kieron
+	 * @implements Comparator
+	 */
 	public class sortByAdmissionNumber implements Comparator<Patient> {
 		@Override
 		public int compare(Patient p1, Patient p2) {
@@ -349,20 +425,6 @@ public class TheQueue {
 		}
 		return index;
 	}
-
-	/*
-	 * public int lastIn(int index) {
-	 * 
-	 * long highestStartTime = TreatmentRoom.get(index).getStartTime();
-	 * 
-	 * int accurateIndex = 0;
-	 * 
-	 * for (int loop = 0; loop < TreatmentRoom.size(); loop++) { if
-	 * ((TreatmentRoom.get(index).getTriageNumber() == TreatmentRoom
-	 * .get(loop).getTriageNumber())) { if
-	 * (TreatmentRoom.get(loop).getStartTime() < highestStartTime) {
-	 * accurateIndex = loop; } } } return accurateIndex; }
-	 */
 
 	public synchronized int bubbleSortTreatmentRoom() {
 
@@ -436,23 +498,14 @@ public class TheQueue {
 			if (tempList.get(3).getAdmissionNumber() > tempList.get(4)
 					.getAdmissionNumber()) {
 				Collections.swap(tempList, 3, 4);
+				System.out.println(tempList.get(3).getAdmissionNumber());
+				System.out.println(tempList.get(4).getAdmissionNumber());
+
+			//	if (tempList.get(4).getAdmissionNumber() < 0 && tempList.get(3).getAdmissionNumber() < 0) {
+			//		Collections.swap(tempList, 4, 3);
+			//	}
 			}
 		}
-
-		// was trying something - awaiting reply from Aidan
-		/*
-		 * if (tempList.get(4).isMovedFromTreatRoom()) { indexOfElement =
-		 * tempList.get(3).getTreatmentRoom();
-		 * 
-		 * if (tempList.get(3).isMovedFromTreatRoom()) { indexOfElement =
-		 * tempList.get(2).getTreatmentRoom();
-		 * 
-		 * if (tempList.get(2).isMovedFromTreatRoom()) { indexOfElement =
-		 * tempList.get(1).getTreatmentRoom();
-		 * 
-		 * if (tempList.get(1).isMovedFromTreatRoom()) { indexOfElement =
-		 * tempList.get(0).getTreatmentRoom(); } } } }
-		 */
 
 		// get treatment room number of last element
 		indexOfElement = tempList.get(4).getTreatmentRoom();
@@ -469,7 +522,8 @@ public class TheQueue {
 	public synchronized void moveEmergencyPatients() {
 
 		// temp arraylist
-		ArrayList<Patient> tempList = new ArrayList<Patient>();
+		ArrayList<Patient> tempListFromTreatment = new ArrayList<Patient>();
+		ArrayList<Patient> tempListFromWaiting = new ArrayList<Patient>();
 
 		int index;
 
@@ -483,76 +537,48 @@ public class TheQueue {
 		if ((TreatmentRoom.get(index).getTriageNumber() != 1)
 				&& (WaitingList.get(0).getTriageNumber() == 1)) {
 
-			System.out.println("ine here");
-
-			// if (TreatmentRoom.get(index).getTriageNumber() != 1
-			// && !TreatmentRoom.get(index).getTopOfList()) {
-
-			// set the topOfList boolean to true to enable them to be put to the
-			// top
-			// of the waiting list
 			TreatmentRoom.get(index).setMovedFromTreatRoom(true);
-			TreatmentRoom.get(index).setEndTimeTreat1(new Date().getTime());
+			TreatmentRoom.get(index).setStartTimeTreat(0);
+			TreatmentRoom.get(index).setEndTimeTreat(0);
 
-			if (TreatmentRoom.get(index).getEndTimeWait1() != 0) {
-				TreatmentRoom.get(index).setSecondTimeOnWaitingList(true);
-			}
-			
 			// copy patient in treatment room to be moved list to temp arraylist
-			tempList.add(TreatmentRoom.get(index));
+			tempListFromTreatment.add(TreatmentRoom.get(index));
 
 			TreatmentRoom.remove(index);
 
 			newPatNum--;
 
-			tempList.get(0).setAdmissionNumber(newPatNum);
-			/*
-			 * if (tempList.get(0).isSecondTimeOnWaitingList()) {
-			 * tempList.get(0).setStartTimeWait2(new Date().getTime()); } else {
-			 * tempList.get(0).setStartTimeWait1(new Date().getTime()); }
-			 */
-			if (WaitingList.get(0).isMovedFromTreatRoom()) {
-				WaitingList.get(0).setStartTimeTreat2(new Date().getTime());
-			} else {
-				WaitingList.get(0).setStartTimeTreat1(new Date().getTime());
-			}
+			tempListFromTreatment.get(0).setAdmissionNumber(newPatNum);
 
-			if (tempList.get(0).isSecondTimeOnWaitingList()) {
-				tempList.get(0).setStartTimeWait2(new Date().getTime());
-			} else {
-				tempList.get(0).setStartTimeWait1(new Date().getTime());
-			}
-			/*
-			 * if (WaitingList.get(0).isSecondTimeOnWaitingList()) {
-			 * WaitingList.get(0).setEndTimeWait2(new Date().getTime()); } else
-			 * { WaitingList.get(0).setEndTimeWait1(new Date().getTime()); }
-			 */
+			Instant setWait = Instant.now();
+			tempListFromTreatment.get(0).setStartTimeWait(
+					setWait.toEpochMilli());
+
+			Instant setTreat = Instant.now();
+			WaitingList.get(0).setStartTimeTreat(setTreat.toEpochMilli());
+			tempListFromWaiting.add(WaitingList.get(0));
+			WaitingList.remove(0);
 
 			switch (index) {
 			case 0:
-				TreatmentRoom.add(index, WaitingList.get(0));
+				TreatmentRoom.add(index, tempListFromWaiting.get(0));
 				TreatmentRoom.get(index).setTreatmentRoom(index);
-				WaitingList.remove(0);
 				break;
 			case 1:
-				TreatmentRoom.add(index, WaitingList.get(0));
+				TreatmentRoom.add(index, tempListFromWaiting.get(0));
 				TreatmentRoom.get(index).setTreatmentRoom(index);
-				WaitingList.remove(0);
 				break;
 			case 2:
-				TreatmentRoom.add(index, WaitingList.get(0));
+				TreatmentRoom.add(index, tempListFromWaiting.get(0));
 				TreatmentRoom.get(index).setTreatmentRoom(index);
-				WaitingList.remove(0);
 				break;
 			case 3:
-				TreatmentRoom.add(index, WaitingList.get(0));
+				TreatmentRoom.add(index, tempListFromWaiting.get(0));
 				TreatmentRoom.get(index).setTreatmentRoom(index);
-				WaitingList.remove(0);
 				break;
 			case 4:
-				TreatmentRoom.add(index, WaitingList.get(0));
+				TreatmentRoom.add(index, tempListFromWaiting.get(0));
 				TreatmentRoom.get(index).setTreatmentRoom(index);
-				WaitingList.remove(0);
 				break;
 			}
 
@@ -560,18 +586,14 @@ public class TheQueue {
 
 			// reset treatment room of patient removed from threatment room to
 			// the default value
-			tempList.get(0).setTreatmentRoom(-1);
+			tempListFromTreatment.get(0).setTreatmentRoom(-1);
 
-			/*
-			 * if (tempList.get(0).isSecondTimeOnWaitingList()) {
-			 * tempList.get(0).setStartTimeWait2(new Date().getTime()); } else {
-			 * tempList.get(0).setStartTimeWait1(new Date().getTime()); }
-			 */
 			// copy patient from temp arraylist to first element of waiting list
-			WaitingList.addFirst(tempList.get(0));
+			WaitingList.addFirst(tempListFromTreatment.get(0));
 
 			// clear temp arraylist
-			tempList.clear();
+			tempListFromTreatment.clear();
+			tempListFromWaiting.clear();
 
 		} else if ((TreatmentRoom.get(index).getTriageNumber() == 1)
 				&& (WaitingList.getFirst().getTriageNumber() == 1)
@@ -580,23 +602,36 @@ public class TheQueue {
 			// set boolean to true
 			onCallTeamContacted = true;
 
-			// sendSMSToOnCallTeam(){}
+			// Send SMS to the On Call Team, do this by instantiating SMS
+			// class and starting it as a new thread, the SMS class will
+			// check back to TheQueue to see if the boolean value
+			// onCallTeamContacted is true. Then if true it will extract the
+			// mobile numbers of the 2 doctors and 3 nurses that are flagged
+			// as on call from the database into an array and send them an
+			// sms message, once message is sent the thread will end, this
+			// structure means that the queue can continue without delay
+
+			// SendSMS sendSMS = new SendSMS();
+			// Thread sms = new Thread(sms);
+			// sms.start();
 
 			// for demo purposes
-			System.out.println("******** On-call team called - SMS");
+			System.out.println("On-call team called - SMS");
 
 			// set boolean to true
 			onCallInSitu = true;
 
-			tempList.add(WaitingList.get(0));
+			tempListFromTreatment.add(WaitingList.get(0));
 
 			WaitingList.remove(0);
 
 			// add patient to on call team list - patient removed from this list
 			// after 15 minutes - there can only be one patient on this list
-			OnCallTeam.add(0, tempList.get(0));
+			OnCallTeam.add(0, tempListFromTreatment.get(0));
 			OnCallTeam.get(0).isTreatedByOnCallTeam();
-			OnCallTeam.get(0).setStartTimeTreat1(new Date().getTime());
+
+			Instant onCallStart = Instant.now();
+			OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
 		}
 
 	}
@@ -636,7 +671,7 @@ public class TheQueue {
 	// they should be in relative to when they joined the queue)
 	public synchronized void keepPatientsOfSameTriageInOrder() {
 
-		if (WaitingList.size() < 10) {
+		if (WaitingList.size() <= 10) {
 			LinkedList<Patient> copyWaitingList = new LinkedList<Patient>(
 					WaitingList);
 
@@ -744,9 +779,6 @@ public class TheQueue {
 			sortListByAdmissionNumber(triage2);
 			sortListByAdmissionNumber(triage3);
 			sortListByAdmissionNumber(triage4);
-
-			// delete all elements from WaitingList
-			// .clear();
 
 			// addAll elements from each sorted arraylist to the end of the
 			// WaitingList linked list

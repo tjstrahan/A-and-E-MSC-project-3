@@ -1,15 +1,13 @@
 package hospital;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.Random;
 
 public class TriageNurse implements Runnable {
 
 	static TheQueue hospQueue = new TheQueue();
 	static Random random = new Random();
-	static Date date;
 	
-
 	@Override
 	public synchronized void run() {
 
@@ -33,7 +31,8 @@ public class TriageNurse implements Runnable {
 			// needs to be inside the Queue itself as it will need to be reset
 			// depending on if patient is waiting or being treated - put here
 			// initially to show that it works
-			Receptionist.patientsFromDB.get(0).setStartTimeWait1(new Date().getTime());
+			Instant startWait = Instant.now();
+			Receptionist.patientsFromDB.get(0).setStartTimeWait(startWait.toEpochMilli());
 
 			// add patient to Queue
 			hospQueue.addToQueue(Receptionist.patientsFromDB.get(0));
@@ -48,7 +47,7 @@ public class TriageNurse implements Runnable {
 
 			// pause to represent gaps between patients - set at 2.5 minutes
 			try {
-				Thread.sleep(73000 / TheQueue.TIME_FACTOR);
+				Thread.sleep(59998 / TheQueue.TIME_FACTOR);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
