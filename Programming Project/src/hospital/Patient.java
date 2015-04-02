@@ -141,25 +141,28 @@ public class Patient extends Person {
 	 * @throws IllegalArgumentException
 	 * @throws Exception
 	 */
-	public void setNhsNumber(int nhsNumber) throws IllegalArgumentException,
-			Exception {
+	public void setNhsNumber(int nhsNumber) throws IllegalArgumentException
+	// , Exception
+	{
 		// Check that the NHS number is nine figures long
-		if (nhsNumber > NHS_NUMBER_MIN && nhsNumber < NHS_NUMBER_MAX) {
+		if (nhsNumber >= NHS_NUMBER_MIN && nhsNumber <= NHS_NUMBER_MAX) {
 			// If the NHS number is the appropriate length then set the NHS
 			// number
 			this.nhsNumber = nhsNumber;
 
 			// If the NHS number falls below the appropriate values throw an
 			// exception with an appropriate message
-		} else if (nhsNumber < NHS_NUMBER_MIN || nhsNumber > NHS_NUMBER_MAX) {
+		}
+		if (nhsNumber < NHS_NUMBER_MIN || nhsNumber > NHS_NUMBER_MAX) {
 			throw new IllegalArgumentException(
 					"Sorry. NHS number must be 9 digits long.");
-
-			// Anything other than a nine digit value will throw an exception
-			// with an appropriate message
-		} else {
-			throw new Exception("Your entry is invalid.");
 		}
+
+		// Anything other than a nine digit value will throw an exception
+		// with an appropriate message
+		/*
+		 * } else { throw new Exception("Your entry is invalid."); }
+		 */
 	}
 
 	/**
@@ -326,20 +329,19 @@ public class Patient extends Person {
 
 	/**
 	 * Set method for GP code
+	 * 
+	 * @throws Exception
 	 */
 	public void setGpCode(String gpCode) throws Exception {
-
-		// If statement to check whether the GP code is left blank - if it is
-		// then throw an exception
-		if (gpCode.isEmpty()) {
-			throw new Exception("GP Code cannot be left blank.");
-			// Else if to check if the GP code beings with E - if it doesn't
-			// then throw an exception
-		} else if (!gpCode.startsWith("E")) {
-			throw new Exception("GP Code must start with E.");
-			// Else to set the GP code
-		} else {
+		// If statement to check that the gp code is not empty, starts with the
+		// letter E and is 5 characters long. If it is, it sets it.
+		if ((!gpCode.isEmpty()) && (gpCode.startsWith("E"))
+				&& (gpCode.length() == 5)) {
 			this.gpCode = gpCode;
+			// If the the gp code does not fulfil the requirements of the if
+			// statement then an exception is thrown.
+		} else {
+			throw new Exception("This GP Code is invalid.");
 		}
 	}
 
