@@ -49,23 +49,31 @@ public class Receptionist extends Staff {
 	 */
 	@SuppressWarnings("static-access")
 	public void lookUpPatient() {
-		
+
+		// make an instantiation of the Connect to database class called lookup
 		JDBC.ConnectToDatabase lookup = new ConnectToDatabase();
 
+		// PRint out look up patient
 		System.out.println("Look up Patient");
+		// declare the scanner
 		Scanner scanner = new Scanner(System.in);
-		
+
+		// ask the user to type in their first and last name of the person they
+		// seek
 		System.out.println("Enter Patient Name. First and Last");
 		String first1 = scanner.next();
 		String last1 = scanner.next();
-		 
+
+		// surrounded by a try catch block, send to the loopUpPatient class the
+		// first and last names typed in
 		try {
 			lookup.lookUpPatient("'" + first1 + "'", "'" + last1 + "'");
+			
+			// if this fails catch the SQLException and print the stack trace
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 	}
 
@@ -74,8 +82,10 @@ public class Receptionist extends Staff {
 	 */
 	public void admitPatient() {
 
+		// make an instantiation of the ConnectToDatabase class called admitOne
 		JDBC.ConnectToDatabase admitOne = new ConnectToDatabase();
 
+		// call the method surrounded by a try catch block and catch the SQLException if it is thrown
 		try {
 			admitOne.admitPatient();
 		} catch (SQLException e) {

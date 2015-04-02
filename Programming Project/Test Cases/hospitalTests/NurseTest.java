@@ -1,12 +1,12 @@
 package hospitalTests;
 
 import static org.junit.Assert.*;
-import hospital.Receptionist;
+import hospital.Nurse;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class ReceptionistTest {
+public class NurseTest {
 
 	String TitleCorrect, TitleWrong, firstNameCorrect, firstNameWrong,
 			middleNameCorrect, middleNameWrong, lastNameCorrect, lastNameWrong,
@@ -22,7 +22,7 @@ public class ReceptionistTest {
 
 	@Before
 	public void setUp() throws Exception {
-
+		
 		TitleCorrect = "Mr";
 		TitleWrong = null;
 		firstNameCorrect = "Thomas";
@@ -57,196 +57,199 @@ public class ReceptionistTest {
 	}
 
 	@Test
-	public void testReceptionist() {
-		Receptionist receptionist = new Receptionist();
-		assertNotNull(receptionist);
+	public void testNurseDefaultConstructor() {
+		Nurse nurse = new Nurse();
+		assertNotNull(nurse);
 	}
 
 	@Test
 	public void testConstructorWithArgsCorrect() {
-		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
+		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertNotNull(receptionist);
+		assertNotNull(nurse);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongStaffID()
 			throws IllegalArgumentException, Exception {
-		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
+		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				StaffIDWrong, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(StaffIDCorrect, receptionist.getStaffID());
+		assertEquals(StaffIDCorrect, nurse.getStaffID());
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongPassword() {
-		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
+		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordWrong);
-		assertEquals(passwordCorrect, receptionist.getPassword());
+		assertEquals(passwordCorrect, nurse.getPassword());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongLogIn() throws Exception {
-		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
+		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDWrong,
 				passwordCorrect);
 
-		assertEquals(loginIDCorrect, receptionist.getLoginID());
+		assertEquals(loginIDCorrect, nurse.getLoginID());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongMobileNumber() {
-		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
+		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				StaffIDCorrect, mobileNumberWrong, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(mobileNumberCorrect, receptionist.getMobileNumber());
+		assertEquals(mobileNumberCorrect, nurse.getMobileNumber());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoTitle() {
-		Receptionist receptionist = new Receptionist(TitleWrong, firstNameWrong, middleNameCorrect,
+		Nurse nurse = new Nurse(TitleWrong, firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(TitleCorrect, receptionist.getTitle());
+		assertEquals(TitleCorrect, nurse.getTitle());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoFirstName() {
-		Receptionist receptionist = new Receptionist("Mr", firstNameWrong, middleNameCorrect,
+		Nurse nurse = new Nurse("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(firstNameCorrect, receptionist.getFirstName());
+		assertEquals(firstNameCorrect, nurse.getFirstName());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoMiddleName() {
-		Receptionist receptionist = new Receptionist("Mr", firstNameCorrect, middleNameWrong,
+		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameWrong,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(middleNameCorrect, receptionist.getMiddleName());
+		assertEquals(middleNameCorrect, nurse.getMiddleName());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoLastName() {
-		Receptionist receptionist = new Receptionist("Mr", firstNameCorrect, middleNameCorrect,
+		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(lastNameCorrect, receptionist.getLastName());
+		assertEquals(lastNameCorrect, nurse.getLastName());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoDOB() {
-		Receptionist receptionist = new Receptionist("Mr", firstNameCorrect, middleNameCorrect,
+		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(dateOfBirthCorrect, receptionist.getDateOfBirth());
+		assertEquals(dateOfBirthCorrect, nurse.getDateOfBirth());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineOne() {
-		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
+		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneWrong, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(addressLineOneCorrect, receptionist.getAddressLineOne());
+		assertEquals(addressLineOneCorrect,nurse.getAddressLineOne());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineTwo() {
-		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
+		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoWrong,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(addressLineTwoCorrect, receptionist.getAddressLineTwo());
+		assertEquals(addressLineTwoCorrect, nurse.getAddressLineTwo());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineThree() {
-		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
+		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeWrong, cityCorrect, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(addressLineThreeCorrect, receptionist.getAddressLineThree());
+		assertEquals(addressLineThreeCorrect, nurse.getAddressLineThree());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoCity() {
-		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
+		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityWrong, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(cityCorrect, receptionist.getCity());
+		assertEquals(cityCorrect, nurse.getCity());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoPostCode() {
-		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
+		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postCodeWrong,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(postcodeCorrect, receptionist.getPostcode());
+		assertEquals(postcodeCorrect, nurse.getPostcode());
 
 	}
 
 	@Test
-	public void testLookUpPatient() {
-		Receptionist recep = new Receptionist();
-		recep.lookUpPatient();
+	public void testAmendRecord() {
+		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testAdmitPatient() {
-		Receptionist recep = new Receptionist();
-		recep.admitPatient();
+	public void testExtendTreatment() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsOnCall() {
+		fail("Not yet implemented");
 	}
 
 }
