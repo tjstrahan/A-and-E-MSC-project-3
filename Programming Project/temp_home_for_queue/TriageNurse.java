@@ -42,12 +42,11 @@ public class TriageNurse implements Runnable {
 
 			// remove first patient from the LinkedList of patients imported
 			// from the DB
-			// Receptionist.patientsFromDB.addLast(Receptionist.patientsFromDB.getFirst());
 			Receptionist.patientsFromDB.removeFirst();
 
 			// pause to represent gaps between patients - set at 2.5 minutes
 			try {
-				Thread.sleep(59998 / TheQueue.TIME_FACTOR);
+				Thread.sleep((random.nextInt(60000)+60000) / TheQueue.TIME_FACTOR);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

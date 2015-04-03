@@ -1,6 +1,5 @@
 package hospital;
 
-import java.time.Instant;
 
 // mock up of patient class to test the queue
 public class Patient {
@@ -10,13 +9,15 @@ public class Patient {
 	private String lastName;
 	private int age;
 	private int triageNumber;
-	private boolean movedFromTreatRoom;
+	private boolean priorityPatient;
 	private boolean treatedByOnCallTeam;
+	private boolean waitingMoreThan25;
 	private int admissionNumber;
 	private long startTimeWait;
 	private long endTimeWait;
 	private long startTimeTreat;
 	private long endTimeTreat;
+	private int timeOnWaitingList;
 	private int treatmentRoom;
 
 	// default constructor
@@ -28,7 +29,7 @@ public class Patient {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
-		this.movedFromTreatRoom = false;
+		this.priorityPatient = false;
 		this.treatedByOnCallTeam = false;
 		this.admissionNumber = 0;
 		this.triageNumber = triageNumber;
@@ -37,6 +38,7 @@ public class Patient {
 		this.endTimeWait = 0;
 		this.endTimeTreat = 0;
 		this.treatmentRoom = -1;
+		this.timeOnWaitingList = 0;
 	}
 
 	// getters and setters
@@ -72,12 +74,12 @@ public class Patient {
 		this.triageNumber = triageNumber;
 	}
 
-	public boolean isMovedFromTreatRoom() {
-		return movedFromTreatRoom;
+	public boolean isPriorityPatient() {
+		return priorityPatient;
 	}
 
-	public void setMovedFromTreatRoom(boolean movedFromTreatRoom) {
-		this.movedFromTreatRoom = movedFromTreatRoom;
+	public void setPriorityPatient(boolean priorityPatient) {
+		this.priorityPatient = priorityPatient;
 	}
 
 	public int getAdmissionNumber() {
@@ -92,14 +94,12 @@ public class Patient {
 	@Override
 	public String toString() {
 		return "[" + this.firstName + ", T" + this.triageNumber + ", "
-				+ this.movedFromTreatRoom + ", No " + this.admissionNumber
+				+ this.priorityPatient + ", No " + this.admissionNumber
 				+ ", Wait Start:" + (this.startTimeWait)
 				+ ", Wait End:" + (this.endTimeWait)
 				+ ", Treat Start:" + (this.startTimeTreat)
 				+ ", Treat End:" + (this.endTimeTreat)
-				+ ", Wait Time:" + waitTime(this.startTimeWait, this.endTimeWait)+"mins ]";
-
-		// , Waiting Time " + calcWaitingTime()
+				+ ", Wait:" + (getTimeOnWaitingList()) +"mins, Wait: "+this.waitingMoreThan25+" ]";
 
 	}
 
@@ -150,22 +150,35 @@ public class Patient {
 	public void setTreatedByOnCallTeam(boolean treatedByOnCallTeam) {
 		this.treatedByOnCallTeam = treatedByOnCallTeam;
 	}
-	
-	public int waitTime(long start, long end){
-		Instant now = Instant.now();
-		long currentTime = now.toEpochMilli();
-		int minutes = 0;
-		if (start == end) {
-			minutes = 0;
-		} else if (end < start) {
-			minutes = 0;
+
+	public boolean isWaitingMoreThan25() {
+		return waitingMoreThan25;
+	}
+
+	public void setWaitingMoreThan25(boolean waitingMoreThan25) {
+		this.waitingMoreThan25 = waitingMoreThan25;
+	}
+
+	public int getTimeOnWaitingList() {
+		return timeOnWaitingList;
+	}
+
+	public void setTimeOnWaitingList(long currentTime) {
 		
-		} else if (end == 0) {
-			minutes = (int) ((currentTime - start)  / 10000) ;
+		if (this.startTimeWait == this.endTimeWait) {
+			this.timeOnWaitingList = 0;
+		} else if (this.endTimeWait > 0) {
+			this.timeOnWaitingList = 0;
+		} else if (this.endTimeWait == 0 && this.startTimeTreat > 0) {
+			this.timeOnWaitingList = 0;
+		} else if (this.endTimeWait == 0) {
+			this.timeOnWaitingList = (int) ((currentTime - this.startTimeWait) / (60000 / TheQueue.TIME_FACTOR));
 		} else {
-			minutes = (int) ((end - start)  / 10000);
+			this.timeOnWaitingList = (int) ((this.endTimeWait - this.startTimeWait) / (60000 / TheQueue.TIME_FACTOR));
 		}
-		
-		return minutes;
+		if (this.timeOnWaitingList > 24) {
+			this.setPriorityPatient(true);
+			this.setWaitingMoreThan25(true);
+		}
 	}
 }

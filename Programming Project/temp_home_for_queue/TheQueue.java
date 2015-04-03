@@ -147,7 +147,7 @@ public class TheQueue {
 
 				// Ensure that patient moved from treatment room is put to the
 				// top of the waiting list regardless of triage category
-				keepMovedPatientsAtTop();
+				keepPriorityPatientsAtTop();
 
 				// Take patients of the same triage number and sort by the order
 				// they joined the waiting list
@@ -216,7 +216,7 @@ public class TheQueue {
 
 					// Ensure that patient moved from treatment room is put to
 					// the top of the waiting list regardless of triage category
-					keepMovedPatientsAtTop();
+					keepPriorityPatientsAtTop();
 
 					// Take patients of the same triage number and sort by the
 					// order they joined the waiting list
@@ -244,6 +244,11 @@ public class TheQueue {
 
 				// Add patient to On Call LinkedList
 				OnCallTeam.add(0, patient);
+				
+				// Call patient
+				System.out.println("The On Call Team will attend to "
+						+ OnCallTeam.get(0).getFirstName() + " "
+						+ OnCallTeam.get(0).getLastName() + " now");
 
 				// Set flag in patient that they have been treated by the On
 				// Call Team
@@ -255,10 +260,26 @@ public class TheQueue {
 				// Sets patients treatment start time
 				OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
 
+				// Ensure that patient moved from treatment room is put to
+				// the top of the waiting list regardless of triage category
+				keepPriorityPatientsAtTop();
+
+				// Take patients of the same triage number and sort by the
+				// order they joined the waiting list
+				keepPatientsOfSameTriageInOrder();
+
 			} else {
 
 				// Patient is sent elsewhere
 				System.out.println("go elsewhere");
+
+				// Ensure that patient moved from treatment room is put to
+				// the top of the waiting list regardless of triage category
+				keepPriorityPatientsAtTop();
+
+				// Take patients of the same triage number and sort by the
+				// order they joined the waiting list
+				keepPatientsOfSameTriageInOrder();
 
 				// Add last patient to send elsewhere list
 				SentElsewhere.add(patient);
@@ -317,6 +338,12 @@ public class TheQueue {
 				// Copy the patient from the temporary ArrayList to the correct
 				// treatment room as defined by the loop iteration
 				TreatmentRoom.add(loop, temp.get(0));
+
+				// Calling patient to treatment room
+				System.out.println("Can "
+						+ TreatmentRoom.get(loop).getFirstName() + " "
+						+ TreatmentRoom.get(loop).getLastName()
+						+ " go to Treatment Room " + (loop + 1) + "");
 
 				// Assign set he Treatment Room number in the patient object,
 				// this is required when bubblesorting the treatment room to
@@ -412,52 +439,42 @@ public class TheQueue {
 		}
 	}
 
-	public int highestTriageTreatmentList(ArrayList<Patient> patient) {
-
-		int highestTriageValue = TreatmentRoom.get(0).getTriageNumber();
-		int index = 0;
-
-		for (int loop = 1; loop < TreatmentRoom.size(); loop++) {
-			if (TreatmentRoom.get(loop).getTriageNumber() > highestTriageValue) {
-				highestTriageValue = TreatmentRoom.get(loop).getTriageNumber();
-				index = loop;
-			}
-		}
-		return index;
-	}
-
+	/**
+	 * Method to bubblesort a copy of the treatment room in order to obtain the
+	 * room number of the patient with the lowest priority, that is the patient
+	 * with the highest triage number and in the case of two patients with this
+	 * triage number the patient who has been in the treatment room for the
+	 * shortest period. The treatment room list itself is not bubblesorted as
+	 * that would destroy the order of the list and 'move' patients around the
+	 * different treatment rooms
+	 * 
+	 * @return an <code>int</code> which is the element number of the treatment
+	 *         room ArrayList which contains the patient of the lowest priority
+	 */
 	public synchronized int bubbleSortTreatmentRoom() {
 
-		// I was gonna try a TreeMap, but you can only sort properly by key,
-		// rather than value, then thought about maybe adding in treatment room
-		// to the patient - i have changed the treatment room java threads to do
-		// that the moment the patient enters the room.
-
-		// now i think we can probably use the bubblesort method from the other
-		// class - i was a gonna create a temp arraylist, do the bubblesort
-		// based on, triage, then time and the last element of the arraylist
-		// will be the one we need to remove, so get treatment room number from
-		// that and thats the one we need to swap with waiting list.
-
-		// temp arraylist - copy of treatment room
+		// temporary ArrayList - copy of treatment room
 		ArrayList<Patient> tempList = new ArrayList<Patient>();
+
+		// Populate the temporary ArrayList with all the elements from the
+		// TreatmentRoom list
 		tempList.add(0, TreatmentRoom.get(0));
 		tempList.add(1, TreatmentRoom.get(1));
 		tempList.add(2, TreatmentRoom.get(2));
 		tempList.add(3, TreatmentRoom.get(3));
 		tempList.add(4, TreatmentRoom.get(4));
 
-		// initialise variable
+		// Initialise variable for the index of the element
 		int indexOfElement = 0;
 
-		// sort templist by triagenumber - lowest first
+		// Sort the temporary ArrayList by triage number - lowest first
 		sortListByTriage(tempList);
 
-		// if triage number of elements 0 and 1 are the same
+		// If triage number of elements 0 and 1 are the same
 		if (tempList.get(0).getTriageNumber() == tempList.get(1)
 				.getTriageNumber()) {
 
-			// and if element 0 was added after element 1 to the queue, swap
+			// And if element 0 was added after element 1 to the queue, swap
 			// them in the list
 			if (tempList.get(0).getAdmissionNumber() > tempList.get(1)
 					.getAdmissionNumber()) {
@@ -469,7 +486,7 @@ public class TheQueue {
 		if (tempList.get(1).getTriageNumber() == tempList.get(2)
 				.getTriageNumber()) {
 
-			// and if element 1 was added after element 2 to the queue, swap
+			// And if element 1 was added after element 2 to the queue, swap
 			// them in the list
 			if (tempList.get(1).getAdmissionNumber() > tempList.get(2)
 					.getAdmissionNumber()) {
@@ -481,7 +498,7 @@ public class TheQueue {
 		if (tempList.get(2).getTriageNumber() == tempList.get(3)
 				.getTriageNumber()) {
 
-			// and if element 2 was added after element 3 to the queue, swap
+			// And if element 2 was added after element 3 to the queue, swap
 			// them in the list
 			if (tempList.get(2).getAdmissionNumber() > tempList.get(3)
 					.getAdmissionNumber()) {
@@ -493,113 +510,227 @@ public class TheQueue {
 		if (tempList.get(3).getTriageNumber() == tempList.get(4)
 				.getTriageNumber()) {
 
-			// and if element 3 was added after element 4 to the queue, swap
+			// And if element 3 was added after element 4 to the queue, swap
 			// them in the list
 			if (tempList.get(3).getAdmissionNumber() > tempList.get(4)
 					.getAdmissionNumber()) {
 				Collections.swap(tempList, 3, 4);
+
+				// For Testing purposes
 				System.out.println(tempList.get(3).getAdmissionNumber());
 				System.out.println(tempList.get(4).getAdmissionNumber());
 
-			//	if (tempList.get(4).getAdmissionNumber() < 0 && tempList.get(3).getAdmissionNumber() < 0) {
-			//		Collections.swap(tempList, 4, 3);
-			//	}
+				// if (tempList.get(4).getAdmissionNumber() < 0 &&
+				// tempList.get(3).getAdmissionNumber() < 0) {
+				// Collections.swap(tempList, 4, 3);
+				// }
 			}
 		}
 
-		// get treatment room number of last element
+		// Get treatment room number of last element
 		indexOfElement = tempList.get(4).getTreatmentRoom();
 
-		// clear temp arraylist
+		// Clear the temporary ArrayList for next use
 		tempList.clear();
 
-		System.out.println(indexOfElement);
+		// For Testing purposes
+		// System.out.println(indexOfElement);
 
-		// return index of element to be swapped out of treatment room
+		// Return index of element containing patient of lowest priority
 		return indexOfElement;
 	}
 
+	/**
+	 * Method to move a newly added emergency patient, triage number 1, into the
+	 * treatment room by removing the patient of the lowest priority
+	 */
 	public synchronized void moveEmergencyPatients() {
 
-		// temp arraylist
+		// Temporary ArrayLists used in the moving process
 		ArrayList<Patient> tempListFromTreatment = new ArrayList<Patient>();
 		ArrayList<Patient> tempListFromWaiting = new ArrayList<Patient>();
 
+		// Declare variable
 		int index;
 
+		// Obtain index which is the element of the treatment room ArrayList of
+		// the lowest priority. This is obtained by calling the
+		// bubblesortTreatmentList method
 		index = bubbleSortTreatmentRoom();
 
-		// do this while last patient in treatment room list when it was sorted
-		// in the bubblesort method does not have a
-		// triage category of 1 (ie is not an emergency) and the first patient
-		// on the waiting list does have a triage category of 1 (is an emergency
-		// patient)
+		// If patient in the treatment room of the lowest priority is not of
+		// triage rating 1 and the first element of the waiting list (the newly
+		// arrived patient) is an emergency patient they must be swapped
 		if ((TreatmentRoom.get(index).getTriageNumber() != 1)
 				&& (WaitingList.get(0).getTriageNumber() == 1)) {
 
-			TreatmentRoom.get(index).setMovedFromTreatRoom(true);
+			// The patient being removed from the treatment room is set as a
+			// priority patient and will be kept at the top of the waiting list
+			TreatmentRoom.get(index).setPriorityPatient(true);
+
+			// Reset the start treatment time to zero as their clock will start
+			// at zero when they eventually re-enter the treatment room
 			TreatmentRoom.get(index).setStartTimeTreat(0);
+
+			// Ensure their end treatment time is also set to zero
 			TreatmentRoom.get(index).setEndTimeTreat(0);
 
-			// copy patient in treatment room to be moved list to temp arraylist
+			// Copy patient in treatment room to be moved to a temporary
+			// ArrayList
 			tempListFromTreatment.add(TreatmentRoom.get(index));
 
+			// Remove patient from Treatment Room
 			TreatmentRoom.remove(index);
 
+			// Decrement the new Admission number this is to make sorting of
+			// patients that are a priority patient easier, such patients all
+			// have a negative admission number
 			newPatNum--;
 
+			// Set new admission number for patient being moved out of treatment
+			// room
 			tempListFromTreatment.get(0).setAdmissionNumber(newPatNum);
 
+			// Get a new instant of time
 			Instant setWait = Instant.now();
+
+			// Set waiting start time for patient moving to waiting list
 			tempListFromTreatment.get(0).setStartTimeWait(
 					setWait.toEpochMilli());
 
+			// Get a new instant of time
 			Instant setTreat = Instant.now();
+
+			// Set treatment start time for patient moving to treatment room
 			WaitingList.get(0).setStartTimeTreat(setTreat.toEpochMilli());
+
+			// Add person from waiting list to temporary ArrayList
 			tempListFromWaiting.add(WaitingList.get(0));
+
+			// Remove first element of Waiting List
 			WaitingList.remove(0);
 
+			// Switch on index - element corresponding to each treatment room -
+			// elements in an ArrayList start at zero, therefore an index of
+			// zero refers to treatment room 1 and so on
 			switch (index) {
+
+			// Treatment Room 1
 			case 0:
+
+				// Add patient to treatment room 1
 				TreatmentRoom.add(index, tempListFromWaiting.get(0));
+
+				// Call patient
+				System.out.println("Can "
+						+ TreatmentRoom.get(index).getFirstName() + " "
+						+ TreatmentRoom.get(index).getLastName()
+						+ " go to Treatment Room " + (index + 1) + "");
+
+				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
+
+				// Leave switch statement
 				break;
+
+			// Treatment Room 2
 			case 1:
+
+				// Add patient to treatment room 2
 				TreatmentRoom.add(index, tempListFromWaiting.get(0));
+
+				// Call patient
+				System.out.println("Can "
+						+ TreatmentRoom.get(index).getFirstName() + " "
+						+ TreatmentRoom.get(index).getLastName()
+						+ " go to Treatment Room " + (index + 1) + "");
+
+				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
+
+				// Leave switch statement
 				break;
+
+			// Treatment Room 3
 			case 2:
+
+				// Add patient to treatment room 3
 				TreatmentRoom.add(index, tempListFromWaiting.get(0));
+
+				// Call patient
+				System.out.println("Can "
+						+ TreatmentRoom.get(index).getFirstName() + " "
+						+ TreatmentRoom.get(index).getLastName()
+						+ " go to Treatment Room " + (index + 1) + "");
+
+				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
+
+				// Leave switch statement
 				break;
+
+			// Treatment Room 4
 			case 3:
+
+				// Add patient to treatment room 4
 				TreatmentRoom.add(index, tempListFromWaiting.get(0));
+
+				// Call patient
+				System.out.println("Can "
+						+ TreatmentRoom.get(index).getFirstName() + " "
+						+ TreatmentRoom.get(index).getLastName()
+						+ " go to Treatment Room " + (index + 1) + "");
+
+				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
+
+				// Leave switch statement
 				break;
+
+			// Treatment Room 5
 			case 4:
+
+				// Add patient to treatment room 5
 				TreatmentRoom.add(index, tempListFromWaiting.get(0));
+
+				// Call patient
+				System.out.println("Can "
+						+ TreatmentRoom.get(index).getFirstName() + " "
+						+ TreatmentRoom.get(index).getLastName()
+						+ " go to Treatment Room " + (index + 1) + "");
+
+				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
+
+				// Leave switch statement
 				break;
 			}
 
+			// for testing purposes
 			System.out.println("Swapping patients");
 
-			// reset treatment room of patient removed from threatment room to
+			// Reset treatment room of patient removed from treatment room to
 			// the default value
 			tempListFromTreatment.get(0).setTreatmentRoom(-1);
 
-			// copy patient from temp arraylist to first element of waiting list
+			// Copy patient from temporary ArrayList to first element of waiting
+			// list; this is a LinkedList and all the other elements will
+			// shuffle up to make room at the start of the list
 			WaitingList.addFirst(tempListFromTreatment.get(0));
 
-			// clear temp arraylist
+			// Clear both temporary ArrayLists for next use
 			tempListFromTreatment.clear();
 			tempListFromWaiting.clear();
 
+			// If all treatment room patients are emergency patients (triage
+			// number of 1) and the newly added patient at the top of the
+			// waiting list is an emergency patient and the On Call Team is not
+			// treating anyone
 		} else if ((TreatmentRoom.get(index).getTriageNumber() == 1)
 				&& (WaitingList.getFirst().getTriageNumber() == 1)
 				&& !onCallInSitu) {
 
-			// set boolean to true
+			// Set boolean to true
 			onCallTeamContacted = true;
 
 			// Send SMS to the On Call Team, do this by instantiating SMS
@@ -618,181 +749,211 @@ public class TheQueue {
 			// for demo purposes
 			System.out.println("On-call team called - SMS");
 
-			// set boolean to true
+			// Set boolean to true
 			onCallInSitu = true;
 
+			// Copy emergency patient from top of waiting list to a temporary
+			// ArrayList
 			tempListFromTreatment.add(WaitingList.get(0));
 
+			// Remove patient from Waiting List
 			WaitingList.remove(0);
 
-			// add patient to on call team list - patient removed from this list
+			// Add patient to on call team list - patient removed from this list
 			// after 15 minutes - there can only be one patient on this list
 			OnCallTeam.add(0, tempListFromTreatment.get(0));
+
+			// Call patient
+			System.out.println("The On Call Team will attend to "
+					+ OnCallTeam.get(0).getFirstName() + " "
+					+ OnCallTeam.get(0).getLastName() + " now");
+
+			// Set boolean for patient records
 			OnCallTeam.get(0).isTreatedByOnCallTeam();
 
+			// Get a new instant of time
 			Instant onCallStart = Instant.now();
+
+			// Set time that on call team started treating patient
 			OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
 		}
 
 	}
 
-	// moving patients who have been in the treatment room and moved out to the
-	// top of the waiting list
-	public synchronized void keepMovedPatientsAtTop() {
+	/**
+	 * Method to ensure that those patients who have been granted priority
+	 * status, that is they have been moved from the treatment room to make way
+	 * for an emergency patient or they have been waiting for more than 25
+	 * minutes, are kept at the top of the waiting list
+	 */
+	public synchronized void keepPriorityPatientsAtTop() {
 
-		// temp arraylist
+		// Temporary ArrayList to hold patient whilst being sorted
 		ArrayList<Patient> temp = new ArrayList<Patient>();
 
-		// for loop
+		// Loop through the waiting list
 		for (int loop = 0; loop < WaitingList.size(); loop++) {
 
-			// if true
-			if (WaitingList.get(loop).isMovedFromTreatRoom()) {
+			// If patient has been granted priority status
+			if (WaitingList.get(loop).isPriorityPatient()) {
 
-				// copy patient to temp arraylist
+				// Copy patient to the temporary ArrayList
 				temp.add(WaitingList.get(loop));
 
-				// remove patient from current position in waiting list
+				// Remove patient from current position in waiting list
 				WaitingList.remove(loop);
 
-				// add patient from temp arraylist to start of waiting list
+				// Add patient from temporary ArrayList to the start of waiting
+				// list
 				WaitingList.addFirst(temp.get(0));
-
 			}
 
-			// empty temp array list
+			// Clear the temporary ArrayList for next use
 			temp.clear();
-
 		}
 	}
 
-	// method to sort patients in waiting list that have not been moved from the
-	// treatment room by patient number (in otherwords to keep them in the order
-	// they should be in relative to when they joined the queue)
+	/**
+	 * Method ensure that patients of the same priority are grouped together and
+	 * sorted by time on waiting list, for instance if there are several
+	 * patients with a triage number of 4 they will all be grouped together, but
+	 * with the patient who joined the waiting list first at the top of the list
+	 */
 	public synchronized void keepPatientsOfSameTriageInOrder() {
 
+		// If the waiting list has 10 or less patients (elements)
 		if (WaitingList.size() <= 10) {
+
+			// Make a temporary LinkedList of the waiting list
 			LinkedList<Patient> copyWaitingList = new LinkedList<Patient>(
 					WaitingList);
 
-			// instantiate the iterator
+			// Instantiate the iterator
 			Iterator<Patient> Patient = copyWaitingList.iterator();
 
-			// temporary arraylists to hold the different types of patient when
-			// they
-			// are copied from the Waiting List Linked List
-			ArrayList<Patient> moved = new ArrayList<Patient>();
+			// Create five temporary ArrayLists to hold the patients of each
+			// priority or triage number - note that triage1 should never be
+			// used, it is included for completeness and its absence did cause
+			// an exception on one occasion
+			ArrayList<Patient> priority = new ArrayList<Patient>();
 			ArrayList<Patient> triage1 = new ArrayList<Patient>();
 			ArrayList<Patient> triage2 = new ArrayList<Patient>();
 			ArrayList<Patient> triage3 = new ArrayList<Patient>();
 			ArrayList<Patient> triage4 = new ArrayList<Patient>();
+
+			// Second temporary LinkedList into which the waiting list will be
+			// recontructed before being copied back to the actual waiting list
 			LinkedList<Patient> orderedWaitingList = new LinkedList<Patient>();
 
-			// into to allow for iteration of the Waiting List
+			// Variable to allow for iteration of the Waiting List
 			int element = 0;
 
-			// while there are patients in the Waiting List do...
+			// While there are patients in the Waiting List do...
 			while (Patient.hasNext()) {
 
-				// if patient has been previously moved from the treatment room,
-				// remember that these patients have already been sorted
-				if (Patient.next().isMovedFromTreatRoom()) {
+				// If patient has been previously moved from the treatment room,
+				// or
+				// has been waiting for more than 25 without treatment.
+				if (Patient.next().isPriorityPatient()) {
 
-					// add patient to to 'moved' arraylist
-					moved.add(copyWaitingList.get(element));
+					// Add patient to to 'priority' ArrayList
+					priority.add(copyWaitingList.get(element));
 
-					// advance element number
+					// Advance element number
 					element++;
 
-					// for those patients not moved from the treatment room
+					// For those patients not afforded priority status
 				} else {
 
-					// switch on triage priority
+					// Switch on triage priority
 					switch (copyWaitingList.get(element).getTriageNumber()) {
 
-					// if triage priority equals 1
+					// Triage priority 1
 					case 1:
 
-						// add patient to 'triage1' arraylist
+						// Add patient to 'triage1' ArrayList
 						triage1.add(copyWaitingList.get(element));
 
-						// advance element number
+						// Advance element number
 						element++;
 
-						// allow iterator to advance to next patient if any
+						// Allow iterator to advance to next patient if any
 						break;
 
-					// if triage priority equals 2
+					// Triage priority 2
 					case 2:
 
-						// add patient to 'triage2' arraylist
+						// Add patient to 'triage2' ArrayList
 						triage2.add(copyWaitingList.get(element));
 
-						// advance element number
+						// Advance element number
 						element++;
 
-						// allow iterator to advance to next patient if any
+						// Allow iterator to advance to next patient if any
 						break;
 
-					// if triage priority equals 3
+					// Triage priority 3
 					case 3:
 
-						// add patient to 'triage 3' arraylist
+						// Add patient to 'triage 3' ArrayList
 						triage3.add(copyWaitingList.get(element));
 
-						// advance element number
+						// Advance element number
 						element++;
 
-						// allow iterator to advance to next patient if any
+						// Allow iterator to advance to next patient if any
 						break;
 
-					// if triage priority equals 4
+					// Triage priority 4
 					case 4:
 
-						// add patient to 'triage 4' arraylist
+						// Add patient to 'triage 4' ArrayList
 						triage4.add(copyWaitingList.get(element));
 
-						// advance element number
+						// Advance element number
 						element++;
 
-						// allow iterator to advance to next patient if any
+						// Allow iterator to advance to next patient if any
 						break;
 					}
 				}
 			}
 
-			// sort each of these array lists based on patient number, which is
-			// being used in this file in place of time on queue - patient
-			// number
-			// gives incorrect results for patients that have been moved because
-			// in
-			// the actual system when they are moved from the treatment room to
-			// the
-			// waiting list their treatment room thread will cease and a new
-			// waiting
-			// list thread will start, therefore i have assigned new patient
-			// numbers
-			// to mimic this
-			sortListByAdmissionNumber(moved);
-			Collections.reverse(moved);
+			// Sort each of these ArrayLists based on admission number, that is
+			// the order in which the patients joined the waiting list. Priority
+			// patients have been assigned a new negative admission number which
+			// indicates the order in which they were awarded priority status
+			// and therefore allows them to be sorted also
+			sortListByAdmissionNumber(priority);
 			sortListByAdmissionNumber(triage1);
 			sortListByAdmissionNumber(triage2);
 			sortListByAdmissionNumber(triage3);
 			sortListByAdmissionNumber(triage4);
 
-			// addAll elements from each sorted arraylist to the end of the
-			// WaitingList linked list
-			orderedWaitingList.addAll(moved);
+			// As the priority patients now have a decementing negative
+			// admission number their temporary ArrayList must be reversed to
+			// keep them in the correct order
+			Collections.reverse(priority);
+
+			// Add all the elements from each sorted ArrayList to the
+			// orderedWaitingList temporary LinkedList in the correct order
+			orderedWaitingList.addAll(priority);
 			orderedWaitingList.addAll(triage1);
 			orderedWaitingList.addAll(triage2);
 			orderedWaitingList.addAll(triage3);
 			orderedWaitingList.addAll(triage4);
 
-			copyWaitingList.clear();
+			// Clear Waiting List
 			WaitingList.clear();
+
+			// Add all elements from orderedWaitingList temporary LinkedList to
+			// the Waiting List, all patients are now in the correct order
 			WaitingList.addAll(orderedWaitingList);
+
+			// Clear temporary lists
+			copyWaitingList.clear();
+			orderedWaitingList.clear();
+
 		}
-
 	}
-
 }

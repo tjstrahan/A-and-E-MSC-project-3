@@ -9,7 +9,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class QueueTimer {
-	
+
 	static ArrayList<Patient> treatmentCopy = new ArrayList<Patient>(5);
 	static LinkedList<Patient> waitingCopy = new LinkedList<Patient>();
 	static LinkedList<Patient> onCallCopy = new LinkedList<Patient>();
@@ -19,29 +19,35 @@ public class QueueTimer {
 	static final long ON_CALL_TREATMENT_TIME = 900000 / TheQueue.TIME_FACTOR;
 
 	static final long TREATMENT_ROOM_TIME = 600000 / TheQueue.TIME_FACTOR;
-	
+
 	static final long numberOfMilliSeconds = 60000 / TheQueue.TIME_FACTOR;
 
 	static TheQueue theQueue = new TheQueue();
-	
+	static Patient patient = new Patient();
+
 	static long extraTime1 = 0;
 	static long extraTime2 = 0;
-	static long extraTime3 = 0;	
-	static long extraTime4 = 0;	
+	static long extraTime3 = 0;
+	static long extraTime4 = 0;
 	static long extraTime5 = 0;
 
 	public void extraTreatmentTime(int minutes, int treatmentRoom) {
 		switch (treatmentRoom) {
-		case 1 : extraTime1 = (minutes * 10000) / TheQueue.TIME_FACTOR;
-		break;
-		case 2 : extraTime2 = (minutes * 10000) / TheQueue.TIME_FACTOR;
-		break;
-		case 3 : extraTime3 = (minutes * 10000) / TheQueue.TIME_FACTOR;
-		break;
-		case 4 : extraTime4 = (minutes * 10000) / TheQueue.TIME_FACTOR;
-		break;
-		case 5 : extraTime5 = (minutes * 10000) / TheQueue.TIME_FACTOR;
-		break;
+		case 1:
+			extraTime1 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+			break;
+		case 2:
+			extraTime2 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+			break;
+		case 3:
+			extraTime3 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+			break;
+		case 4:
+			extraTime4 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+			break;
+		case 5:
+			extraTime5 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+			break;
 		}
 	}
 
@@ -61,7 +67,7 @@ public class QueueTimer {
 				onCallCopy.addAll(TheQueue.OnCallTeam);
 				treatedCopy.addAll(TheQueue.Treated);
 				turnedAwayCopy.addAll(TheQueue.SentElsewhere);
-				
+
 				printAll();
 
 				treatmentCopy.clear();
@@ -169,6 +175,59 @@ public class QueueTimer {
 
 			}
 		}, 0, numberOfMilliSeconds, TimeUnit.MILLISECONDS);
+
+		final ScheduledExecutorService service8 = Executors
+				.newSingleThreadScheduledExecutor();
+		service8.scheduleWithFixedDelay(new Runnable() {
+			@Override
+			public void run() {
+
+				theQueue.keepPriorityPatientsAtTop();
+				theQueue.keepPatientsOfSameTriageInOrder();
+
+			}
+		}, 0, numberOfMilliSeconds, TimeUnit.MILLISECONDS);
+
+		final ScheduledExecutorService service9 = Executors
+				.newSingleThreadScheduledExecutor();
+		service9.scheduleWithFixedDelay(new Runnable() {
+			@Override
+			public void run() {
+
+				Instant now = Instant.now();
+				if (!TheQueue.WaitingList.isEmpty()) {
+					for (int loop = 0; loop < TheQueue.WaitingList.size(); loop++) {
+						TheQueue.WaitingList.get(loop).setTimeOnWaitingList(
+								now.toEpochMilli());
+					}
+				}
+
+			}
+		}, 0, numberOfMilliSeconds, TimeUnit.MILLISECONDS);
+
+		final ScheduledExecutorService service10 = Executors
+				.newSingleThreadScheduledExecutor();
+		service10.scheduleWithFixedDelay(new Runnable() {
+			@Override
+			public void run() {
+
+				int averageWaitTime = 0;
+				int sumOfWaitTime = 0;
+				
+				if (!TheQueue.WaitingList.isEmpty()) {
+					for (int loop = 0; loop < TheQueue.WaitingList.size(); loop++) {
+						sumOfWaitTime += TheQueue.WaitingList.get(loop).getTimeOnWaitingList();
+					}
+					averageWaitTime = sumOfWaitTime / TheQueue.WaitingList.size();
+				}
+				
+				System.out.println("\n*****");
+				System.out.println("  "+ averageWaitTime);
+				System.out.println("*****\n");
+				
+			}
+		}, 0, numberOfMilliSeconds, TimeUnit.MILLISECONDS);
+
 	}
 
 	public static void endTreatmentRoomTreatment1(long currentTime) {
@@ -332,4 +391,5 @@ public class QueueTimer {
 			System.out.println(Patient.next());
 		}
 	}
+
 }
