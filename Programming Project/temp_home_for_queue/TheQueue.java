@@ -22,7 +22,7 @@ public class TheQueue {
 	 * If set to 40 it runs forty times faster than real time. To set to real
 	 * time set this variable to 1.
 	 */
-	public static final int TIME_FACTOR = 30;
+	public static final int TIME_FACTOR = 16;
 
 	/**
 	 * Maximum length of Waiting List as described in specifications
@@ -244,7 +244,7 @@ public class TheQueue {
 
 				// Add patient to On Call LinkedList
 				OnCallTeam.add(0, patient);
-				
+
 				// Call patient
 				System.out.println("The On Call Team will attend to "
 						+ OnCallTeam.get(0).getFirstName() + " "
@@ -256,6 +256,10 @@ public class TheQueue {
 
 				// Get a new instance of time
 				Instant onCallStart = Instant.now();
+
+				// Sets patients end wait time, which will have automatically
+				// been started at triage
+				OnCallTeam.get(0).setEndTimeWait(onCallStart.toEpochMilli());
 
 				// Sets patients treatment start time
 				OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
@@ -325,12 +329,22 @@ public class TheQueue {
 				// Copy first patient in Waiting List into the temporary
 				// ArrayList
 				temp.add(WaitingList.get(0));
+				
+				// Reset this boolean as patient is no longer on the Waiting List
+				temp.get(0).setWaitingMoreThan30(false);
 
-				// Get a new instance of time
-				Instant endWait = Instant.now();
+				// This is so that patient who have already been on the waiting
+				// list do not get their waiting end time changed upon re-entry
+				// to the waiting list
+				if (temp.get(0).getAdmissionNumber() > 0) {
 
-				// Set end waiting time for patient using new instance of date
-				temp.get(0).setEndTimeWait(endWait.toEpochMilli());
+					// Get a new instance of time
+					Instant endWait = Instant.now();
+
+					// Set end waiting time for patient using new instance of
+					// date
+					temp.get(0).setEndTimeWait(endWait.toEpochMilli());
+				}
 
 				// Remove the first element from the waiting list
 				WaitingList.remove(0);
@@ -479,6 +493,13 @@ public class TheQueue {
 			if (tempList.get(0).getAdmissionNumber() > tempList.get(1)
 					.getAdmissionNumber()) {
 				Collections.swap(tempList, 0, 1);
+
+				// This will ensure that if two patients have negative admission
+				// numbers they will be ordered correctly
+				if (tempList.get(0).getAdmissionNumber() < 0
+						&& tempList.get(1).getAdmissionNumber() < 0) {
+					Collections.swap(tempList, 0, 1);
+				}
 			}
 		}
 
@@ -491,6 +512,13 @@ public class TheQueue {
 			if (tempList.get(1).getAdmissionNumber() > tempList.get(2)
 					.getAdmissionNumber()) {
 				Collections.swap(tempList, 1, 2);
+
+				// This will ensure that if two patients have negative admission
+				// numbers they will be ordered correctly
+				if (tempList.get(1).getAdmissionNumber() < 0
+						&& tempList.get(2).getAdmissionNumber() < 0) {
+					Collections.swap(tempList, 1, 2);
+				}
 			}
 		}
 
@@ -503,6 +531,13 @@ public class TheQueue {
 			if (tempList.get(2).getAdmissionNumber() > tempList.get(3)
 					.getAdmissionNumber()) {
 				Collections.swap(tempList, 2, 3);
+
+				// This will ensure that if two patients have negative admission
+				// numbers they will be ordered correctly
+				if (tempList.get(2).getAdmissionNumber() < 0
+						&& tempList.get(3).getAdmissionNumber() < 0) {
+					Collections.swap(tempList, 2, 3);
+				}
 			}
 		}
 
@@ -516,14 +551,13 @@ public class TheQueue {
 					.getAdmissionNumber()) {
 				Collections.swap(tempList, 3, 4);
 
-				// For Testing purposes
-				System.out.println(tempList.get(3).getAdmissionNumber());
-				System.out.println(tempList.get(4).getAdmissionNumber());
+				// This will ensure that if two patients have negative admission
+				// numbers they will be ordered correctly
+				if (tempList.get(3).getAdmissionNumber() < 0
+						&& tempList.get(4).getAdmissionNumber() < 0) {
+					Collections.swap(tempList, 3, 4);
 
-				// if (tempList.get(4).getAdmissionNumber() < 0 &&
-				// tempList.get(3).getAdmissionNumber() < 0) {
-				// Collections.swap(tempList, 4, 3);
-				// }
+				}
 			}
 		}
 
@@ -532,9 +566,6 @@ public class TheQueue {
 
 		// Clear the temporary ArrayList for next use
 		tempList.clear();
-
-		// For Testing purposes
-		// System.out.println(indexOfElement);
 
 		// Return index of element containing patient of lowest priority
 		return indexOfElement;
@@ -592,17 +623,14 @@ public class TheQueue {
 			tempListFromTreatment.get(0).setAdmissionNumber(newPatNum);
 
 			// Get a new instant of time
-			Instant setWait = Instant.now();
+			Instant setTime = Instant.now();
 
-			// Set waiting start time for patient moving to waiting list
-			tempListFromTreatment.get(0).setStartTimeWait(
-					setWait.toEpochMilli());
+			// Set end wait time for emergency patient moving to treatment room
+			WaitingList.get(0).setEndTimeWait(setTime.toEpochMilli());
 
-			// Get a new instant of time
-			Instant setTreat = Instant.now();
-
-			// Set treatment start time for patient moving to treatment room
-			WaitingList.get(0).setStartTimeTreat(setTreat.toEpochMilli());
+			// Set treatment start time for emergency patient moving to
+			// treatment room
+			WaitingList.get(0).setStartTimeTreat(setTime.toEpochMilli());
 
 			// Add person from waiting list to temporary ArrayList
 			tempListFromWaiting.add(WaitingList.get(0));
@@ -773,6 +801,10 @@ public class TheQueue {
 
 			// Get a new instant of time
 			Instant onCallStart = Instant.now();
+			
+			// Sets patients end wait time, which will have automatically
+			// been started at triage
+			OnCallTeam.get(0).setEndTimeWait(onCallStart.toEpochMilli());
 
 			// Set time that on call team started treating patient
 			OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());

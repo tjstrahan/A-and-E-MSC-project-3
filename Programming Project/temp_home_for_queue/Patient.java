@@ -11,7 +11,7 @@ public class Patient {
 	private int triageNumber;
 	private boolean priorityPatient;
 	private boolean treatedByOnCallTeam;
-	private boolean waitingMoreThan25;
+	private boolean waitingMoreThan30;
 	private int admissionNumber;
 	private long startTimeWait;
 	private long endTimeWait;
@@ -99,7 +99,7 @@ public class Patient {
 				+ ", Wait End:" + (this.endTimeWait)
 				+ ", Treat Start:" + (this.startTimeTreat)
 				+ ", Treat End:" + (this.endTimeTreat)
-				+ ", Wait:" + (getTimeOnWaitingList()) +"mins, Wait: "+this.waitingMoreThan25+" ]";
+				+ ", Wait:" + (getTimeOnWaitingList()) +"mins, Wait: "+this.waitingMoreThan30+" ]";
 
 	}
 
@@ -151,12 +151,12 @@ public class Patient {
 		this.treatedByOnCallTeam = treatedByOnCallTeam;
 	}
 
-	public boolean isWaitingMoreThan25() {
-		return waitingMoreThan25;
+	public boolean isWaitingMoreThan30() {
+		return waitingMoreThan30;
 	}
 
-	public void setWaitingMoreThan25(boolean waitingMoreThan25) {
-		this.waitingMoreThan25 = waitingMoreThan25;
+	public void setWaitingMoreThan30(boolean waitingMoreThan30) {
+		this.waitingMoreThan30 = waitingMoreThan30;
 	}
 
 	public int getTimeOnWaitingList() {
@@ -167,8 +167,6 @@ public class Patient {
 		
 		if (this.startTimeWait == this.endTimeWait) {
 			this.timeOnWaitingList = 0;
-		} else if (this.endTimeWait > 0) {
-			this.timeOnWaitingList = 0;
 		} else if (this.endTimeWait == 0 && this.startTimeTreat > 0) {
 			this.timeOnWaitingList = 0;
 		} else if (this.endTimeWait == 0) {
@@ -178,7 +176,9 @@ public class Patient {
 		}
 		if (this.timeOnWaitingList > 24) {
 			this.setPriorityPatient(true);
-			this.setWaitingMoreThan25(true);
+		}
+		if (this.timeOnWaitingList > 29) {
+			this.setWaitingMoreThan30(true);
 		}
 	}
 }
