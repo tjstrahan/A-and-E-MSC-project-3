@@ -59,8 +59,21 @@ public class Nurse extends Staff implements iOnCall {
 	 */
 	@Override
 	public void isOnCall() {
-		// TODO Auto-generated method stub
+		
+		this.isOnCallToString();
 
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	
+	public String isOnCallToString() {
+		return "Nurse " + title + " " + firstName
+				+ " " + middleName + " " + lastName
+				+ "is on call";
+	}
+	
+	
 
 }
