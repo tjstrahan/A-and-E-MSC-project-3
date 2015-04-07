@@ -93,7 +93,7 @@ public class Patient {
 	// minimal to string for demo purposes
 	@Override
 	public String toString() {
-		return "[" + this.firstName + ", T" + this.triageNumber + ", "
+		return "[" + this.firstName + ", T" + this.triageNumber + ", " +triageCategory()+ ", "
 				+ this.priorityPatient + ", No " + this.admissionNumber
 				+ ", Wait Start:" + (this.startTimeWait)
 				+ ", Wait End:" + (this.endTimeWait)
@@ -167,8 +167,6 @@ public class Patient {
 		
 		if (this.startTimeWait == this.endTimeWait) {
 			this.timeOnWaitingList = 0;
-		} else if (this.endTimeWait == 0 && this.startTimeTreat > 0) {
-			this.timeOnWaitingList = 0;
 		} else if (this.endTimeWait == 0) {
 			this.timeOnWaitingList = (int) ((currentTime - this.startTimeWait) / (60000 / TheQueue.TIME_FACTOR));
 		} else {
@@ -181,4 +179,22 @@ public class Patient {
 			this.setWaitingMoreThan30(true);
 		}
 	}
+	
+	public String triageCategory() {
+		String triage = "";
+		switch (this.triageNumber) {
+		case 1 : triage = "Emergency";
+		break;
+		case 2 : triage = "Urgent";
+		break;
+		case 3 : triage = "Semi-urgent";
+		break;
+		case 4 : triage = "Non-urgent";
+		break;
+		default : triage = "";
+		break;
+		}
+		return triage;
+	}
+	
 }
