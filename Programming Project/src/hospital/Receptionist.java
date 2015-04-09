@@ -3,7 +3,7 @@ package hospital;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import JDBC.ConnectToDatabase;
+import jdbc.ReceptionistJDBC;
 
 public class Receptionist extends Staff {
 
@@ -50,8 +50,10 @@ public class Receptionist extends Staff {
 	@SuppressWarnings("static-access")
 	public void lookUpPatient() {
 
+		
+		
 		// make an instantiation of the Connect to database class called lookup
-		JDBC.ConnectToDatabase lookup = new ConnectToDatabase();
+		jdbc.ReceptionistJDBC lookup = new ReceptionistJDBC();
 
 		// PRint out look up patient
 		System.out.println("Look up Patient");
@@ -83,7 +85,7 @@ public class Receptionist extends Staff {
 	public void admitPatient() {
 
 		// make an instantiation of the ConnectToDatabase class called admitOne
-		JDBC.ConnectToDatabase admitOne = new ConnectToDatabase();
+		jdbc.ReceptionistJDBC admitOne = new ReceptionistJDBC();
 
 		// call the method surrounded by a try catch block and catch the SQLException if it is thrown
 		try {
