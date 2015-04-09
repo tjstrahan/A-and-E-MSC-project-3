@@ -1,7 +1,7 @@
 /**
  * JDBC Code to Connect to Database from the Receptionist.
  */
-package hospital;
+package jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,7 +15,7 @@ import java.util.Scanner;
  * 
  * @author James Maguire
  */
-public class ConnectToDatabase {
+public class ReceptionistJDBC {
 	/**
 	 * Username for access to Database
 	 */
@@ -24,45 +24,55 @@ public class ConnectToDatabase {
 	/**
 	 * Use if Username is part of the Databases URL, otherwise leave blank
 	 */
-	private static final String URL_USERNAME = "";
+	private static final String URL_USERNAME = "40038896";
+	
 	/**
 	 * Password for access to Database
 	 */
 	private static final String DB_PASSWORD = "SUA8746";
+	
 	/**
 	 * Main body of URL of Database, eg //web2.eeecs.qub.ac.uk/ or
 	 * thin:@db.yale.edu:univdb
 	 */
-	public static final String WEB_ADDRESS = "//web2.eeecs.qub.ac.uk/40038896";
+	public static final String WEB_ADDRESS = "//web2.eeecs.qub.ac.uk/";
+	
 	/**
 	 * Type of database, eg mysql: or oracle: etc
 	 */
 	public static final String DB_PROTOCOL = "mysql:";
+	
 	/**
 	 * name of Database driver to be called, for mysql com.mysql.jdbc.Driver or
 	 * for oracle oracle.jdbc.driver.OracleDriver
 	 */
 	public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
+	
 	/**
 	 * Instance Var for Connection to database
 	 */
 	public static Connection con = null;
+	
 	/**
 	 *  Instance Var for statements made into the database
 	 */
 	public static Statement stmt;
+	
 	/**
 	 * Instance Var for the patient Name used in SQL Query
 	 */
 	public static String PATIENT_NAME;
+	
 	/**
 	 * Instance Var for Patient Last Name used in SQL Query
 	 */
 	public static String PATIENT_LAST_NAME;
+	
 	/**
 	 * Patient first name for args asked by scanner
 	 */
 	public static String first1;
+	
 	/**
 	 * Patient last name for args asked by scanner
 	 */
