@@ -1,4 +1,5 @@
 package hospital;
+
 /**
  * Abstract class for Person
  * 
@@ -12,43 +13,52 @@ public abstract class Person {
 	 * Instance Var to store the title. Title can only be
 	 * Mr/Ms/Mrs/Miss/Dr/Rev/Prof
 	 */
-	String title;
+	private String title;
+
 	/**
 	 * Instance var to store the first Name.
 	 */
-	String firstName;
+	private String firstName;
+
 	/**
 	 * Instance var to store the middle Name. Can be NULL.
 	 */
-	String middleName;
+	private String middleName;
+
 	/**
 	 * Instance var to store the last name.
 	 */
-	String lastName;
+	private String lastName;
+
 	/**
 	 * Instance var to store the date of birth.
 	 */
-	String dateOfBirth;
+	private String dateOfBirth;
+
 	/**
 	 * Instance var to store Address Line One(1) Expected Format - YYYY/MM/DD
 	 */
-	String addressLineOne;
+	private String addressLineOne;
+
 	/**
 	 * Instance var to store Address Line Two(2). Can be NULL
 	 */
-	String addressLineTwo;
+	private String addressLineTwo;
+
 	/**
 	 * Instance var to store Address Line Three(3). Can be NULL
 	 */
-	String addressLineThree;
+	private String addressLineThree;
+
 	/**
 	 * Instance var to store the city Name.
 	 */
-	String city;
+	private String city;
+
 	/**
 	 * Instance var to store the postcode. Expected Format. e.g - AA1 1AA
 	 */
-	String postcode;
+	private String postcode;
 
 	/**
 	 * Default Constructor
@@ -75,7 +85,7 @@ public abstract class Person {
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode) {
-		super();
+
 		this.title = title;
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -125,7 +135,7 @@ public abstract class Person {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-		}
+	}
 
 	/**
 	 * Get method for middleName
