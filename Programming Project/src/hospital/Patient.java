@@ -528,12 +528,12 @@ public class Patient extends Person {
 				+ ", knownConditions=" + knownConditions + ", bloodGroup="
 				+ bloodGroup + ", sex" + sex + ", nextOfKin" + nextOfKin
 				+ ", gpName" + gpName + ", gpCode" + gpCode
-				+ ", triageCategory" + triageCategory() + ", title=" + title
-				+ ", firstName=" + firstName + ", middleName=" + middleName
-				+ ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth
-				+ ", addressLineOne=" + addressLineOne + ", addressLineTwo="
-				+ addressLineTwo + ", addressLineThree=" + addressLineThree
-				+ ", city=" + city + ", postcode=" + postcode + "]";
+				+ ", triageCategory" + triageCategory() + ", title=" + getTitle()
+				+ ", firstName=" + getFirstName() + ", middleName=" + getMiddleName()
+				+ ", lastName=" + getLastName() + ", dateOfBirth=" + getDateOfBirth()
+				+ ", addressLineOne=" + getAddressLineOne() + ", addressLineTwo="
+				+ getAddressLineTwo() + ", addressLineThree=" + getAddressLineThree()
+				+ ", city=" + getCity() + ", postcode=" + getPostcode() + "]";
 	}
 
 	// New
