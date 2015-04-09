@@ -22,7 +22,7 @@ public class TheQueue {
 	 * If set to 40 it runs forty times faster than real time. To set to real
 	 * time set this variable to 1.
 	 */
-	public static final int TIME_FACTOR = 16;
+	public static final int TIME_FACTOR = 60;
 
 	/**
 	 * Maximum length of Waiting List as described in specifications
@@ -46,13 +46,13 @@ public class TheQueue {
 	 * Boolean to indicate if the On Call Team has been contacted by SMS.
 	 * Default value is false.
 	 */
-	static boolean onCallTeamContacted = false;
+	public static boolean onCallTeamContacted = false;
 
 	/**
 	 * Boolean to indicate if the On Call Team is on the site an treating
 	 * patients. Default value is false.
 	 */
-	static boolean onCallInSitu = false;
+	public static boolean onCallInSitu = false;
 
 	/**
 	 * Boolean to indicate that the treatment room ArrayList has been populated

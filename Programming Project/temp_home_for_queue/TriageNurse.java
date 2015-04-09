@@ -1,77 +1,84 @@
 package hospital;
 
+// Imports
 import java.time.Instant;
 import java.util.Random;
 
+/**
+ * Triage Nurse class - this represents the triage nurse and is where patients
+ * are assigned their triage category and is the entry point to the queue.
+ * 
+ * @author Kieron
+ *
+ */
 public class TriageNurse implements Runnable {
 
+	/**
+	 * Instantiate the Queue class
+	 */
 	static TheQueue hospQueue = new TheQueue();
+
+	/**
+	 * Instantiate the Random class
+	 */
 	static Random random = new Random();
-	
+
+	/**
+	 * Main run method of the class where patients are brought in from the
+	 * receptionist class, assigned a triage number and their waiting time
+	 * started
+	 */
 	@Override
 	public synchronized void run() {
 
-		// to add a patient number for demo
+		// Declare and initialise variable
 		int admissionNumber = 0;
 
 		do {
 
-			// increment patient number
+			// Increment patient number
 			admissionNumber++;
 
-			// set triage rating
+			// Set triage rating
 			Receptionist.patientsFromDB.get(0).setTriageNumber(
 					presetTriageNumber());
 
-			// set patient number - demo reasons
+			// Set patient's admission number
 			Receptionist.patientsFromDB.get(0).setAdmissionNumber(
 					admissionNumber);
 
-			// set time patient added to treatment room or waiting list - this
-			// needs to be inside the Queue itself as it will need to be reset
-			// depending on if patient is waiting or being treated - put here
-			// initially to show that it works
+			// Get new instant of time
 			Instant startWait = Instant.now();
-			Receptionist.patientsFromDB.get(0).setStartTimeWait(startWait.toEpochMilli());
 
-			// add patient to Queue
+			// Set time patient added to waiting list in milliseconds since the
+			// 1970 epoch
+			Receptionist.patientsFromDB.get(0).setStartTimeWait(
+					startWait.toEpochMilli());
+
+			// Add patient to Queue
 			hospQueue.addToQueue(Receptionist.patientsFromDB.get(0));
 
-			// print Queue
-			// hospQueue.printLists();
-
-			// remove first patient from the LinkedList of patients imported
-			// from the DB
+			// Remove first patient from the LinkedList of patients imported
+			// from the database
 			Receptionist.patientsFromDB.removeFirst();
 
-			// pause to represent gaps between patients - set at 2.5 minutes
+			// Pause to represent gaps between patients - set at 1 to 2 minutes
 			try {
-				Thread.sleep((random.nextInt(60000)+60000) / TheQueue.TIME_FACTOR);
+				Thread.sleep((random.nextInt(60000) + 60000)
+						/ TheQueue.TIME_FACTOR);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			// while there are patients in the LinkedList from DB
+			// While there are patients in the LinkedList from database
 		} while (Receptionist.patientsFromDB.size() != 0);
 
-		cleanUp();
 	}
 
-	public synchronized void cleanUp() {
-		for (int loop = 0; loop == 20; loop++) {
-			hospQueue.addToQueue(null);
-			try {
-				Thread.sleep(61000 / TheQueue.TIME_FACTOR);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-	// method to randomly assign triage number
+	/**
+	 * Method to randomly assign triage number
+	 * @return
+	 */
 	public int presetTriageNumber() {
 		int triageRating = 0;
 		int triageGenerator = random.nextInt(4);
