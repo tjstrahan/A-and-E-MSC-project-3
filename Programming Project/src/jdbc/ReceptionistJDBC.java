@@ -78,7 +78,7 @@ public class ReceptionistJDBC {
 	 */
 	public static String last1;
 
-	public static void main(String args[]) {
+	public static Connection con () {
 
 		String url = "jdbc:" + DB_PROTOCOL + WEB_ADDRESS + URL_USERNAME;
 		// Load Driver
@@ -97,31 +97,12 @@ public class ReceptionistJDBC {
 			/**
 			 * 
 			 */
-			admitPatient();
-
-			System.out.println("Look up Patient");
-			Scanner scanner = new Scanner(System.in);
-			
-			System.out.println("Enter Patient Name. First and Last");
-			first1 = scanner.next();
-			last1 = scanner.next();
-
-			scanner.close();
-			/**
-			 * Search for Patient Using Arguements 'First_Name' and 'Last_Name'
-			 */
-			lookUpPatient("'" + first1 + "'", "'" + last1 + "'");
-
-		} catch (SQLException ex) {
-			System.err.println("SQLException: " + ex.getMessage());
-		}
-		try {
-			con.close();
-			System.out.println("close");
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
+		
+		return con;
 	} // Main Method Close
 
 	/**
@@ -152,6 +133,8 @@ public class ReceptionistJDBC {
 	 */
 	public static void lookUpPatient(String PATIENT_NAME,
 			String PATIENT_LAST_NAME) throws SQLException {
+		
+		Connection con = con();
 		stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		String sql;
