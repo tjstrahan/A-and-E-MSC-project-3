@@ -69,8 +69,8 @@ public class Nurse extends Staff implements iOnCall {
 	 */
 	
 	public String isOnCallToString() {
-		return "Nurse " + title + " " + firstName
-				+ " " + middleName + " " + lastName
+		return "Nurse " + getTitle() + " " + getFirstName()
+				+ " " + getMiddleName() + " " + getLastName()
 				+ "is on call";
 	}
 	
