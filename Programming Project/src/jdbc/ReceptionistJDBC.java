@@ -16,6 +16,7 @@ import java.util.Scanner;
  * @author James Maguire
  */
 public class ReceptionistJDBC {
+	
 	/**
 	 * Username for access to Database
 	 */
