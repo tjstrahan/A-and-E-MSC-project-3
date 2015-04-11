@@ -120,7 +120,7 @@ public class ReceptionistJDBC {
 	public static void admitPatient() throws SQLException {
 		Statement stmt = con.createStatement();
 		try {
-			stmt.executeUpdate("INSERT INTO Patient VALUES('111121111','Miss','Lucinda','','Bow','1955-06-05','F','22','Adelaide St','','Belfast','BT2 8GD','442827537576','','','AB','Dr. Zeus','E1829','Long Bow')");
+			stmt.executeUpdate("INSERT INTO Patient VALUES('111121111','Miss','Lucinda','','Bow','1955-06-05','F','22','Adelaide St','','Belfast','BT2 8GD','442827537576','','','AB+','Dr. Zeus','E1829','Long Bow')");
 		} catch (SQLException sqle) {
 			System.out.println("Could Not Insert Values Given To Database"
 					+ sqle);
@@ -139,7 +139,7 @@ public class ReceptionistJDBC {
 		stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		String sql;
-		sql = "SELECT NHS_number, Title, First_Name, Middle_Name, Last_Name , DOB, Sex, First_line_of_Address, Second_line_of_Address, Third_line_of_Address, City, Postcode, Contact_Number, Allergies, Known_Condtions, Bloood_Group, Gp_Name, Gp_Code, Next_of_Kin FROM PATIENT WHERE First_Name = "
+		sql = "SELECT NHS_number, Title, First_Name, Middle_Name, Last_Name , DOB, Sex, First_line_of_Address, Second_line_of_Address, Third_line_of_Address, City, Postcode, Contact_Number, Allergies, Known_Conditions, Blood_Group, Gp_Name, Gp_Code, Next_of_Kin FROM PATIENT WHERE First_Name = "
 				+ PATIENT_NAME + "and Last_Name = " + PATIENT_LAST_NAME;
 		ResultSet rs = stmt.executeQuery(sql);
 
@@ -164,8 +164,8 @@ public class ReceptionistJDBC {
 		String Postcode = rs.getString("Postcode");
 		String Contact_Number = rs.getString("Contact_Number");
 		String Allergies = rs.getString("Allergies");
-		String Known_Condtions = rs.getString("Known_Condtions");
-		String Bloood_Group = rs.getString("Bloood_Group");
+		String Known_Condtions = rs.getString("Known_Conditions");
+		String Bloood_Group = rs.getString("Blood_Group");
 		String Gp_Name = rs.getString("Gp_Name");
 		String Next_of_Kin = rs.getString("Next_of_Kin");
 
