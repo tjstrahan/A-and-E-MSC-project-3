@@ -88,7 +88,7 @@ INSERT INTO Patient VALUES (335678232,'Mr ','Michael','Adolf','Bolton','1981-11-
 INSERT INTO Patient VALUES (349806234,'Mr ','Andrew','','Wu','1986-04-23','M','3','Leathemstown Road','','Antrim','BT41 6JN','447898345342','','Hepatitis B','B-','Dr Vincent Gupta','E3869','Sarah Wu');
 INSERT INTO Patient VALUES (363091233,'Mr ','Keyser','','Soze','1965-12-13','M','2','Fountain Street','','Crumlin','BT31 6QZ','442436587249','Aspirin','','O-','Dr Peter Griffin','E1234','David Soze');
 INSERT INTO Patient VALUES (319204512,'Mr ','Diedrich','','Henry','1943-10-31','M','Bryn-Y-Felin','Dyserth','','Rhyl','LL18 6AE','442866930995','','','O-','Dr Lisa Lopez','E3960','John Henry');
-INSERT INTO Patient VALUES (395811223,'Mr ','Gustav','Hooper','Yorke','1999-10-04','M','31','100 Sunny Grove','','Derby','DE21 6WJ','443498234234','','','A- ','Dr Dr Re','E3768','Emma Yorke');
+INSERT INTO Patient VALUES (395811223,'Mr ','Gustav','Hooper','Yorke','1999-10-04','M','31','100 Sunny Grove','','Derby','DE21 6WJ','443498234234','','','A-','Dr Dr Re','E3768','Emma Yorke');
 INSERT INTO Patient VALUES (300000234,'Mrs','Aisha','','Stevens','1990-08-16','F','43','29 Eadie Street','Nuneaton','Warwick','CV10 8JB','447686430276','','','B-','Dr Lesley Monday','E3789','Joel Stevens');
 INSERT INTO Patient VALUES (323059291,'Mrs','Sharon','Famitah','Jamali','1943-03-06','F','Little Cottage','30','Garden Grove','Londonderry','BT56 7LH','447648920965','','Asthma','AB-','Dr Cliff Bacon','E3768','Ibrahim Jamali');
 INSERT INTO Patient VALUES (316507923,'Mrs','Sandra','','Al-Jawari','1965-12-08','F','19','Arsenal Road','Holloway','London','NE0 AK9','444905685322','','','B-','Dr Sidra Abdul','E3321','David Al-Jawari');
