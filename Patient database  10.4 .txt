@@ -24,12 +24,12 @@ primary key (NHS_number));
 
 
 INSERT INTO Patient VALUES (602738475,'Mr','Terry','James','McCartan','1992-05-03','M','21','rumniscamph Road','LawrenceTown','Newry','BT63 6DU','447889693835','Nuts','','AB+','Dr R Lennan','E9292','Nuala Donnelly');
-INSERT INTO Patient VALUES (638485969,'Mr','Colm','Eugene','Doran','1992-02-08','M','121','Malone Avenue','','Belfast','BT93 1GQ','447852532565','Pollen','HIV+','A- ','Dr F Keown','E3838','Terry McCartan');
+INSERT INTO Patient VALUES (638485969,'Mr','Colm','Eugene','Doran','1992-02-08','M','121','Malone Avenue','','Belfast','BT93 1GQ','447852532565','Pollen','HIV+','A-','Dr F Keown','E3838','Terry McCartan');
 INSERT INTO Patient VALUES (629483758,'Mr','Liam','William','Maguire','1972-04-21','M','212','Malone Road','','Belfast','BT9 5BY','447855436585','','','O+','Dr A Larry','E3653','Claire Maguire');
 INSERT INTO Patient VALUES (692935847,'Mr','Sandy','Nejob','Row','1969-12-01','M','50','Balmoral Avenue','','Belfast','BT9 6RB','447954354295','','','B+','Dr B Laferty','E5543','Patricia Row');
 INSERT INTO Patient VALUES (630030303,'Mr','Brendan','Patrick','Keenan','1952-03-22','M','31','Notting Hill','','Belfast','BT9 6RJ','447845325478','Nuts','','AB+','Dr C Cullen','E5443','Carmel Keenan');
-INSERT INTO Patient VALUES (659733343,'Mrs','Sally','Mary','Wood','1995-06-26','F','103','Osborne Park','','Belfast','BT9 5QU','447954554375','','','A- ','Dr D Maguire','E4354','James Woods');
-INSERT INTO Patient VALUES (638231743,'Mrs','Fanny','Claire','Schmelar','1960-06-06','F','14',' Malton Vale','','Belfast','BT9 6SS','447843254356','','','A- ','Dr E Corey','E3254','Dick Schmelar');
+INSERT INTO Patient VALUES (659733343,'Mrs','Sally','Mary','Wood','1995-06-26','F','103','Osborne Park','','Belfast','BT9 5QU','447954554375','','','A-','Dr D Maguire','E4354','James Woods');
+INSERT INTO Patient VALUES (638231743,'Mrs','Fanny','Claire','Schmelar','1960-06-06','F','14',' Malton Vale','','Belfast','BT9 6SS','447843254356','','','A-','Dr E Corey','E3254','Dick Schmelar');
 INSERT INTO Patient VALUES (692746892,'Mr','Adolf','George','Hatler','1945-08-15','M','19','Malfin Court','','Belfast','BT9 5NF','447954354266','','','A+','Dr G Hartman','E5432','Henrick Himmla');
 INSERT INTO Patient VALUES (643204755,'Mr','David','Matteo','Craig','1987-09-03','M','6',' Bromfield','','Belfast','BT9 7JF','447754354365','Fish','Epilepse','A+','Dr H Kelly','E5344','David CopperField');
 INSERT INTO Patient VALUES (634318434,'Mr','Darren','Gay','Loughran','1967-10-18','M','355','Lisburn Road','','Belfast','BT9 7FX','447854325465','','','B-','Dr A Larry','E5445','Billy Boyd');
@@ -83,7 +83,7 @@ INSERT INTO Patient VALUES (700000020,'Mr','Mario','','Bacotelli','1979-07-29','
 INSERT INTO Patient VALUES (311294876,'Mr ','Muhammad','Jay','Peterson','2000-08-03','M','20','Westwood Way','','Luton','LU2 3SA','442343432412','N/A','','O-','Dr Gemma Malone','E3000','Priya Muhmmad');
 INSERT INTO Patient VALUES (312387658,'Mr ','Andrew','','Davis','1993-03-05','M','Moat House','17 Garagedoor','','Glasgow','GW12 8AS','447776964320','','Epilepsy','AB+','Dr Ali Imran','E3254','Siobhan David');
 INSERT INTO Patient VALUES (329850876,'Mr ','Vijay','Amari','Singh','1959-10-30','M','9','Hillcrest','Greater End','Wolverhampton','WV1 1ED','447795049231','','','B-','Dr Porter Smith','E3198','Ajay Singh');
-INSERT INTO Patient VALUES (308761006,'Dr','Nemanja','','Roberts','1951-02-26','M','43','43 Grove Street','The Hood','Larne','BT49 3LL','447729123452','Penicillin','Scurvy','A- ','Dr Lynn Xu','E3756','Ivan Roberts');
+INSERT INTO Patient VALUES (308761006,'Dr','Nemanja','','Roberts','1951-02-26','M','43','43 Grove Street','The Hood','Larne','BT49 3LL','447729123452','Penicillin','Scurvy','A-','Dr Lynn Xu','E3756','Ivan Roberts');
 INSERT INTO Patient VALUES (335678232,'Mr ','Michael','Adolf','Bolton','1981-11-03','M','1','Unnamed Road','Insch','Aberdeenshire','AB52 7JH','447709284350','','','B-','Dr David Andrews','E3920','Michaeala Bolton');
 INSERT INTO Patient VALUES (349806234,'Mr ','Andrew','','Wu','1986-04-23','M','3','Leathemstown Road','','Antrim','BT41 6JN','447898345342','','Hepatitis B','B-','Dr Vincent Gupta','E3869','Sarah Wu');
 INSERT INTO Patient VALUES (363091233,'Mr ','Keyser','','Soze','1965-12-13','M','2','Fountain Street','','Crumlin','BT31 6QZ','442436587249','Aspirin','','O-','Dr Peter Griffin','E1234','David Soze');
