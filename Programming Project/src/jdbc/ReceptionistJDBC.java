@@ -3,6 +3,9 @@
  */
 package jdbc;
 
+import hospital.Patient;
+import hospital.Receptionist;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -164,8 +167,8 @@ public class ReceptionistJDBC {
 		String Postcode = rs.getString("Postcode");
 		String Contact_Number = rs.getString("Contact_Number");
 		String Allergies = rs.getString("Allergies");
-		String Known_Condtions = rs.getString("Known_Conditions");
-		String Bloood_Group = rs.getString("Blood_Group");
+		String Known_Conditions = rs.getString("Known_Conditions");
+		String Blood_Group = rs.getString("Blood_Group");
 		String Gp_Name = rs.getString("Gp_Name");
 		String Next_of_Kin = rs.getString("Next_of_Kin");
 
@@ -184,11 +187,11 @@ public class ReceptionistJDBC {
 		System.out.println("GP : " + Gp_Name + "(" + Gp_Code + ")");
 		System.out.println("Birth " + DOB);
 		System.out.println("Allergies/Conditions: " + Allergies + " "
-				+ Known_Condtions);
-		System.out.println("Blood Group: " + Bloood_Group);
+				+ Known_Conditions);
+		System.out.println("Blood Group: " + Blood_Group);
 		System.out.println("Next of Kin: " + Next_of_Kin);
 		System.out
 				.println("______________________________________________________________________");
 	} // lookUpPatient Close
-
+	
 } // Class Close
