@@ -30,7 +30,7 @@ public class PersonTest {
 		firstName = "Tess";
 		middleName = "Tee";
 		lastName = "McCode";
-		dateOfBirth = "1990/01/01”;
+		dateOfBirth = "1990/01/01";
 		addressLineOne = "30";
 		addressLineTwo = "Main Street";
 		addressLineThree = "Finaghy";
