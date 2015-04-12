@@ -80,22 +80,24 @@ public abstract class Person {
 	 * @param addressLineThree
 	 * @param city
 	 * @param postcode
+	 * @throws IllegalArgumentException
+	 *             , Exception
 	 */
 	public Person(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
-			String postcode) {
+			String postcode) throws IllegalArgumentException, Exception {
 
-		this.title = title;
-		this.firstName = firstName;
+		setTitle(title);
+		setFirstName(firstName);
 		this.middleName = middleName;
-		this.lastName = lastName;
-		this.dateOfBirth = dateOfBirth;
-		this.addressLineOne = addressLineOne;
+		setLastName(lastName);
+		setDateOfBirth(dateOfBirth);
+		setAddressLineOne(addressLineOne);
 		this.addressLineTwo = addressLineTwo;
 		this.addressLineThree = addressLineThree;
-		this.city = city;
-		this.postcode = postcode;
+		setCity(city);
+		setPostcode(postcode);
 	}
 
 	/**
@@ -112,9 +114,13 @@ public abstract class Person {
 	 * 
 	 * @param title
 	 */
-	public void setTitle(String title) {
+	public void setTitle(String title) throws Exception {
+		if (title == "Mr" || title == "Mrs" || title == "Miss" || title == "Ms"
+				|| title == "Dr" || title == "Rev" || title == "Prof") {
+			this.title = title;
+		} else
+			throw new Exception("Title is invalid.");
 
-		this.title = title;
 	}
 
 	/**
@@ -133,8 +139,12 @@ public abstract class Person {
 	 * @param firstName
 	 */
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstName(String firstName) throws Exception {
+		if (!firstName.isEmpty()) {
+			this.firstName = firstName;
+		} else
+			throw new Exception("First name cannot be left blank.");
+
 	}
 
 	/**
@@ -170,8 +180,12 @@ public abstract class Person {
 	 * 
 	 * @param lastName
 	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastName(String lastName) throws Exception {
+		if (!lastName.isEmpty()) {
+			this.lastName = lastName;
+		} else
+			throw new Exception("Last name cannot be left blank.");
+
 	}
 
 	/**
@@ -188,8 +202,12 @@ public abstract class Person {
 	 * 
 	 * @param dateOfBirth
 	 */
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+	public void setDateOfBirth(String dateOfBirth) throws Exception {
+		if (!dateOfBirth.isEmpty()) {
+			this.dateOfBirth = dateOfBirth;
+		} else
+			throw new Exception("D.O.B. cannot be left blank.");
+
 	}
 
 	/**
@@ -206,8 +224,12 @@ public abstract class Person {
 	 * 
 	 * @param addressLineOne
 	 */
-	public void setAddressLineOne(String addressLineOne) {
-		this.addressLineOne = addressLineOne;
+	public void setAddressLineOne(String addressLineOne) throws Exception {
+		if (!addressLineOne.isEmpty()) {
+			this.addressLineOne = addressLineOne;
+		} else
+			throw new Exception("An address must be entered.");
+
 	}
 
 	/**
@@ -260,8 +282,11 @@ public abstract class Person {
 	 * 
 	 * @param city
 	 */
-	public void setCity(String city) {
-		this.city = city;
+	public void setCity(String city) throws Exception {
+		if (!city.isEmpty()) {
+			this.city = city;
+		} else
+			throw new Exception("A city must be entered.");
 	}
 
 	/**
@@ -278,8 +303,11 @@ public abstract class Person {
 	 * 
 	 * @param postcode
 	 */
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
+	public void setPostcode(String postcode) throws Exception {
+		if (!postcode.isEmpty()) {
+			this.postcode = postcode;
+		} else
+			throw new Exception("A postcode must be entered.");
 	}
 
 } // Class close
