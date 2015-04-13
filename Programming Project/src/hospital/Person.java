@@ -115,9 +115,9 @@ public abstract class Person {
 	 * @param title
 	 */
 	public void setTitle(String title) throws Exception {
-		if (title == "Mr" || title == "Mrs" || title == "Miss" || title == "Ms"
-				|| title == "Dr" || title == "Rev" || title == "Prof"
-				|| title == "Sir") {
+		if (title.equals("Mr") || title.equals("Mrs") || title.equals("Miss") || title.equals("Ms")
+				|| title.equals("Dr") || title.equals("Rev") || title.equals("Prof")
+				|| title.equals("Sir")) {
 			this.title = title;
 		} else
 			throw new Exception("Title is invalid.");
