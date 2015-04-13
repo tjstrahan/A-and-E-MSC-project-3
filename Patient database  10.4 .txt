@@ -51,7 +51,7 @@ INSERT INTO Patient VALUES (400000007,'Mr','Barry','','Allen','2000-04-02','M','
 INSERT INTO Patient VALUES (400000008,'Mrs','Jessica','','Ennis','2001-06-02','F','69','Bridge Road','','Coleraine','BT51 5RR','447595049381','','','O-','Dr. Issabel Onabike','E2839','George Ennis');
 INSERT INTO Patient VALUES (400000009,'Miss','Teresa','','Green','2002-04-02','F','1','Moneybrannon Road','Aghadowey','Coleraine','BT51 4DH','447717385930','','Vertigo','A-','Dr. Mike Tyson','E3748','Field Green');
 INSERT INTO Patient VALUES (400000010,'Miss','Penelopy','','Pitstop','2003-04-02','F','79','Craigmore Rd','Garvagh','Coleraine','BT51 5HF','442868593027','','','O+','Dr. Austin Powers','E2738','Dianna Pitstop');
-INSERT INTO Patient VALUES (400000011,'Mr.','Steve','','Rodgers','2004-04-02','M','52','Terrydo Road','','Limavady','BT49 0PF','442874920194','','','B-','Dr.  Max Power','E9584','Buck Rodgers');
+INSERT INTO Patient VALUES (400000011,'Mr','Steve','','Rodgers','2004-04-02','M','52','Terrydo Road','','Limavady','BT49 0PF','442874920194','','','B-','Dr.  Max Power','E9584','Buck Rodgers');
 INSERT INTO Patient VALUES (400000012,'Mr','Tony','','Stark','2005-04-02','M','38','Berryhill Road','','Artigarvan','BT82 0HN','442873920134','','','B+','Dr. Slade Wilson','E9384','Pepper Stark');
 INSERT INTO Patient VALUES (400000013,'Mrs','Natasha','','Romanov','2006-06-02','F','27','Glenside','','Strabane','BT82 8PU','447584020123','Penicilin','','A+','Dr. Nicholas Cage','E1093','Nicholaev Romanov');
 INSERT INTO Patient VALUES (400000014,'Miss','Mary','','Jane','2007-09-12','F','51','Broklis Road','','Strabane','BT82 9LZ','447884729405','','High cholesterol','O-','Dr. Scarlett Johanson','E0594','Emilia Jane');
