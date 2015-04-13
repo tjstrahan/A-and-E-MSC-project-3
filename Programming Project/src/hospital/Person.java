@@ -116,7 +116,8 @@ public abstract class Person {
 	 */
 	public void setTitle(String title) throws Exception {
 		if (title == "Mr" || title == "Mrs" || title == "Miss" || title == "Ms"
-				|| title == "Dr" || title == "Rev" || title == "Prof") {
+				|| title == "Dr" || title == "Rev" || title == "Prof"
+				|| title == "Sir") {
 			this.title = title;
 		} else
 			throw new Exception("Title is invalid.");
