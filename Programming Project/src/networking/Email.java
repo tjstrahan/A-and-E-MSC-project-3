@@ -3,7 +3,7 @@
  * NOTE: You must have switched on "Allow lesser applications to access account" on your Gmail.
  * NOTE: You must have the javamail jar file added as an external extension. 
  */
-package hospital;
+package networking;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
