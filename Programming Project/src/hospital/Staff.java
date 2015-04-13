@@ -74,12 +74,14 @@ public class Staff extends Person {
 	 * @param mobileNumber
 	 * @param LoginID
 	 * @param password
+	 * @throws Exception 
+	 * @throws IllegalArgumentException 
 	 */
 	public Staff(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode, int staffID, long mobileNumber, int loginID,
-			String password) {
+			String password) throws IllegalArgumentException, Exception {
 
 		// call to the super class constructor
 		super(title, firstName, middleName, lastName, dateOfBirth,
@@ -257,12 +259,12 @@ public class Staff extends Person {
 	public String toString() {
 		return "Staff [staffID=" + staffID + ", mobileNumber=" + mobileNumber
 				+ ", loginID=" + loginID + ", password=" + password
-				+ ", title=" + title + ", firstName=" + firstName
-				+ ", middleName=" + middleName + ", lastName=" + lastName
-				+ ", dateOfBirth=" + dateOfBirth + ", addressLineOne="
-				+ addressLineOne + ", addressLineTwo=" + addressLineTwo
-				+ ", addressLineThree=" + addressLineThree + ", city=" + city
-				+ ", postcode=" + postcode + "]";
+				+ ", title=" + getTitle() + ", firstName=" + getFirstName()
+				+ ", middleName=" + getMiddleName() + ", lastName=" + getLastName()
+				+ ", dateOfBirth=" + getDateOfBirth() + ", addressLineOne="
+				+ getAddressLineOne() + ", addressLineTwo=" + getAddressLineTwo()
+				+ ", addressLineThree=" + getAddressLineThree() + ", city=" + getCity()
+				+ ", postcode=" + getPostcode() + "]";
 	}
 
 }
