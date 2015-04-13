@@ -1,6 +1,6 @@
 Create Table Staff(
 
-StaffID int(6) not null,
+StaffID int(6) PRIMARY KEY,
 
 Role varchar(20) not null,
 
@@ -29,6 +29,7 @@ Postcode varchar(8) not null,
 Contact_number bigint(12)not null,
 
 Mobile_number bigint(12)not null);
+
 
 INSERT INTO Staff VALUES("700300", "Doctor", "Dr", "John", null, "Allen", "19991-12-28", "M", "12 
 
