@@ -74,14 +74,13 @@ public class Staff extends Person {
 	 * @param mobileNumber
 	 * @param LoginID
 	 * @param password
-	 * @throws Exception 
-	 * @throws IllegalArgumentException 
+	 * @throws Exception  
 	 */
 	public Staff(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode, int staffID, long mobileNumber, int loginID,
-			String password) throws IllegalArgumentException, Exception {
+			String password) throws Exception  {
 
 		// call to the super class constructor
 		super(title, firstName, middleName, lastName, dateOfBirth,

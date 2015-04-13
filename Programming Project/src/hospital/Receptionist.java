@@ -9,9 +9,7 @@ import jdbc.ReceptionistJDBC;
 
 public class Receptionist extends Staff {
 
-	/**
-	 * LinkedList to hold patients that are being sent to triage
-	 */
+	
 	public static LinkedList<Patient> patientsFromDB = new LinkedList<Patient>();
 	
 	
@@ -40,14 +38,12 @@ public class Receptionist extends Staff {
 	 * @param loginID
 	 * @param password
 	 * @throws Exception 
-	 * @throws IllegalArgumentException 
 	 */
 	public Receptionist(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode, int staffID, long mobileNumber, int loginID,
-			String password) throws IllegalArgumentException, Exception  {
-		
+			String password) throws Exception {
 		super(title, firstName, middleName, lastName, dateOfBirth,
 				addressLineOne, addressLineTwo, addressLineThree, city,
 				postcode, staffID, mobileNumber, loginID, password);
