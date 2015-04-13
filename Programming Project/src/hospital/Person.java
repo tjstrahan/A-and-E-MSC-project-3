@@ -80,13 +80,12 @@ public abstract class Person {
 	 * @param addressLineThree
 	 * @param city
 	 * @param postcode
-	 * @throws IllegalArgumentException
-	 *             , Exception
+	 * @throws Exception 
 	 */
 	public Person(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
-			String postcode) throws IllegalArgumentException, Exception {
+			String postcode) throws Exception {
 
 		setTitle(title);
 		setFirstName(firstName);
