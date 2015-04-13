@@ -35,7 +35,7 @@ public class Patient extends Person {
 	/**
 	 * Instance var to store the sex Must be either M or F
 	 */
-	private char sex;
+	private String sex;
 
 	/**
 	 * Instance var to store the next of kin
@@ -52,35 +52,29 @@ public class Patient extends Person {
 	 */
 	private String gpCode;
 
-	// Amended this to triageNumber as I have introduced a method triageCategory
-	// to represent the triageNumber as a String for display purposes
 	/**
 	 * Instance var to store the triage category as a number
 	 */
 	private int triageNumber;
 
-	// New instance var
 	/**
 	 * Auto-incrementing number starting at zero used solely during sorting to
 	 * ensure patients of same triage category are treated in admission order
 	 */
 	private int admissionNumber;
 
-	// Amended var type and name
 	/**
 	 * Instance var to store the start of a patient's time on the Waiting List.
 	 * The time is taken as the time in milliseconds since the 1970 epoch
 	 */
 	private long startTimeWait;
 
-	// New
 	/**
 	 * Instance var to store the end of a patient's time on the Waiting List The
 	 * time is taken as the time in milliseconds since the 1970 epoch
 	 */
 	private long endTimeWait;
 
-	// New
 	/**
 	 * Instance var to store the start of a patient's time being treated, either
 	 * in a Treatment Room or by the On Call Team. The time is taken as the time
@@ -88,7 +82,6 @@ public class Patient extends Person {
 	 */
 	private long startTimeTreat;
 
-	// New
 	/**
 	 * Instance var to store the end of a patient's time being treated, either
 	 * in a Treatment Room or by the On Call Team. The time is taken as the time
@@ -97,7 +90,6 @@ public class Patient extends Person {
 	 */
 	private long endTimeTreat;
 
-	// New
 	/**
 	 * Instance var to hold the time which a patient is on the Waiting List and
 	 * waiting for their first period of treatment to commence. It is calculated
@@ -107,7 +99,6 @@ public class Patient extends Person {
 	 */
 	private int timeOnWaitingList;
 
-	// New
 	/**
 	 * Instance var to store the Treatment Room number that a particular patient
 	 * has been put into. To avoid confusion between ArrayList elements (which
@@ -116,7 +107,6 @@ public class Patient extends Person {
 	 */
 	private int treatmentRoom;
 
-	// New
 	/**
 	 * Instance var boolean to show that a patient was treate by the on call
 	 * team, as this would not necessarily be obvious from treatment time alone
@@ -124,8 +114,7 @@ public class Patient extends Person {
 	 * the treatment room extended
 	 */
 	private boolean treatedByOnCallTeam;
-
-	// New
+	
 	/**
 	 * Instance var boolean which is triggered to true when a patient has been
 	 * waiting for treatment to commence for more than 30 minutes. It gets reset
@@ -133,7 +122,6 @@ public class Patient extends Person {
 	 */
 	private boolean waitingMoreThan30;
 
-	// Amended var name
 	/**
 	 * Instance var to store the boolean verifying whether the patient is to
 	 * receive priority in the Waiting List - this can be because they have been
@@ -188,7 +176,7 @@ public class Patient extends Person {
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode, int nhsNumber, String allergies,
-			String knownConditions, String bloodGroup, char sex,
+			String knownConditions, String bloodGroup, String sex,
 			String nextOfKin, String gpName, String gpCode)
 			throws IllegalArgumentException, Exception {
 
@@ -314,6 +302,7 @@ public class Patient extends Person {
 	 */
 	public void setBloodGroup(String bloodGroup)
 			throws IllegalArgumentException {
+
 		// Switch statement to ensure the blood group selected is an appropriate
 		// one. Default will throw an exception if the blood group is not one of
 		// those listed.
@@ -354,7 +343,7 @@ public class Patient extends Person {
 	 * 
 	 * @return sex
 	 */
-	public char getSex() {
+	public String getSex() {
 		return sex;
 	}
 
@@ -363,10 +352,10 @@ public class Patient extends Person {
 	 * 
 	 * @param sex
 	 */
-	public void setSex(char sex) throws IllegalArgumentException {
+	public void setSex(String sex) throws IllegalArgumentException {
 		// If statement to check if the sex entered is valid - either M or F. If
 		// not it will throw an exception.
-		if (sex == 'F' || sex == 'M') {
+		if (sex.equalsIgnoreCase("F") || sex.equalsIgnoreCase("M")) {
 			this.sex = sex;
 		} else {
 			throw new IllegalArgumentException(
@@ -451,14 +440,6 @@ public class Patient extends Person {
 		return triageNumber;
 	}
 
-	// I had to amend this - yes the triageNumber starts out as zero (initial
-	// value is set above) but the set method will be called by the triagenurse,
-	// therefore must be able to set a value of 1, 2, 3 or 4. Will probably need
-	// new test cases. I could argue that you need the ability to set it to zero
-	// as well, for instance if a patient is sent elsewhere or they are
-	// discharged and re-admitted their triageNumber would need to be reset to
-	// zero before they entered triage again in case there was a mix up, so
-	// perhaps it should be greater than or equal to zero and less than 5.
 	/**
 	 * Set method for triage number
 	 * 
@@ -490,53 +471,19 @@ public class Patient extends Person {
 		this.priorityPatient = priorityPatient;
 	}
 
-	/*
-	 * The toString will need to be modified to display only those details which
-	 * we will display in the queue and that will be displayed publicly to those
-	 * patients actually in the queue. The main use of the toString method will
-	 * be in the iteration of the various lists which is carried out every
-	 * minute so it needs to be quick and easy.
-	 * 
-	 * I suggest firstName, lastName, NHS number, triageCategory, possibly DOB,
-	 * 
-	 * The toString I have been using for developmental and testing purposes is
-	 * 
-	 * 
-	 * @Override public String toString() { 
-	 * return "[" + this.firstName + ", T"
-	 * + this.triageNumber + ", " +triageCategory()+ ", " + this.priorityPatient
-	 * + ", No " + this.admissionNumber + ", Wait Start:" + (this.startTimeWait)
-	 * + ", Wait End:" + (this.endTimeWait) + ", Treat Start:" +
-	 * (this.startTimeTreat) + ", Treat End:" + (this.endTimeTreat) + ", Wait:"
-	 * + (getTimeOnWaitingList()) +"mins, Wait: "+this.waitingMoreThan30+" ]";
-	 * }
-	 * 
-	 * Almost everything else held in patient is private/not of relevance to the
-	 * patient.
-	 * 
-	 * Nurses and doctors should be able to bring up more information - they
-	 * should be able to search the queue for patient name, nhs number of triage
-	 * category
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * ToString method to show information that will be displayed to people,
+	 * including the public, who can view the Queue. It is basic none sensitive
+	 * information. Users such as the Receptionist, Nurses and Doctors will be
+	 * able to see more and will use a different method.
 	 */
 	@Override
 	public String toString() {
-		return "Patient [nhsNumber=" + nhsNumber + ", allergies=" + allergies
-				+ ", knownConditions=" + knownConditions + ", bloodGroup="
-				+ bloodGroup + ", sex" + sex + ", nextOfKin" + nextOfKin
-				+ ", gpName" + gpName + ", gpCode" + gpCode
-				+ ", triageCategory" + triageCategory() + ", title=" + getTitle()
-				+ ", firstName=" + getFirstName() + ", middleName=" + getMiddleName()
-				+ ", lastName=" + getLastName() + ", dateOfBirth=" + getDateOfBirth()
-				+ ", addressLineOne=" + getAddressLineOne() + ", addressLineTwo="
-				+ getAddressLineTwo() + ", addressLineThree=" + getAddressLineThree()
-				+ ", city=" + getCity() + ", postcode=" + getPostcode() + "]";
+		return "[" + getTitle() + " " + getFirstName() + " " + getLastName()
+				+ ", Date of Birth: " + getDateOfBirth() + ", Triaged as: "
+				+ triageCategory() + ", NHS number: " + this.nhsNumber + "]";
 	}
 
-	// New
 	/**
 	 * Get method for admission number
 	 * 
@@ -546,9 +493,6 @@ public class Patient extends Person {
 		return admissionNumber;
 	}
 
-	// New - this is automatically set by TheQueue class and can be any positive
-	// or negative integer - there is no user input to this number whatsoever
-	// therefore no validation is required
 	/**
 	 * Set method for admission number
 	 * 
@@ -558,7 +502,6 @@ public class Patient extends Person {
 		this.admissionNumber = admissionNumber;
 	}
 
-	// New
 	/**
 	 * Get method for the start time for a patient on the waiting list
 	 * 
@@ -568,9 +511,6 @@ public class Patient extends Person {
 		return startTimeWait;
 	}
 
-	// New - see no need for validation here, not sure what you would validate -
-	// the number is a long in the order of 1428357527133 - and as stated above
-	// is the time in milliseconds since the 1970 epoch
 	/**
 	 * Set method for the start time for a patient on the waiting list
 	 * 
@@ -580,7 +520,6 @@ public class Patient extends Person {
 		this.startTimeWait = startTimeWait;
 	}
 
-	// New
 	/**
 	 * Get method for the end time for a patient on the waiting list
 	 * 
@@ -590,8 +529,6 @@ public class Patient extends Person {
 		return endTimeWait;
 	}
 
-	// New - see no need for validation here, not sure what you would validate -
-	// see above
 	/**
 	 * Set method for the end time for a patient on the waiting list
 	 * 
@@ -601,7 +538,6 @@ public class Patient extends Person {
 		this.endTimeWait = endTimeWait;
 	}
 
-	// New
 	/**
 	 * Method to get the treatment room number that a patient is currently in
 	 * 
@@ -611,8 +547,6 @@ public class Patient extends Person {
 		return treatmentRoom;
 	}
 
-	// New - TheQueue can only set valid treatment room numbers or -1 as a
-	// default
 	/**
 	 * Method to set the treatment room a patient is currently being treated in.
 	 * 
@@ -622,7 +556,6 @@ public class Patient extends Person {
 		this.treatmentRoom = treatmentRoom;
 	}
 
-	// New
 	/**
 	 * Method to get the start time for a patient being treated
 	 * 
@@ -632,8 +565,6 @@ public class Patient extends Person {
 		return startTimeTreat;
 	}
 
-	// New - see no need for validation here, not sure what you would validate -
-	// see above
 	/**
 	 * Method to set the start time for a patient being treated
 	 * 
@@ -643,7 +574,6 @@ public class Patient extends Person {
 		this.startTimeTreat = startTimeTreat;
 	}
 
-	// New
 	/**
 	 * Method to get the end time for a patient being treated - can also be
 	 * considered as their discharge time
@@ -654,8 +584,6 @@ public class Patient extends Person {
 		return endTimeTreat;
 	}
 
-	// New - see no need for validation here, not sure what you would validate -
-	// see above
 	/**
 	 * Method to set the end time for a patient being treated - can also be
 	 * considered as their discharge time
@@ -666,7 +594,6 @@ public class Patient extends Person {
 		this.endTimeTreat = endTimeTreat;
 	}
 
-	// New
 	/**
 	 * Method to get the boolean value which states if a patient is/was under
 	 * the treatment of the On Call Team
@@ -677,7 +604,6 @@ public class Patient extends Person {
 		return treatedByOnCallTeam;
 	}
 
-	// New
 	/**
 	 * Method to set the boolean value which states if a patient is/was under
 	 * the treatment of the On Call Team
@@ -688,7 +614,6 @@ public class Patient extends Person {
 		this.treatedByOnCallTeam = treatedByOnCallTeam;
 	}
 
-	// New
 	/**
 	 * Method to get the boolean value which states if a patient actively
 	 * waiting for treatment has been waiting for 30 minutes or more
@@ -699,7 +624,6 @@ public class Patient extends Person {
 		return waitingMoreThan30;
 	}
 
-	// New
 	/**
 	 * Method to set the boolean value which states if a patient actively
 	 * waiting for treatment has been waiting for 30 minutes or more
@@ -710,7 +634,6 @@ public class Patient extends Person {
 		this.waitingMoreThan30 = waitingMoreThan30;
 	}
 
-	// New
 	/**
 	 * Method to get the waiting time of a patient.
 	 * 
@@ -720,13 +643,6 @@ public class Patient extends Person {
 		return timeOnWaitingList;
 	}
 
-	// New - to test this class you would need to firstly change the bit which
-	// says TheQueue.TIME_FACTOR to an integer, I have it set to 16 normally so
-	// the queue runs 16 times faster than realtime, and also you would need to
-	// pass in the currentTime. This can be obtained by doing
-	//
-	// Instant now = Instant.now();
-	// long currentTime = now.toEpochmilli();
 	/**
 	 * Method to set the waiting time of a patient. It is calculated as the
 	 * difference between the patient's starting time on the waiting list and a
@@ -754,7 +670,6 @@ public class Patient extends Person {
 		}
 	}
 
-	// New
 	/**
 	 * Method to display the names of the triage categories
 	 * 
