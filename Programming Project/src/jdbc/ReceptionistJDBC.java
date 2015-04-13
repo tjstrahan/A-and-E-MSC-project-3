@@ -3,15 +3,14 @@
  */
 package jdbc;
 
-import hospital.Patient;
-import hospital.Receptionist;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Scanner;
+
+import hospital.Patient;
+import hospital.Receptionist;
 
 /**
  * Class that uses JDBC code to connect to the database table 'Patient'
@@ -19,7 +18,7 @@ import java.util.Scanner;
  * @author James Maguire
  */
 public class ReceptionistJDBC {
-	
+
 	/**
 	 * Username for access to Database
 	 */
@@ -29,60 +28,62 @@ public class ReceptionistJDBC {
 	 * Use if Username is part of the Databases URL, otherwise leave blank
 	 */
 	private static final String URL_USERNAME = "40038896";
-	
+
 	/**
 	 * Password for access to Database
 	 */
 	private static final String DB_PASSWORD = "SUA8746";
-	
+
 	/**
 	 * Main body of URL of Database, eg //web2.eeecs.qub.ac.uk/ or
 	 * thin:@db.yale.edu:univdb
 	 */
 	public static final String WEB_ADDRESS = "//web2.eeecs.qub.ac.uk/";
-	
+
 	/**
 	 * Type of database, eg mysql: or oracle: etc
 	 */
 	public static final String DB_PROTOCOL = "mysql:";
-	
+
 	/**
 	 * name of Database driver to be called, for mysql com.mysql.jdbc.Driver or
 	 * for oracle oracle.jdbc.driver.OracleDriver
 	 */
 	public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-	
+
 	/**
 	 * Instance Var for Connection to database
 	 */
 	public static Connection con = null;
-	
+
 	/**
-	 *  Instance Var for statements made into the database
+	 * Instance Var for statements made into the database
 	 */
 	public static Statement stmt;
-	
+
 	/**
 	 * Instance Var for the patient Name used in SQL Query
 	 */
 	public static String PATIENT_NAME;
-	
+
 	/**
 	 * Instance Var for Patient Last Name used in SQL Query
 	 */
 	public static String PATIENT_LAST_NAME;
-	
+
 	/**
 	 * Patient first name for args asked by scanner
 	 */
 	public static String first1;
-	
+
 	/**
 	 * Patient last name for args asked by scanner
 	 */
 	public static String last1;
+	
+	static Patient patient;
 
-	public static Connection con () {
+	public static Connection con() {
 
 		String url = "jdbc:" + DB_PROTOCOL + WEB_ADDRESS + URL_USERNAME;
 		// Load Driver
@@ -105,7 +106,7 @@ public class ReceptionistJDBC {
 
 			e.printStackTrace();
 		}
-		
+
 		return con;
 	} // Main Method Close
 
@@ -137,7 +138,7 @@ public class ReceptionistJDBC {
 	 */
 	public static void lookUpPatient(String PATIENT_NAME,
 			String PATIENT_LAST_NAME) throws SQLException {
-		
+
 		Connection con = con();
 		stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
@@ -167,7 +168,7 @@ public class ReceptionistJDBC {
 		String Postcode = rs.getString("Postcode");
 		String Contact_Number = rs.getString("Contact_Number");
 		String Allergies = rs.getString("Allergies");
-		String Known_Conditions = rs.getString("Known_Conditions");
+		String Known_Condtions = rs.getString("Known_Conditions");
 		String Blood_Group = rs.getString("Blood_Group");
 		String Gp_Name = rs.getString("Gp_Name");
 		String Next_of_Kin = rs.getString("Next_of_Kin");
@@ -187,11 +188,65 @@ public class ReceptionistJDBC {
 		System.out.println("GP : " + Gp_Name + "(" + Gp_Code + ")");
 		System.out.println("Birth " + DOB);
 		System.out.println("Allergies/Conditions: " + Allergies + " "
-				+ Known_Conditions);
+				+ Known_Condtions);
 		System.out.println("Blood Group: " + Blood_Group);
 		System.out.println("Next of Kin: " + Next_of_Kin);
 		System.out
 				.println("______________________________________________________________________");
 	} // lookUpPatient Close
+
+	/**
+	 * Method to get all patients from the database
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
+	public static void getAllPatients() throws IllegalArgumentException, Exception {
+		
+		try {
+			
+		Connection con = con();
+		
+		stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		String sql;
+		
+		sql = "SELECT * FROM PATIENT";
+		ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				Receptionist.patientsFromDB.add(new Patient(rs.getString("Title"),
+						rs.getString("First_Name"),
+						rs.getString("Middle_Name"),
+						rs.getString("Last_Name"),
+						rs.getString("DOB"),
+						rs.getString("First_line_of_Address"),
+						rs.getString("Second_line_of_Address"),
+						rs.getString("Third_line_of_Address"),
+						rs.getString("City"),
+						rs.getString("Postcode"),
+						rs.getInt("NHS_number"),
+						rs.getString("Allergies"),
+						rs.getString("Known_Conditions"),
+						rs.getString("Blood_Group"),
+						rs.getString("Sex"),
+						rs.getString("Next_of_Kin"),
+						rs.getString("Gp_Name"),
+						rs.getString("Gp_Code")
+						));
+			}
+			
+
+			// close statement object
+			stmt.close();
+			// close connection
+			con.close();
+
+		} catch (SQLException ex) {
+			System.err.println("SQLException: " + ex.getMessage());
+		}
+	
+		
+	}
 	
 } // Class Close
