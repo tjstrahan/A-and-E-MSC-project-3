@@ -63,7 +63,7 @@ public class NurseTest {
 	}
 
 	@Test
-	public void testConstructorWithArgsCorrect() {
+	public void testConstructorWithArgsCorrect() throws Exception {
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -86,7 +86,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsWrongPassword() {
+	public void testConstructorWithArgsWrongPassword() throws Exception {
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -111,7 +111,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsWrongMobileNumber() {
+	public void testConstructorWithArgsWrongMobileNumber() throws Exception {
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -123,7 +123,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoTitle() {
+	public void testConstructorWithArgsNoTitle() throws Exception {
 		Nurse nurse = new Nurse(TitleWrong, firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
@@ -134,7 +134,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoFirstName() {
+	public void testConstructorWithArgsNoFirstName() throws Exception {
 		Nurse nurse = new Nurse("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
@@ -145,7 +145,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoMiddleName() {
+	public void testConstructorWithArgsNoMiddleName() throws Exception {
 		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameWrong,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
@@ -156,7 +156,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoLastName() {
+	public void testConstructorWithArgsNoLastName() throws Exception {
 		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
@@ -167,7 +167,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoDOB() {
+	public void testConstructorWithArgsNoDOB() throws Exception {
 		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
@@ -178,7 +178,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoAddressLineOne() {
+	public void testConstructorWithArgsNoAddressLineOne() throws Exception {
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneWrong, addressLineTwoCorrect,
@@ -190,7 +190,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoAddressLineTwo() {
+	public void testConstructorWithArgsNoAddressLineTwo() throws Exception {
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoWrong,
@@ -202,7 +202,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoAddressLineThree() {
+	public void testConstructorWithArgsNoAddressLineThree() throws Exception {
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -214,7 +214,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoCity() {
+	public void testConstructorWithArgsNoCity() throws Exception {
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -226,7 +226,7 @@ public class NurseTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoPostCode() {
+	public void testConstructorWithArgsNoPostCode() throws Exception {
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,

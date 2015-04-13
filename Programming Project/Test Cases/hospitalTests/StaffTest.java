@@ -79,7 +79,7 @@ public class StaffTest {
 	}
 
 	@Test
-	public void testConstructorWithArgsCorrect() {
+	public void testConstructorWithArgsCorrect() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -102,7 +102,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsWrongPassword() {
+	public void testConstructorWithArgsWrongPassword() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -127,7 +127,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsWrongMobileNumber() {
+	public void testConstructorWithArgsWrongMobileNumber() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -139,7 +139,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoTitle() {
+	public void testConstructorWithArgsNoTitle() throws Exception {
 		Staff staff = new Staff(TitleWrong, firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
@@ -150,7 +150,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoFirstName() {
+	public void testConstructorWithArgsNoFirstName() throws Exception {
 		Staff staff = new Staff("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
@@ -161,7 +161,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoMiddleName() {
+	public void testConstructorWithArgsNoMiddleName() throws Exception {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameWrong,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
@@ -172,7 +172,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoLastName() {
+	public void testConstructorWithArgsNoLastName() throws Exception {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
@@ -183,7 +183,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoDOB() {
+	public void testConstructorWithArgsNoDOB() throws Exception {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
@@ -194,7 +194,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoAddressLineOne() {
+	public void testConstructorWithArgsNoAddressLineOne() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneWrong, addressLineTwoCorrect,
@@ -206,7 +206,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoAddressLineTwo() {
+	public void testConstructorWithArgsNoAddressLineTwo() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoWrong,
@@ -218,7 +218,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoAddressLineThree() {
+	public void testConstructorWithArgsNoAddressLineThree() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -230,7 +230,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoCity() {
+	public void testConstructorWithArgsNoCity() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -242,7 +242,7 @@ public class StaffTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void testConstructorWithArgsNoPostCode() {
+	public void testConstructorWithArgsNoPostCode() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -384,7 +384,7 @@ public class StaffTest {
 	}
 
 	@Test
-	public void testToString() {
+	public void testToString() throws Exception {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,

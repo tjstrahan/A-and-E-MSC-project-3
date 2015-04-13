@@ -26,17 +26,12 @@ public class PatientTest {
 			aNegative, bPositive, bNegative, abPositive, abNegative, oPositive,
 			oNegative, incorrectBloodType, incorrectBloodTypeLong,
 			correctNextOfKin, correctGPName, incorrectGPName, correctGPCode,
-			incorrectGPCode, incorrectEmptyGPCode, incorrectGPCodeLong;
+			incorrectGPCode, incorrectEmptyGPCode, incorrectGPCodeLong, female,
+			male, incorrectSex;
 
 	int nhsNumberLowerBoundary, nhsNumberUpperBoundary, nhsNumberCorrect,
 			nhsNumberLowerBoundaryIncorrect, nhsNumberUpperBoundaryIncorrect,
-			nhsNumberIncorrect, incorrectGPCodeNumber, correctTriageCategory;
-
-	char female, male, incorrectSexChar;
-
-	double correctAdmissionTime;
-
-	boolean correctTopOfList;
+			nhsNumberIncorrect, incorrectGPCodeNumber;
 
 	@Before
 	public void setUp() throws Exception {
@@ -87,9 +82,9 @@ public class PatientTest {
 		incorrectBloodTypeLong = "Blood group A";
 
 		// Test data for sex
-		female = 'F';
-		male = 'M';
-		incorrectSexChar = 'A';
+		female = "F";
+		male = "M";
+		incorrectSex = "A";
 
 		// Test data for next of kin
 		correctNextOfKin = "Rory McCaul";
@@ -103,16 +98,6 @@ public class PatientTest {
 		incorrectGPCode = "F1234";
 		incorrectGPCodeLong = "E12345";
 		incorrectEmptyGPCode = null;
-
-		// Triage category
-		correctTriageCategory = 0;
-
-		// Admission
-		correctAdmissionTime = 12.00;
-
-		// Top of list
-
-		correctTopOfList = false;
 
 	}
 
@@ -131,8 +116,7 @@ public class PatientTest {
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
 				aPositive, female, correctNextOfKin, correctGPName,
-				correctGPCode, correctTriageCategory, correctAdmissionTime,
-				correctTopOfList);
+				correctGPCode);
 		assertNotNull(patient);
 	}
 
@@ -145,8 +129,7 @@ public class PatientTest {
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				nhsNumberIncorrect, allergiesCorrect, knownConditionsCorrect,
 				aPositive, female, correctNextOfKin, correctGPName,
-				correctGPCode, correctTriageCategory, correctAdmissionTime,
-				correctTopOfList);
+				correctGPCode);
 		assertNotNull(patient);
 	}
 
@@ -159,8 +142,7 @@ public class PatientTest {
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
 				incorrectBloodType, female, correctNextOfKin, correctGPName,
-				correctGPCode, correctTriageCategory, correctAdmissionTime,
-				correctTopOfList);
+				correctGPCode);
 		assertNotNull(patient);
 	}
 
@@ -172,12 +154,11 @@ public class PatientTest {
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
-				aPositive, incorrectSexChar, correctNextOfKin, correctGPName,
-				correctGPCode, correctTriageCategory, correctAdmissionTime,
-				correctTopOfList);
+				aPositive, incorrectSex, correctNextOfKin, correctGPName,
+				correctGPCode);
 		assertNotNull(patient);
 	}
-	
+
 	@Test(expected = NullPointerException.class)
 	public void testConstructorArgumentsIncorrectGPName()
 			throws IllegalArgumentException, Exception {
@@ -187,8 +168,7 @@ public class PatientTest {
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
 				aPositive, female, correctNextOfKin, incorrectGPName,
-				correctGPCode, correctTriageCategory, correctAdmissionTime,
-				correctTopOfList);
+				correctGPCode);
 		assertNotNull(patient);
 	}
 
@@ -330,7 +310,7 @@ public class PatientTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetSexIncorrect() {
 		Patient patient = new Patient();
-		patient.setSex(incorrectSexChar);
+		patient.setSex(incorrectSex);
 	}
 
 	@Test
