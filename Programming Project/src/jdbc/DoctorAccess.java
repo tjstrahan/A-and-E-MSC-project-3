@@ -10,9 +10,9 @@ import java.util.Scanner;
 
 /**
  * Class that uses JDBC code to connect to the database table 'Patient'
- * update the rows in patient table 
+ * updates the rows in patient table and then
  * inserts records into a table with has the date and an autoincremented id
- * Emma
+ * 
  */
 
 public class DoctorAccess {
