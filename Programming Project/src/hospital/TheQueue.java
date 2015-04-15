@@ -116,8 +116,7 @@ public class TheQueue {
 			firstRun = false;
 		}
 
-		System.out.println("New Patient" + patient);
-		System.out.println();
+		System.out.println("New Patient arrives " + patient);
 
 		// If waiting list size is less than the defined size
 		if (WaitingList.size() < MAX_WAITING_LIST_LENGTH) {
