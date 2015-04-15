@@ -79,36 +79,6 @@ public class QueueTimerAlt implements Runnable {
 	static Patient patient = new Patient();
 
 	/**
-	 * To allow for a patient in Treatment Room 1 be treated for a determined
-	 * extra period of time.
-	 */
-	static long extraTime1 = 0L;
-
-	/**
-	 * To allow for a patient in Treatment Room 2 be treated for a determined
-	 * extra period of time.
-	 */
-	static long extraTime2 = 0L;
-
-	/**
-	 * To allow for a patient in Treatment Room 3 be treated for a determined
-	 * extra period of time.
-	 */
-	static long extraTime3 = 0L;
-
-	/**
-	 * To allow for a patient in Treatment Room 4 be treated for a determined
-	 * extra period of time.
-	 */
-	static long extraTime4 = 0L;
-
-	/**
-	 * To allow for a patient in Treatment Room 5 be treated for a determined
-	 * extra period of time.
-	 */
-	static long extraTime5 = 0L;
-
-	/**
 	 * Run method of class
 	 */
 	@Override
@@ -187,7 +157,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// If treatmentTime is greater than the allowed time, consisting of the
 		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + extraTime1)) {
+		if (treatmentTime > (TREATMENT_ROOM_TIME + QueueOperations.extraTime1)) {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(0).setEndTimeTreat(currentTime);
@@ -256,7 +226,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// If treatmentTime is greater than the allowed time, consisting of the
 		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + extraTime2)) {
+		if (treatmentTime > (TREATMENT_ROOM_TIME + QueueOperations.extraTime2)) {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(1).setEndTimeTreat(currentTime);
@@ -325,7 +295,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// If treatmentTime is greater than the allowed time, consisting of the
 		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + extraTime3)) {
+		if (treatmentTime > (TREATMENT_ROOM_TIME + QueueOperations.extraTime3)) {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(2).setEndTimeTreat(currentTime);
@@ -394,7 +364,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// If treatmentTime is greater than the allowed time, consisting of the
 		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + extraTime4)) {
+		if (treatmentTime > (TREATMENT_ROOM_TIME + QueueOperations.extraTime4)) {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(3).setEndTimeTreat(currentTime);
@@ -464,7 +434,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// If treatmentTime is greater than the allowed time, consisting of the
 		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + extraTime5)) {
+		if (treatmentTime > (TREATMENT_ROOM_TIME + QueueOperations.extraTime5)) {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(4).setEndTimeTreat(currentTime);
@@ -875,49 +845,6 @@ public class QueueTimerAlt implements Runnable {
 		Iterator<Patient> Patient = turnedAwayCopy.iterator();
 		while (Patient.hasNext()) {
 			System.out.println(Patient.next());
-		}
-	}
-
-	/**
-	 * Method which can be called by a doctor to increase a patients period of
-	 * treatment in one of the five treatment rooms.
-	 * 
-	 * @param extend
-	 *            , a <code>boolean</code> to say if a patient is having their
-	 *            treatment extended or not
-	 * @param treatmentRoom
-	 *            , an <code>int</code> for the treatment room number
-	 */
-	public static void extraTreatmentTime(boolean extend, int treatmentRoom) {
-
-		// Declare and initialise variable
-		int minutes = 0;
-
-		// If extend is true
-		if (extend) {
-
-			// Treatment will be extended by five minutes
-			minutes = 5;
-		}
-
-		// Switch on the Treatment Room number, conversion is included to
-		// convert the minutes into milliseconds
-		switch (treatmentRoom) {
-		case 1:
-			extraTime1 = (minutes * 10000) / TheQueue.TIME_FACTOR;
-			break;
-		case 2:
-			extraTime2 = (minutes * 10000) / TheQueue.TIME_FACTOR;
-			break;
-		case 3:
-			extraTime3 = (minutes * 10000) / TheQueue.TIME_FACTOR;
-			break;
-		case 4:
-			extraTime4 = (minutes * 10000) / TheQueue.TIME_FACTOR;
-			break;
-		case 5:
-			extraTime5 = (minutes * 10000) / TheQueue.TIME_FACTOR;
-			break;
 		}
 	}
 
