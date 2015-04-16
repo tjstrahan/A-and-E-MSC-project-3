@@ -50,8 +50,8 @@ public class Nurse extends Staff implements iOnCall {
 	 * Method which once called will allow a Nurse to extend the treatment time
 	 * of a patient
 	 */
-	public void extendTreatment() {
-
+	public void extendTreatment(boolean extend, int treatmentRoom) {
+		QueueOperations.extraTreatmentTime(extend, treatmentRoom);
 	}
 
 	/**
