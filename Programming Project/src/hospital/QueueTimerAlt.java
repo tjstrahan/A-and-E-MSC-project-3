@@ -165,6 +165,13 @@ public class QueueTimerAlt implements Runnable {
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(0));
 
+			// If patient had their treatment extended reset treatment room time
+			// to standard
+			if (QueueOperations.treatmentRoom1extended) {
+				QueueOperations.extraTime1 = 0;
+				QueueOperations.treatmentRoom1extended = false;
+			}
+
 			// Let everyone know the room is now empty
 			System.out.println("Treatment Room 1 ready for next patient");
 
@@ -233,6 +240,13 @@ public class QueueTimerAlt implements Runnable {
 
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(1));
+
+			// If patient had their treatment extended reset treatment room time
+			// to standard
+			if (QueueOperations.treatmentRoom2extended) {
+				QueueOperations.extraTime2 = 0;
+				QueueOperations.treatmentRoom2extended = false;
+			}
 
 			// Let everyone know the room is now empty
 			System.out.println("Treatment Room 2 ready for next patient");
@@ -303,6 +317,13 @@ public class QueueTimerAlt implements Runnable {
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(2));
 
+			// If patient had their treatment extended reset treatment room time
+			// to standard
+			if (QueueOperations.treatmentRoom3extended) {
+				QueueOperations.extraTime3 = 0;
+				QueueOperations.treatmentRoom3extended = false;
+			}
+
 			// Let everyone know the room is now empty
 			System.out.println("Treatment Room 3 ready for next patient");
 
@@ -371,6 +392,13 @@ public class QueueTimerAlt implements Runnable {
 
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(3));
+			
+			// If patient had their treatment extended reset treatment room time
+			// to standard
+			if (QueueOperations.treatmentRoom4extended) {
+				QueueOperations.extraTime4 = 0;
+				QueueOperations.treatmentRoom4extended = false;
+			}
 
 			// Let everyone know the room is now empty
 			System.out.println("Treatment Room 4 ready for next patient");
@@ -441,6 +469,13 @@ public class QueueTimerAlt implements Runnable {
 
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(4));
+
+			// If patient had their treatment extended reset treatment room time
+			// to standard
+			if (QueueOperations.treatmentRoom5extended) {
+				QueueOperations.extraTime5 = 0;
+				QueueOperations.treatmentRoom5extended = false;
+			}
 
 			// Let everyone know the room is now empty
 			System.out.println("Treatment Room 5 ready for next patient");
@@ -673,10 +708,10 @@ public class QueueTimerAlt implements Runnable {
 			// Treatment Room the count will be zero. This is to prevent a
 			// divide by zero error
 			if (count == 0) {
-				
+
 				averageWaitTime = 0;
 			} else {
-				
+
 				// Calculate average waiting time
 				averageWaitTime = sumOfWaitTime / count;
 			}

@@ -45,6 +45,12 @@ public class QueueOperations {
 	 */
 	public static long extraTime5 = 0L;
 
+	public static boolean treatmentRoom1extended = false;
+	public static boolean treatmentRoom2extended = false;
+	public static boolean treatmentRoom3extended = false;
+	public static boolean treatmentRoom4extended = false;
+	public static boolean treatmentRoom5extended = false;
+
 	/**
 	 * Method which can be called by a doctor to increase a patients period of
 	 * treatment in one of the five treatment rooms.
@@ -74,27 +80,59 @@ public class QueueOperations {
 		// If treatment room variable is less than 1
 		if (treatmentRoom < 1) {
 			throw new IllegalArgumentException("Invalid Treatment Rooom");
-			
+
 		} else {
 			// Switch on the Treatment Room number, conversion is included to
 			// convert the minutes into milliseconds. If an invalid Treatment
-			// room
-			// number is passed to the method an exception is throw
+			// room number is passed to the method an exception is throw. Set a
+			// boolean to show that the treatment room time for that treatment
+			// room has been extended. This allows it to be reset when a patient
+			// leaves that particular treatment room.
 			switch (treatmentRoom) {
 			case 1:
-				extraTime1 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+				if (treatmentRoom1extended) {
+					throw new IllegalArgumentException(
+							"Treatment already extended");
+				} else {
+					extraTime1 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+					treatmentRoom1extended = true;
+				}
 				break;
 			case 2:
-				extraTime2 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+				if (treatmentRoom2extended) {
+					throw new IllegalArgumentException(
+							"Treatment already extended");
+				} else {
+					extraTime2 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+					treatmentRoom2extended = true;
+				}
 				break;
 			case 3:
-				extraTime3 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+				if (treatmentRoom3extended) {
+					throw new IllegalArgumentException(
+							"Treatment already extended");
+				} else {
+					extraTime3 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+					treatmentRoom3extended = true;
+				}
 				break;
 			case 4:
-				extraTime4 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+				if (treatmentRoom4extended) {
+					throw new IllegalArgumentException(
+							"Treatment already extended");
+				} else {
+					extraTime4 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+					treatmentRoom4extended = true;
+				}
 				break;
 			case 5:
-				extraTime5 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+				if (treatmentRoom5extended) {
+					throw new IllegalArgumentException(
+							"Treatment already extended");
+				} else {
+					extraTime5 = (minutes * 10000) / TheQueue.TIME_FACTOR;
+					treatmentRoom5extended = true;
+				}
 				break;
 			default:
 				throw new IllegalArgumentException("Invalid Treatment Room");
