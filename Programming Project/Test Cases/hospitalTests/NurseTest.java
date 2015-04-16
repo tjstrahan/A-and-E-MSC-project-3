@@ -52,8 +52,8 @@ public class NurseTest {
 		StaffIDCorrect = 666666;
 		StaffIDWrong = 6666;
 
-		mobileNumberCorrect = (long) 447592010304.00;
-		mobileNumberWrong = (long) 4475920103040.00;
+		mobileNumberCorrect = 447592010304L;
+		mobileNumberWrong = 4475920103040L;
 	}
 
 	@Test
@@ -122,26 +122,26 @@ public class NurseTest {
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoTitle() throws Exception {
+		@SuppressWarnings("unused")
 		Nurse nurse = new Nurse(TitleWrong, firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(TitleCorrect, nurse.getTitle());
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoFirstName() throws Exception {
+		@SuppressWarnings("unused")
 		Nurse nurse = new Nurse("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(firstNameCorrect, nurse.getFirstName());
-
+	
 	}
 
 	@Test(expected = AssertionError.class)
@@ -155,38 +155,38 @@ public class NurseTest {
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoLastName() throws Exception {
+		@SuppressWarnings("unused")
 		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(lastNameCorrect, nurse.getLastName());
-
+	
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoDOB() throws Exception {
+		@SuppressWarnings("unused")
 		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(dateOfBirthCorrect, nurse.getDateOfBirth());
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoAddressLineOne() throws Exception {
+		@SuppressWarnings("unused")
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneWrong, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(addressLineOneCorrect,nurse.getAddressLineOne());
-
+	
 	}
 
 	@Test(expected = AssertionError.class)
@@ -213,27 +213,27 @@ public class NurseTest {
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoCity() throws Exception {
+		@SuppressWarnings("unused")
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityWrong, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(cityCorrect, nurse.getCity());
-
+	
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoPostCode() throws Exception {
+		@SuppressWarnings("unused")
 		Nurse nurse = new Nurse(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postCodeWrong,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(postcodeCorrect, nurse.getPostcode());
 
 	}
 
