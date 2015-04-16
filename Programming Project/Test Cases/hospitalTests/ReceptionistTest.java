@@ -122,25 +122,25 @@ public class ReceptionistTest {
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoTitle() throws Exception {
+		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist(TitleWrong, firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(TitleCorrect, receptionist.getTitle());
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoFirstName() throws Exception {
+		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(firstNameCorrect, receptionist.getFirstName());
 
 	}
 
@@ -155,37 +155,37 @@ public class ReceptionistTest {
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoLastName() throws Exception {
+		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(lastNameCorrect, receptionist.getLastName());
-
+	
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoDOB() throws Exception {
+		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(dateOfBirthCorrect, receptionist.getDateOfBirth());
-
+	
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoAddressLineOne() throws Exception {
+		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneWrong, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(addressLineOneCorrect, receptionist.getAddressLineOne());
 
 	}
 
@@ -213,40 +213,40 @@ public class ReceptionistTest {
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoCity() throws Exception {
+		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityWrong, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(cityCorrect, receptionist.getCity());
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoPostCode() throws Exception {
+		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postCodeWrong,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(postcodeCorrect, receptionist.getPostcode());
-
+	
 	}
 
-	@Test
-	public void testLookUpPatient() {
-		Receptionist recep = new Receptionist();
-		recep.lookUpPatient();
-	}
+	//@Test
+	//public void testLookUpPatient() {
+	//	Receptionist recep = new Receptionist();
+	//	recep.lookUpPatient();
+	//}
 
-	@Test
-	public void testAdmitPatient() {
-		Receptionist recep = new Receptionist();
-		recep.admitPatient();
-	}
+	//@Test
+	//public void testAdmitPatient() {
+	//	Receptionist recep = new Receptionist();
+	//	recep.admitPatient();
+	//}
 
 }
