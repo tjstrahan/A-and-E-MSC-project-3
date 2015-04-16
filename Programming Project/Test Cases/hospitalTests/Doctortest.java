@@ -53,8 +53,8 @@ public class Doctortest{
 		StaffIDCorrect = 555555;
 		StaffIDWrong = 5555;
 
-		mobileNumberCorrect = (long) 44759456781.00;
-		mobileNumberWrong = (long) 4475920103040.00;
+		mobileNumberCorrect = 44759456781L;
+		mobileNumberWrong = 4475920103040L;
 	}
 
 	@Test
@@ -129,25 +129,25 @@ public class Doctortest{
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoTitle() throws Exception {
+		@SuppressWarnings("unused")
 		Doctor doctor = new Doctor(TitleWrong, firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(TitleCorrect, doctor.getTitle());
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoFirstName() throws Exception {
+		@SuppressWarnings("unused")
 		Doctor doctor = new Doctor("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(firstNameCorrect, doctor.getFirstName());
 
 	}
 
@@ -162,37 +162,37 @@ public class Doctortest{
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoLastName() throws Exception {
+		@SuppressWarnings("unused")
 		Doctor doctor = new Doctor("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(lastNameCorrect, doctor.getLastName());
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoDOB() throws Exception {
+		@SuppressWarnings("unused")
 		Doctor doctor = new Doctor("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(dateOfBirthCorrect, doctor.getDateOfBirth());
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoAddressLineOne() throws Exception {
+		@SuppressWarnings("unused")
 		Doctor doctor = new Doctor(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneWrong, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(addressLineOneCorrect, doctor.getAddressLineOne());
 
 	}
 
@@ -220,27 +220,27 @@ public class Doctortest{
 
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoCity() throws Exception {
+		@SuppressWarnings("unused")
 		Doctor doctor = new Doctor(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityWrong, postcodeCorrect,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(cityCorrect, doctor.getCity());
-
+	
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoPostCode() throws Exception {
+		@SuppressWarnings("unused")
 		Doctor doctor = new Doctor(TitleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postCodeWrong,
 				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(postcodeCorrect, doctor.getPostcode());
 
 	}
 
