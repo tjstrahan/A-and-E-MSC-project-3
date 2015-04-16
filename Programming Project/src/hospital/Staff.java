@@ -33,12 +33,12 @@ public class Staff extends Person {
 	/**
 	 * Constant for the minimum value of the mobile number
 	 */
-	static final long MOBILE_NUMBER_MIN_LENGTH = (long) 100000000000.00;
+	static final long MOBILE_NUMBER_MIN_LENGTH = (long) 100000000000L;
 
 	/**
 	 * Constant for the maximum value of the mobile number
 	 */
-	static final long MOBILE_NUMBER_MAX_LENGTH = (long) 999999999999.00;
+	static final long MOBILE_NUMBER_MAX_LENGTH = (long) 999999999999L;
 
 	/**
 	 * Constant for the minimum value of the staff ID

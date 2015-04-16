@@ -64,11 +64,11 @@ public class StaffTest {
 		StaffIDLowerBoundary = 100000;
 		StaffIDUpperBoundary = 999999;
 
-		mobileNumberCorrect = (long) 447592010304.00;
-		mobileNumberLowerBoundary = (long) 100000000000.00;
-		mobileNumberUpperBoundary = (long) 999999999999.00;
-		mobileNumberShort = (long) 44759201030.00;
-		mobileNumberLong = (long) 4475920103040.00;
+		mobileNumberCorrect = (long) 447592010304L;
+		mobileNumberLowerBoundary = (long) 100000000000L;
+		mobileNumberUpperBoundary = (long) 999999999999L;
+		mobileNumberShort = (long) 44759201030L;
+		mobileNumberLong = (long) 4475920103040L;
 
 	}
 
