@@ -17,7 +17,7 @@ public class TriageNurse implements Runnable {
 	 * Instantiate the Queue class
 	 */
 	static TheQueue hospQueue = new TheQueue();
-
+	
 	/**
 	 * Instantiate the Random class
 	 */
@@ -51,7 +51,7 @@ public class TriageNurse implements Runnable {
 			// Set patient's admission number
 			Receptionist.patientsFromDB.get(0).setAdmissionNumber(
 					admissionNumber);
-
+			
 			// Get new instant of time
 			Instant startWait = Instant.now();
 

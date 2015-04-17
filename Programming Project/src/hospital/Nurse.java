@@ -6,7 +6,6 @@ public class Nurse extends Staff implements iOnCall {
 	 * Default Constructor
 	 */
 	public Nurse() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -22,21 +21,21 @@ public class Nurse extends Staff implements iOnCall {
 	 * @param addressLineThree
 	 * @param city
 	 * @param postcode
+	 * @param contactNumber
 	 * @param staffID
-	 * @param mobileNumber
 	 * @param loginID
 	 * @param password
+	 * @throws IllegalArgumentException 
 	 * @throws Exception 
 	 */
 	public Nurse(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
-			String postcode, int staffID, long mobileNumber, int loginID,
-			String password) throws Exception {
+			String postcode,long contactNumber, int staffID, int loginID,
+			String password) throws IllegalArgumentException, Exception {
 		super(title, firstName, middleName, lastName, dateOfBirth,
 				addressLineOne, addressLineTwo, addressLineThree, city,
-				postcode, staffID, mobileNumber, loginID, password);
-
+				postcode, contactNumber, staffID, loginID, password);
 	}
 
 	/**

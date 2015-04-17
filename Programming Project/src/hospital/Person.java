@@ -59,6 +59,22 @@ public abstract class Person {
 	 * Instance var to store the postcode. Expected Format. e.g - AA1 1AA
 	 */
 	private String postcode;
+	
+	/**
+	 * Contact telephone number fror the patient
+	 */
+	private long contactNumber;
+	
+	/**
+	 * Constant for the minimum value of the mobile number
+	 */
+	static final long MOBILE_NUMBER_MIN_LENGTH = 100000000000L;
+
+	/**
+	 * Constant for the maximum value of the mobile number
+	 */
+	static final long MOBILE_NUMBER_MAX_LENGTH = 999999999999L;
+
 
 	/**
 	 * Default Constructor
@@ -80,12 +96,14 @@ public abstract class Person {
 	 * @param addressLineThree
 	 * @param city
 	 * @param postcode
+	 * @param contactNumber
 	 * @throws Exception 
+	 * @throws IllegalArgumentException
 	 */
 	public Person(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
-			String postcode) throws Exception {
+			String postcode, long contactNumber) throws IllegalArgumentException,Exception  {
 
 		setTitle(title);
 		setFirstName(firstName);
@@ -95,6 +113,7 @@ public abstract class Person {
 		setAddressLineOne(addressLineOne);
 		this.addressLineTwo = addressLineTwo;
 		this.addressLineThree = addressLineThree;
+		setContactNumber(contactNumber);
 		setCity(city);
 		setPostcode(postcode);
 	}
@@ -308,6 +327,48 @@ public abstract class Person {
 			this.postcode = postcode;
 		} else
 			throw new Exception("A postcode must be entered.");
+	}
+
+	/**
+	 * Get contact number of the patient
+	 * 
+	 * @return
+	 */
+	public long getContactNumber() {
+		return contactNumber;
+	}
+
+	/**
+	 * Set Contact number method which will take in the argument of the mobile
+	 * phone number and assign it to the mobile number var with appropriate
+	 * validation for exceptions in the event of an invalid field
+	 * 
+	 * @param contactNumber
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
+	public void setContactNumber(long contactNumber)
+			throws IllegalArgumentException, Exception {
+
+		// if the mobile number if 11 digits long set it to the mobile number
+		// variable
+		if (contactNumber >= MOBILE_NUMBER_MIN_LENGTH
+				&& contactNumber <= MOBILE_NUMBER_MAX_LENGTH) {
+
+			this.contactNumber = contactNumber;
+			// if the mobile number is not 11 digits long
+		} else if (contactNumber < MOBILE_NUMBER_MIN_LENGTH
+				|| contactNumber > MOBILE_NUMBER_MAX_LENGTH) {
+			// throw a new illegal argument exception with an appropriate
+			// message
+			throw new IllegalArgumentException(
+					"Sorry your mobile number must be 11 numbers long");
+			// if anything else
+		} else {
+			// throw a new illegal argument exception with an appropriate
+			// message
+			throw new Exception("Sorry what you typed is invalid");
+		}
 	}
 
 } // Class close

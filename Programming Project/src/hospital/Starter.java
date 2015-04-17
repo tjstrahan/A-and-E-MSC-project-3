@@ -20,37 +20,34 @@ public class Starter {
 	 */
 	public static void main(String[] args) {
 
+		// Instantiate new Receptionist object
 		Receptionist receptionist = new Receptionist();
-		
+
 		// Set boolean to true
 		makeQueueAlive();
 
-		// Get receptionist to start adding patients
 		try {
+
+			// Get receptionist to start adding patients
 			receptionist.admitAllPatients();
+
 		} catch (IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-System.out.println(Receptionist.patientsFromDB.size());
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+		// For testing purposes
+		System.out.println(Receptionist.patientsFromDB.size());
+
 		// Start TriageNurse thread to assign triage categories and add patients
 		// into the queueing system
 		TriageNurse triNurse = new TriageNurse();
 		Thread t1 = new Thread(triNurse);
 		t1.start();
-
-		// Start the QueueTimeAlt class (only alt as it was an alternative
-		// approach to the original)
+		
+		// Start the QueueTimeAlt class (named Alt as it was an alternative
+		// approach to the original which had used a thread pool approach)
 		QueueTimerAlt qta = new QueueTimerAlt();
 		Thread t2 = new Thread(qta);
 		t2.start();
@@ -58,14 +55,14 @@ System.out.println(Receptionist.patientsFromDB.size());
 	}
 
 	/**
-	 * Set boolean isAlive to true
+	 * Set boolean isAlive to true - while true the queue timer class will run
 	 */
 	public static void makeQueueAlive() {
 		isAlive = true;
 	}
 
 	/**
-	 * Set boolean isAlive to false
+	 * Set boolean isAlive to false - when false the queue timer class will stop
 	 */
 	public static void makeQueueDead() {
 		isAlive = false;

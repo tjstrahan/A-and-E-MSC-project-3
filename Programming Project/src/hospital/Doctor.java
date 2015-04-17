@@ -19,16 +19,32 @@ public class Doctor extends Staff implements iOnCall {
 	/**
 	 * Constructor with args for doctor including a call to the super class
 	 * staff constructor
-	 * @throws Exception 
+	 * 
+	 * @param title
+	 * @param firstName
+	 * @param middleName
+	 * @param lastName
+	 * @param dateOfBirth
+	 * @param addressLineOne
+	 * @param addressLineTwo
+	 * @param addressLineThree
+	 * @param city
+	 * @param postcode
+	 * @param contactNumber
+	 * @param staffID
+	 * @param loginID
+	 * @param password
+	 * @throws IllegalArgumentException
+	 * @throws Exception
 	 */
 	public Doctor(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
-			String postcode, int staffID, long mobileNumber, int loginID,
-			String password) throws Exception {
+			String postcode, long contactNumber, int staffID, int loginID,
+			String password) throws IllegalArgumentException, Exception {
 		super(title, firstName, middleName, lastName, dateOfBirth,
 				addressLineOne, addressLineTwo, addressLineThree, city,
-				postcode, staffID, mobileNumber, loginID, password);
+				postcode, contactNumber, staffID, loginID, password);
 
 	}
 
@@ -47,6 +63,6 @@ public class Doctor extends Staff implements iOnCall {
 	@Override
 	public void isOnCall() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

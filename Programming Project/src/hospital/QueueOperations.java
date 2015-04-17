@@ -247,14 +247,14 @@ public class QueueOperations {
 	 *            , a <code>List</code> of Patient objects
 	 * @param numberBeingSearchedFor
 	 *            , an <code>int</code>, the NHS number being searched for
-	 * @return a <code>LinkedList</code> containing patients who match the
+	 * @return a <code>Patient</code>, the patient who match the
 	 *         search criteria
 	 */
-	public static LinkedList<Patient> searchByNHSNumber(List<Patient> patient,
+	public static Patient searchByNHSNumber(List<Patient> patient,
 			int numberBeingSearchedFor) {
 
 		// LinkedList to hold the results
-		LinkedList<Patient> matchedPatient = new LinkedList<Patient>();
+		Patient matchedPatient = new Patient();
 
 		// To allow for display of "No Matches" dialog if no patients meet the
 		// searched for criteria
@@ -271,7 +271,8 @@ public class QueueOperations {
 
 				// If the NHS number matches print out patient
 				if (patientWaiting.getNhsNumber() == numberBeingSearchedFor) {
-					matchedPatient.add(patientWaiting);
+					matchedPatient.equals(patientWaiting);
+					matches = true;
 				}
 			}
 		}
@@ -279,7 +280,15 @@ public class QueueOperations {
 		// If no matches
 		if (!matches) {
 			System.out.println("No Matches");
+			matchedPatient = null;
 		}
+		
 		return matchedPatient;
+	}
+	
+	public static void changeTriageCategory() {
+		
+		
+		
 	}
 }

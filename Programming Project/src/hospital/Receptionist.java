@@ -5,14 +5,12 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import hospital.Patient;
-import jdbc.ReceptionistJDBC;
+import jdbc.ReceptionistAccess;
 
 public class Receptionist extends Staff {
 
-	
 	public static LinkedList<Patient> patientsFromDB = new LinkedList<Patient>();
-	
-	
+
 	/**
 	 * default constructor for Receptionist
 	 */
@@ -34,19 +32,20 @@ public class Receptionist extends Staff {
 	 * @param city
 	 * @param postcode
 	 * @param staffID
-	 * @param mobileNumber
+	 * @param contactNumber
 	 * @param loginID
 	 * @param password
-	 * @throws Exception 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
 	 */
 	public Receptionist(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
-			String postcode, int staffID, long mobileNumber, int loginID,
-			String password) throws Exception {
+			String postcode, int staffID, int contactNumber, int loginID,
+			String password) throws IllegalArgumentException, Exception {
 		super(title, firstName, middleName, lastName, dateOfBirth,
 				addressLineOne, addressLineTwo, addressLineThree, city,
-				postcode, staffID, mobileNumber, loginID, password);
+				postcode, staffID, contactNumber, loginID, password);
 
 	}
 
@@ -56,7 +55,6 @@ public class Receptionist extends Staff {
 	 */
 	public void lookUpPatient() {
 
-		
 		// PRint out look up patient
 		System.out.println("Look up Patient");
 		// declare the scanner
@@ -71,39 +69,41 @@ public class Receptionist extends Staff {
 		// surrounded by a try catch block, send to the loopUpPatient class the
 		// first and last names typed in
 		try {
-			ReceptionistJDBC.lookUpPatient("'" + first1 + "'", "'" + last1 + "'");
-			
+			ReceptionistAccess.lookUpPatient("'" + first1 + "'", "'" + last1
+					+ "'");
+
 			// if this fails catch the SQLException and print the stack trace
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 	}
 
 	/**
 	 * Method to allow the receptionist to admit a patient
 	 */
-	public void admitPatient() {
+	public void admitPatient(int NHSNumber) {
 
-		// call the method surrounded by a try catch block and catch the SQLException if it is thrown
 		try {
-			ReceptionistJDBC.admitPatient();
-		} catch (SQLException e) {
+			ReceptionistAccess.admitPatient(NHSNumber);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-	
+
 	/**
-	 * Method to admit all patients in the database - method solely for demonstrating the queue
+	 * Method to admit all patients in the database - method solely for
+	 * demonstrating the queue
 	 */
 	public void admitAllPatients() {
-		
+
 		try {
-			ReceptionistJDBC.getAllPatients();
+			ReceptionistAccess.getAllPatients();
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -51,6 +51,11 @@ public class Patient extends Person {
 	 * Instance var to store the GP code
 	 */
 	private String gpCode;
+	
+	/**
+	 * Notes that a doctor has added to patients record upon discharge from AnE
+	 */
+	private String notes;
 
 	/**
 	 * Instance var to store the triage category as a number
@@ -114,7 +119,7 @@ public class Patient extends Person {
 	 * the treatment room extended
 	 */
 	private boolean treatedByOnCallTeam;
-	
+
 	/**
 	 * Instance var boolean which is triggered to true when a patient has been
 	 * waiting for treatment to commence for more than 30 minutes. It gets reset
@@ -161,6 +166,7 @@ public class Patient extends Person {
 	 * @param addressLineThree
 	 * @param city
 	 * @param postcode
+	 * @param contactNumber
 	 * @param nhsNumber
 	 * @param allergies
 	 * @param knownConditions
@@ -169,21 +175,22 @@ public class Patient extends Person {
 	 * @param nextOfKin
 	 * @param gpName
 	 * @param gpCode
+	 * @param notes
 	 * @throws Exception
 	 * @throws IllegalArgumentException
 	 */
 	public Patient(String title, String firstName, String middleName,
-			String lastName, String dateOfBirth, String addressLineOne,
-			String addressLineTwo, String addressLineThree, String city,
-			String postcode, int nhsNumber, String allergies,
-			String knownConditions, String bloodGroup, String sex,
-			String nextOfKin, String gpName, String gpCode)
-			throws IllegalArgumentException, Exception {
+			String lastName, String dateOfBirth,
+			String addressLineOne, String addressLineTwo,
+			String addressLineThree, String city, String postcode, long contactNumber,
+			int nhsNumber, String allergies, String knownConditions,
+			String bloodGroup, String sex, String nextOfKin, String gpName,
+			String gpCode, String notes) throws IllegalArgumentException, Exception {
 
 		// call to the superclass constructor
 		super(title, firstName, middleName, lastName, dateOfBirth,
 				addressLineOne, addressLineTwo, addressLineThree, city,
-				postcode);
+				postcode, contactNumber);
 
 		setNhsNumber(nhsNumber);
 		setAllergies(allergies);
@@ -363,6 +370,7 @@ public class Patient extends Person {
 		}
 	}
 
+
 	/**
 	 * Get for next of kin
 	 * 
@@ -429,6 +437,22 @@ public class Patient extends Person {
 		} else {
 			throw new Exception("This GP Code is invalid.");
 		}
+	}
+
+	/**
+	 * Get method for notes added to patient record by doctor
+	 * @return
+	 */
+	public String getNotes() {
+		return notes;
+	}
+
+	/**
+	 * Get method for notes made by a doctor
+	 * @param notes
+	 */
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	/**

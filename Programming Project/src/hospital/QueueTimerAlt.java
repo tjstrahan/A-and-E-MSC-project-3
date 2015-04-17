@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import jdbc.QueueAccessAddDischargeTime;
+
 /**
  * The class which allows several methods such as printing lists, checking
  * treatment times etc to be carried out at one minute intervals. Stops when
@@ -149,6 +151,9 @@ public class QueueTimerAlt implements Runnable {
 		// Declare and initialise treatmentTime variable
 		long treatmentTime = 0;
 
+		// Declare and initialise NHS number variable
+		int NHSNumber = 0;
+
 		// Declare and initialise startTime variable
 		long startTime = TheQueue.TreatmentRoom.get(0).getStartTimeTreat();
 
@@ -161,6 +166,14 @@ public class QueueTimerAlt implements Runnable {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(0).setEndTimeTreat(currentTime);
+
+			// Get NHS number of patient
+			NHSNumber = TheQueue.TreatmentRoom.get(0).getNhsNumber();
+
+			// Timestamp patients database record - run on separate thread in
+			// case network traffic slows down queue timer execution
+			Thread tR1 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
+			tR1.start();
 
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(0));
@@ -225,6 +238,9 @@ public class QueueTimerAlt implements Runnable {
 		// Declare and initialise treatmentTime variable
 		long treatmentTime = 0;
 
+		// Declare and initialise NHS number variable
+		int NHSNumber = 0;
+		
 		// Declare and initialise startTime variable
 		long startTime = TheQueue.TreatmentRoom.get(1).getStartTimeTreat();
 
@@ -238,6 +254,14 @@ public class QueueTimerAlt implements Runnable {
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(1).setEndTimeTreat(currentTime);
 
+			// Get NHS number of patient
+			NHSNumber = TheQueue.TreatmentRoom.get(1).getNhsNumber();
+
+			// Timestamp patients database record - run on separate thread in
+			// case network traffic slows down queue timer execution
+			Thread tR2 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
+			tR2.start();
+			
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(1));
 
@@ -301,6 +325,9 @@ public class QueueTimerAlt implements Runnable {
 		// Declare and initialise treatmentTime variable
 		long treatmentTime = 0;
 
+		// Declare and initialise NHS number variable
+		int NHSNumber = 0;
+
 		// Declare and initialise startTime variable
 		long startTime = TheQueue.TreatmentRoom.get(2).getStartTimeTreat();
 
@@ -313,6 +340,14 @@ public class QueueTimerAlt implements Runnable {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(2).setEndTimeTreat(currentTime);
+
+			// Get NHS number of patient
+			NHSNumber = TheQueue.TreatmentRoom.get(2).getNhsNumber();
+
+			// Timestamp patients database record - run on separate thread in
+			// case network traffic slows down queue timer execution
+			Thread tR3 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
+			tR3.start();
 
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(2));
@@ -377,6 +412,9 @@ public class QueueTimerAlt implements Runnable {
 		// Declare and initialise treatmentTime variable
 		long treatmentTime = 0;
 
+		// Declare and initialise NHS number variable
+		int NHSNumber = 0;
+
 		// Declare and initialise startTime variable
 		long startTime = TheQueue.TreatmentRoom.get(3).getStartTimeTreat();
 
@@ -390,9 +428,17 @@ public class QueueTimerAlt implements Runnable {
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(3).setEndTimeTreat(currentTime);
 
+			// Get NHS number of patient
+			NHSNumber = TheQueue.TreatmentRoom.get(3).getNhsNumber();
+
+			// Timestamp patients database record - run on separate thread in
+			// case network traffic slows down queue timer execution
+			Thread tR4 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
+			tR4.start();
+
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(3));
-			
+
 			// If patient had their treatment extended reset treatment room time
 			// to standard
 			if (QueueOperations.treatmentRoom4extended) {
@@ -454,6 +500,9 @@ public class QueueTimerAlt implements Runnable {
 		// Declare and initialise treatmentTime variable
 		long treatmentTime = 0;
 
+		// Declare and initialise NHS number variable
+		int NHSNumber = 0;
+
 		// Declare and initialise startTime variable
 		long startTime = TheQueue.TreatmentRoom.get(4).getStartTimeTreat();
 
@@ -466,6 +515,14 @@ public class QueueTimerAlt implements Runnable {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(4).setEndTimeTreat(currentTime);
+
+			// Get NHS number of patient
+			NHSNumber = TheQueue.TreatmentRoom.get(4).getNhsNumber();
+
+			// Timestamp patients database record - run on separate thread in
+			// case network traffic slows down queue timer execution
+			Thread tR5 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
+			tR5.start();
 
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(4));

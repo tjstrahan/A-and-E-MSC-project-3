@@ -31,16 +31,6 @@ public class Staff extends Person {
 	private String password;
 
 	/**
-	 * Constant for the minimum value of the mobile number
-	 */
-	static final long MOBILE_NUMBER_MIN_LENGTH = (long) 100000000000L;
-
-	/**
-	 * Constant for the maximum value of the mobile number
-	 */
-	static final long MOBILE_NUMBER_MAX_LENGTH = (long) 999999999999L;
-
-	/**
 	 * Constant for the minimum value of the staff ID
 	 */
 	static final int STAFF_ID_MIN_LENGTH = 100000;
@@ -58,7 +48,7 @@ public class Staff extends Person {
 	}
 
 	/**
-	 * Constructor with arguements including those from the superclass
+	 * Constructor with arguments including those from the superclass
 	 * 
 	 * @param title
 	 * @param firstName
@@ -71,25 +61,24 @@ public class Staff extends Person {
 	 * @param city
 	 * @param postcode
 	 * @param staffID
-	 * @param mobileNumber
 	 * @param LoginID
 	 * @param password
+	 * @throws IllegalArgumentException 
 	 * @throws Exception  
 	 */
 	public Staff(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
-			String postcode, int staffID, long mobileNumber, int loginID,
-			String password) throws Exception  {
+			String postcode, long contactNumber, int staffID, int loginID,
+			String password) throws IllegalArgumentException, Exception {
 
 		// call to the super class constructor
 		super(title, firstName, middleName, lastName, dateOfBirth,
 				addressLineOne, addressLineTwo, addressLineThree, city,
-				postcode);
+				postcode, contactNumber);
 
 		// including the get methods from the variables declared in this class
 		this.staffID = staffID;
-		this.mobileNumber = mobileNumber;
 		this.loginID = loginID;
 		this.password = password;
 	}
@@ -122,14 +111,14 @@ public class Staff extends Person {
 
 			// or else if the staff ID is above or below the 6 figures
 		} else if (staffID <= STAFF_ID_MIN_LENGTH) {
-			// throw an illegal arguement exception displaying an appropriate
+			// throw an illegal argument exception displaying an appropriate
 			// message
 			throw new IllegalArgumentException(
 					"Sorry your Staff ID must be at least 6 numbers long");
 			// anything else other than the 6 digit figure (for example a
 			// String) will throw an exception with an appropriate message
 		} else if (staffID >= STAFF_ID_MAX_LENGTH) {
-			// throw an illegal arguement exception displaying an appropriate
+			// throw an illegal argument exception displaying an appropriate
 			// message
 			throw new IllegalArgumentException(
 					"Sorry your Staff ID must be at least 6 numbers long");
@@ -145,39 +134,6 @@ public class Staff extends Person {
 	 */
 	public long getMobileNumber() {
 		return mobileNumber;
-	}
-
-	/**
-	 * set Mobile number method which will take in the arguement of the mobile
-	 * phone number and assign it to the mobile number var with appropriate
-	 * validation for exceptions in the event of an invalid field
-	 * 
-	 * @param mobileNumber
-	 * @throws IllegalArgumentException
-	 * @throws Exception
-	 */
-	public void setMobileNumber(long mobileNumber)
-			throws IllegalArgumentException, Exception {
-
-		// if the mobile number if 11 digits long set it to the mobile numer
-		// variable
-		if (mobileNumber >= MOBILE_NUMBER_MIN_LENGTH
-				&& mobileNumber <= MOBILE_NUMBER_MAX_LENGTH) {
-
-			this.mobileNumber = mobileNumber;
-			// if the mobile number is not 11 digits long
-		} else if (mobileNumber <= MOBILE_NUMBER_MIN_LENGTH
-				|| mobileNumber >= MOBILE_NUMBER_MAX_LENGTH) {
-			// throw a new illegal arguement exception with an appropriate
-			// message
-			throw new IllegalArgumentException(
-					"Sorry your mobile number must be at least 11 numbers long");
-			// if anything else
-		} else {
-			// throw a new illegal arguement exception with an appropriate
-			// message
-			throw new Exception("Sorry what you typed is invalid");
-		}
 	}
 
 	/**
@@ -205,9 +161,9 @@ public class Staff extends Person {
 			this.loginID = loginID;
 
 			// or else if the loginID is above or below the 6 figures
-		} else if (loginID <= STAFF_ID_MIN_LENGTH
-				|| loginID >= STAFF_ID_MAX_LENGTH) {
-			// throw an illegal arguement exception displaying an appropriate
+		} else if (loginID < STAFF_ID_MIN_LENGTH
+				|| loginID > STAFF_ID_MAX_LENGTH) {
+			// throw an illegal argument exception displaying an appropriate
 			// message
 			throw new IllegalArgumentException(
 					"Sorry your login ID must be at least 6 numbers long");
@@ -237,14 +193,14 @@ public class Staff extends Person {
 	public void setPassword(String password) throws Exception {
 		// check if the password passed in is empty
 		if (password.isEmpty()) {
-			// if so throw an exception with the approriate message displayed
+			// if so throw an exception with the appropriate message displayed
 			throw new Exception("Password can not be left blank");
 		}
 		// if the password is not 6 letters long at least
 		if (password.length() < 6) {
-			// if so throw an exception with the approriate message displayed
+			// if so throw an exception with the appropriate message displayed
 			throw new Exception("Password must be at least 6 characters");
-			// or else set the passed in arguement to the password variable
+			// or else set the passed in argument to the password variable
 		} else {
 			this.password = password;
 		}
@@ -256,7 +212,7 @@ public class Staff extends Person {
 	 */
 	@Override
 	public String toString() {
-		return "Staff [staffID=" + staffID + ", mobileNumber=" + mobileNumber
+		return "Staff [staffID=" + staffID + ", mobileNumber=" + getContactNumber()
 				+ ", loginID=" + loginID + ", password=" + password
 				+ ", title=" + getTitle() + ", firstName=" + getFirstName()
 				+ ", middleName=" + getMiddleName() + ", lastName=" + getLastName()
