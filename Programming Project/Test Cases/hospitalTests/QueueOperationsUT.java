@@ -61,7 +61,7 @@ public class QueueOperationsUT {
 	 * Test extra time method for Treatment Room 1 where extra time is set
 	 */
 	@Test
-	public void testExtraTreatmentTimeValidTreatmeanRoom1() {
+	public void testExtraTreatmentTimeValidTreatRoom1() {
 		QueueOperations.extraTreatmentTime(true, TRoom1);
 		assertEquals(extraTime, QueueOperations.extraTime1);
 	}
@@ -70,16 +70,26 @@ public class QueueOperationsUT {
 	 * Test extra time method for Treatment Room 1 where NO extra time is set
 	 */
 	@Test
-	public void testExtraTreatmentTimeNoExtraTimeTreatmeanRoom1() {
+	public void testExtraTreatmentTimeNoExtraTimeTreatRoom1() {
+		QueueOperations.treatmentRoom1extended = false;
 		QueueOperations.extraTreatmentTime(false, TRoom1);
 		assertEquals(noExtraTime, QueueOperations.extraTime1);
 	}
 
 	/**
+	 * Test extra time method for Treatment Room 1 where extra time is set
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void testExtraTreatmentTimeTreatRoom1Prev() {
+		QueueOperations.treatmentRoom1extended = true;
+		QueueOperations.extraTreatmentTime(true, TRoom1);
+	}
+	
+	/**
 	 * Test extra time method for Treatment Room 2 where extra time is set
 	 */
 	@Test
-	public void testExtraTreatmentTimeValidTreatmeanRoom2() {
+	public void testExtraTreatmentTimeValidTreatRoom2() {
 		QueueOperations.extraTreatmentTime(true, TRoom2);
 		assertEquals(extraTime, QueueOperations.extraTime2);
 	}
@@ -88,16 +98,26 @@ public class QueueOperationsUT {
 	 * Test extra time method for Treatment Room 2 where NO extra time is set
 	 */
 	@Test
-	public void testExtraTreatmentTimeNoExtraTimeTreatmeanRoom2() {
+	public void testExtraTreatmentTimeNoExtraTimeTreatRoom2() {
+		QueueOperations.treatmentRoom2extended = false;
 		QueueOperations.extraTreatmentTime(false, TRoom2);
 		assertEquals(noExtraTime, QueueOperations.extraTime2);
+	}
+
+	/**
+	 * Test extra time method for Treatment Room 2 where extra time is set
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void testExtraTreatmentTimeTreatRoom2Prev() {
+		QueueOperations.treatmentRoom2extended = true;
+		QueueOperations.extraTreatmentTime(true, TRoom2);
 	}
 
 	/**
 	 * Test extra time method for Treatment Room 3 where extra time is set
 	 */
 	@Test
-	public void testExtraTreatmentTimeValidTreatmeanRoom3() {
+	public void testExtraTreatmentTimeValidTreatRoom3() {
 		QueueOperations.extraTreatmentTime(true, TRoom3);
 		assertEquals(extraTime, QueueOperations.extraTime3);
 	}
@@ -106,16 +126,26 @@ public class QueueOperationsUT {
 	 * Test extra time method for Treatment Room 3 where NO extra time is set
 	 */
 	@Test
-	public void testExtraTreatmentTimeNoExtraTimeTreatmeanRoom3() {
+	public void testExtraTreatmentTimeNoExtraTimeTreatRoom3() {
+		QueueOperations.treatmentRoom3extended = false;
 		QueueOperations.extraTreatmentTime(false, TRoom3);
 		assertEquals(noExtraTime, QueueOperations.extraTime3);
 	}
 
 	/**
+	 * Test extra time method for Treatment Room 3 where extra time is set
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void testExtraTreatmentTimeTreatRoom3Prev() {
+		QueueOperations.treatmentRoom3extended = true;
+		QueueOperations.extraTreatmentTime(true, TRoom3);
+	}
+	
+	/**
 	 * Test extra time method for Treatment Room 4 where extra time is set
 	 */
 	@Test
-	public void testExtraTreatmentTimeValidTreatmeanRoom4() {
+	public void testExtraTreatmentTimeValidTreatRoom4() {
 		QueueOperations.extraTreatmentTime(true, TRoom4);
 		assertEquals(extraTime, QueueOperations.extraTime4);
 	}
@@ -124,16 +154,26 @@ public class QueueOperationsUT {
 	 * Test extra time method for Treatment Room 4 where NO extra time is set
 	 */
 	@Test
-	public void testExtraTreatmentTimeNoExtraTimeTreatmeanRoom4() {
+	public void testExtraTreatmentTimeNoExtraTimeTreatRoom4() {
+		QueueOperations.treatmentRoom4extended = false;
 		QueueOperations.extraTreatmentTime(false, TRoom4);
 		assertEquals(noExtraTime, QueueOperations.extraTime4);
 	}
 
 	/**
+	 * Test extra time method for Treatment Room 4 where extra time is set
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void testExtraTreatmentTimeTreatRoom4Prev() {
+		QueueOperations.treatmentRoom4extended = true;
+		QueueOperations.extraTreatmentTime(true, TRoom4);
+	}
+	
+	/**
 	 * Test extra time method for Treatment Room 5 where extra time is set
 	 */
 	@Test
-	public void testExtraTreatmentTimeValidTreatmeanRoom5() {
+	public void testExtraTreatmentTimeValidTreatRoom5() {
 		QueueOperations.extraTreatmentTime(true, TRoom5);
 		assertEquals(extraTime, QueueOperations.extraTime5);
 	}
@@ -142,9 +182,19 @@ public class QueueOperationsUT {
 	 * Test extra time method for Treatment Room 5 where NO extra time is set
 	 */
 	@Test
-	public void testExtraTreatmentTimeNoExtraTimeTreatmeanRoom5() {
+	public void testExtraTreatmentTimeNoExtraTimeTreatRoom5() {
+		QueueOperations.treatmentRoom5extended = false;
 		QueueOperations.extraTreatmentTime(false, TRoom5);
 		assertEquals(noExtraTime, QueueOperations.extraTime5);
+	}
+
+	/**
+	 * Test extra time method for Treatment Room 5 where extra time is set
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void testExtraTreatmentTimeTreatRoom5Prev() {
+		QueueOperations.treatmentRoom5extended = true;
+		QueueOperations.extraTreatmentTime(true, TRoom5);
 	}
 
 	/**
@@ -152,7 +202,7 @@ public class QueueOperationsUT {
 	 * number is passed
 	 */
 	@Test (expected = IllegalArgumentException.class)
-	public void testExtraTreatmentTimeInvalidTreatmeanRoomLow() {
+	public void testExtraTreatmentTimeInvalidTreatRoomLow() {
 		QueueOperations.extraTreatmentTime(false, TRoomInvalid);
 	}
 	
@@ -161,7 +211,7 @@ public class QueueOperationsUT {
 	 * number is passed
 	 */
 	@Test (expected = IllegalArgumentException.class)
-	public void testExtraTreatmentTimeInvalidTreatmeanRoomHigh() {
+	public void testExtraTreatmentTimeInvalidTreatRoomHigh() {
 		QueueOperations.extraTreatmentTime(false, TRoomHigh);
 	}
 
