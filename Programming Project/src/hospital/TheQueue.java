@@ -8,6 +8,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import jdbc.QueueAccessClearDischargeNotes;
+import jdbc.QueueAccessClearDischargeTime;
+
 /**
  * Class to represent the queueing system of both the treatment rooms and
  * waiting list in a hospital accident and emergency department
@@ -260,6 +263,19 @@ public class TheQueue {
 				// been started at triage
 				OnCallTeam.get(0).setEndTimeWait(onCallStart.toEpochMilli());
 
+				// Reset timestamp on patients record - run on separate thread
+				// in case network traffic slows down queue execution
+				Thread oCTTimeClear = new Thread(new QueueAccessClearDischargeTime(
+						OnCallTeam.get(0).getNhsNumber()));
+				oCTTimeClear.start();
+
+				// Clear Notes (if any) from previous visit (if any) - run on
+				// separate thread in case network traffic slows down queue
+				// execution
+				Thread oCTNotesClear = new Thread(new QueueAccessClearDischargeNotes(
+						OnCallTeam.get(0).getNhsNumber()));
+				oCTNotesClear.start();
+				
 				// Sets patients treatment start time
 				OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
 
@@ -328,8 +344,9 @@ public class TheQueue {
 				// Copy first patient in Waiting List into the temporary
 				// ArrayList
 				temp.add(WaitingList.get(0));
-				
-				// Reset this boolean as patient is no longer on the Waiting List
+
+				// Reset this boolean as patient is no longer on the Waiting
+				// List
 				temp.get(0).setWaitingMoreThan30(false);
 
 				// This is so that patient who have already been on the waiting
@@ -362,6 +379,19 @@ public class TheQueue {
 				// this is required when bubblesorting the treatment room to
 				// find the patient of lowest priority
 				TreatmentRoom.get(loop).setTreatmentRoom(loop);
+
+				// Reset timestamp on patients record - run on separate thread
+				// in case network traffic slows down queue execution
+				Thread tRTimeClear = new Thread(new QueueAccessClearDischargeTime(
+						TreatmentRoom.get(loop).getNhsNumber()));
+				tRTimeClear.start();
+
+				// Clear Notes (if any) from previous visit (if any) - run on
+				// separate thread in case network traffic slows down queue
+				// execution
+				Thread tRNotesClear = new Thread(new QueueAccessClearDischargeNotes(
+						TreatmentRoom.get(loop).getNhsNumber()));
+				tRNotesClear.start();
 
 				// Get a new instance of time
 				Instant startTreat = Instant.now();
@@ -800,7 +830,7 @@ public class TheQueue {
 
 			// Get a new instant of time
 			Instant onCallStart = Instant.now();
-			
+
 			// Sets patients end wait time, which will have automatically
 			// been started at triage
 			OnCallTeam.get(0).setEndTimeWait(onCallStart.toEpochMilli());
