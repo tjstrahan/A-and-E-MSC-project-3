@@ -114,7 +114,7 @@ public class DoctorAccess {
 		Connection con = getConnection();
 		try {
 			pstmt = con
-					.prepareStatement("UPDATE Patient SET Notes = CONCAT(Notes, ' ', ?) WHERE NHS_number = ?");
+					.prepareStatement("UPDATE Patient SET Notes = ? WHERE NHS_number = ?");
 			pstmt.setString(1, notes);
 			pstmt.setInt(2, NHS_Number);
 			pstmt.executeUpdate();

@@ -9,6 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import hospital.Patient;
 import hospital.Receptionist;
@@ -193,9 +198,9 @@ public class ReceptionistAccess {
 		stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		String sql;
-		sql = "SELECT NHS_number FROM PATIENT WHERE First_Name = "
-				+ PATIENT_NAME + " and Last_Name = " + PATIENT_LAST_NAME
-				+ " and DOB = " + DOB;
+		sql = "SELECT NHS_number FROM PATIENT WHERE First_Name = \""
+				+ PATIENT_NAME + "\" and Last_Name = \"" + PATIENT_LAST_NAME
+				+ "\" and DOB = \"" + DOB + "\";";
 		ResultSet rs = stmt.executeQuery(sql);
 
 		// Move cursor to the last row.
@@ -214,12 +219,92 @@ public class ReceptionistAccess {
 	}
 
 	/**
+	 * Method for Looking up Patients and displaying details by NHS_number in the table 'Patient'
+	 * 
+	 * @throws SQLException
+	 * @throws ParseException 
+	 */
+	public void displayPatientByNHSNumber(int NHSNumber)
+			throws SQLException, ParseException {
+		
+		Connection con = con();
+		stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		String sql;
+		sql = "SELECT Title, First_Name, Middle_Name, Last_Name , DOB, Sex, First_line_of_Address, Second_line_of_Address, Third_line_of_Address, City, Postcode, Contact_Number, Allergies, Known_Conditions, Blood_Group, Gp_Name, Gp_Code, Next_of_Kin, Notes, Unix_Timestamp FROM PATIENT WHERE NHS_number = "
+				+ NHSNumber;
+		ResultSet rs = stmt.executeQuery(sql);
+
+		// Move cursor to the last row.
+		rs.next();
+
+		// Retrieve by column name
+		String title = rs.getString("Title");
+		String firstName = rs.getString("First_Name");
+		String middleName = rs.getString("Middle_Name");
+		String lastName = rs.getString("Last_Name");
+		String mysqlDOB = rs.getString("DOB");
+		String sex = rs.getString("Sex");
+		String firstLineOfAddress = rs.getString("First_line_of_Address");
+		String secondLineOfAddress = rs.getString("Second_line_of_Address");
+		String thirdLineOfAddress = rs.getString("Third_line_of_Address");
+		String city = rs.getString("City");
+		String postcode = rs.getString("Postcode");
+		String contactNumber = rs.getString("Contact_Number");
+		String allergies = rs.getString("Allergies");
+		String knownConditions = rs.getString("Known_Conditions");
+		String bloodGroup = rs.getString("Blood_Group");
+		String GPName = rs.getString("Gp_Name");
+		String GPCode = rs.getString("Gp_Code");
+		String nextOfKin = rs.getString("Next_of_Kin");
+		String rawNotes = rs.getString("Notes");
+		long rawDischargeTime = rs.getLong("Unix_Timestamp");
+	    
+		String dischargeTime = "";
+		String notes = "";
+		
+		if (rawDischargeTime == 0L) {
+			dischargeTime = "n/a";
+		} else {		
+			dischargeTime = unixTimestampConversion(rawDischargeTime);		
+		}
+		
+		if (rawNotes.isEmpty()) {
+			notes = "n/a";
+		} else {
+			notes = rawNotes;
+		}
+
+		// Display values
+		System.out.println("________________________________________________________________");
+		System.out.println("Name: " + title + " " + firstName + " "+ middleName + " " + lastName);
+		System.out.print("Date of Birth: " + correctUKDateFormat(mysqlDOB));
+		System.out.println("\tSex : " + sex);
+		System.out.println("NHS Number: " + NHSNumber);
+		System.out.println("Address 1: " + firstLineOfAddress);
+		System.out.println("Address 2: " + secondLineOfAddress);
+		System.out.println("Address 3: " + thirdLineOfAddress);
+		System.out.println("City:      " + city);
+		System.out.println("Postcode:  " + postcode);
+		System.out.println("Contact Number: +" + contactNumber);
+		System.out.println("General Practitioner: " + GPName + "(" + GPCode + ")");
+		System.out.println("Allergies: " + allergies);
+		System.out.println("Conditions: "+ knownConditions);
+		System.out.println("Blood Group: " + bloodGroup);
+		System.out.println("Next of Kin: " + nextOfKin);
+		System.out.println("Last A\'n\'E visit: " + dischargeTime);
+		System.out.println("Notes from visit: " + notes);
+		System.out.println("________________________________________________________________");
+		con.close();
+	}// lookUpPatient Close
+	
+	/**
 	 * Method to update the first line of the address
 	 * 
-	 * @param NHS_Number
+	 * @param NHSNumber
 	 * @param firstLineOfAddress
 	 */
-	public void updateFirstLineOfAddress(int NHS_Number,
+	public void updateFirstLineOfAddress(int NHSNumber,
 			String firstLineOfAddress) throws SQLException {
 
 		if (firstLineOfAddress.isEmpty()) {
@@ -231,7 +316,7 @@ public class ReceptionistAccess {
 				pstmt = con
 						.prepareStatement("UPDATE Patient SET  First_Line_Of_Address = ? WHERE NHS_number = ?");
 				pstmt.setString(1, firstLineOfAddress);
-				pstmt.setInt(2, NHS_Number);
+				pstmt.setInt(2, NHSNumber);
 				pstmt.executeUpdate();
 				pstmt.close();
 				con.close();
@@ -248,7 +333,7 @@ public class ReceptionistAccess {
 	 * @param secondLineOfAddress
 	 * @throws SQLException
 	 */
-	public void updateSecondLineOfAddress(int NHS_Number,
+	public void updateSecondLineOfAddress(int NHSNumber,
 			String secondLineOfAddress) throws SQLException {
 
 		Connection con = con();
@@ -256,7 +341,7 @@ public class ReceptionistAccess {
 			pstmt = con
 					.prepareStatement("UPDATE Patient SET   Second_Line_Of_Address = ? WHERE NHS_number = ?");
 			pstmt.setString(1, secondLineOfAddress);
-			pstmt.setInt(2, NHS_Number);
+			pstmt.setInt(2, NHSNumber);
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -272,7 +357,7 @@ public class ReceptionistAccess {
 	 * @param thirdLineOfAddress
 	 * @throws SQLException
 	 */
-	public void updateThirdLineOfAddress(int NHS_Number,
+	public void updateThirdLineOfAddress(int NHSNumber,
 			String thirdLineOfAddress) throws SQLException {
 
 		Connection con = con();
@@ -280,7 +365,7 @@ public class ReceptionistAccess {
 			pstmt = con
 					.prepareStatement("UPDATE Patient SET Third_Line_Of_Address  = ? WHERE NHS_number = ?");
 			pstmt.setString(1, thirdLineOfAddress);
-			pstmt.setInt(2, NHS_Number);
+			pstmt.setInt(2, NHSNumber);
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -296,7 +381,7 @@ public class ReceptionistAccess {
 	 * @param city
 	 * @throws SQLException
 	 */
-	public void updateCity(int NHS_Number, String city) throws SQLException {
+	public void updateCity(int NHSNumber, String city) throws SQLException {
 
 		if (city.isEmpty()) {
 			throw new IllegalArgumentException("An address must be entered");
@@ -307,7 +392,7 @@ public class ReceptionistAccess {
 				pstmt = con
 						.prepareStatement("UPDATE Patient SET City  = ? WHERE NHS_number = ?");
 				pstmt.setString(1, city);
-				pstmt.setInt(2, NHS_Number);
+				pstmt.setInt(2, NHSNumber);
 				pstmt.executeUpdate();
 				pstmt.close();
 				con.close();
@@ -324,7 +409,7 @@ public class ReceptionistAccess {
 	 * @param postcode
 	 * @throws SQLException
 	 */
-	public void updatePostcode(int NHS_Number, String postcode)
+	public void updatePostcode(int NHSNumber, String postcode)
 			throws SQLException {
 
 		if (postcode.isEmpty()) {
@@ -336,7 +421,7 @@ public class ReceptionistAccess {
 				pstmt = con
 						.prepareStatement("UPDATE Patient SET Postcode  = ? WHERE NHS_number = ?");
 				pstmt.setString(1, postcode);
-				pstmt.setInt(2, NHS_Number);
+				pstmt.setInt(2, NHSNumber);
 				pstmt.executeUpdate();
 				pstmt.close();
 				con.close();
@@ -353,9 +438,13 @@ public class ReceptionistAccess {
 	 * @param contactNumber
 	 * @throws SQLException
 	 */
-	public void updateContactNumber(int NHS_Number, long contactNumber)
+	public void updateContactNumber(int NHSNumber, String phoneNumber)
 			throws SQLException, IllegalArgumentException {
 
+		Long contactNumber;
+		
+		contactNumber = Long.parseLong(phoneNumber);
+		
 		if (contactNumber < MOBILE_NUMBER_MIN_LENGTH
 				|| contactNumber > MOBILE_NUMBER_MAX_LENGTH) {
 			throw new IllegalArgumentException(
@@ -367,7 +456,7 @@ public class ReceptionistAccess {
 				pstmt = con
 						.prepareStatement("UPDATE Patient SET Contact_Number  = ? WHERE NHS_number = ?");
 				pstmt.setLong(1, contactNumber);
-				pstmt.setInt(2, NHS_Number);
+				pstmt.setInt(2, NHSNumber);
 				pstmt.executeUpdate();
 				pstmt.close();
 				con.close();
@@ -378,21 +467,45 @@ public class ReceptionistAccess {
 	}
 
 	/**
+	 * Method to add a patients first allergy
+	 * 
+	 * @param NHS_Number
+	 * @param allergies
+	 * @throws SQLException
+	 */
+	public void addFirstAllergies(int NHSNumber, String allergies)
+			throws SQLException {
+
+		Connection con = con();
+		try {
+			pstmt = con
+					.prepareStatement("UPDATE Patient SET Allergies = ? WHERE NHS_number = ?");
+			pstmt.setString(1, allergies);
+			pstmt.setInt(2, NHSNumber);
+			pstmt.executeUpdate();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.err.println("Failed to update \'Allergies\'");
+		}
+	}
+	
+	/**
 	 * Method to Append to list of allergies a patient has
 	 * 
 	 * @param NHS_Number
 	 * @param allergies
 	 * @throws SQLException
 	 */
-	public void updateAllergies(int NHS_Number, String allergies)
+	public void addMoreAllergies(int NHSNumber, String allergies)
 			throws SQLException {
 
 		Connection con = con();
 		try {
 			pstmt = con
-					.prepareStatement("UPDATE Patient SET Allergies = CONCAT(Allergies, ' ', ?) WHERE NHS_number = ?");
+					.prepareStatement("UPDATE Patient SET Allergies = CONCAT(Allergies, ', ', ?) WHERE NHS_number = ?");
 			pstmt.setString(1, allergies);
-			pstmt.setInt(2, NHS_Number);
+			pstmt.setInt(2, NHSNumber);
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -402,21 +515,45 @@ public class ReceptionistAccess {
 	}
 
 	/**
+	 * Method to add a patients first known condition
+	 * 
+	 * @param NHS_Number
+	 * @param knownCondtions
+	 * @throws SQLException
+	 */
+	public void addFirstKnownConditions(int NHSNumber, String knownCondtions)
+			throws SQLException {
+
+		Connection con = con();
+		try {
+			pstmt = con
+					.prepareStatement("UPDATE Patient SET Known_Conditions = ? WHERE NHS_number = ?");
+			pstmt.setString(1, knownCondtions);
+			pstmt.setInt(2, NHSNumber);
+			pstmt.executeUpdate();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.err.println("Failed to update \'Known Condtions\'");
+		}
+	}
+	
+	/**
 	 * Method to Append to list of known conditions a patient has
 	 * 
 	 * @param NHS_Number
 	 * @param knownCondtions
 	 * @throws SQLException
 	 */
-	public void updateKnownConditions(int NHS_Number, String knownCondtions)
+	public void addMoreKnownConditions(int NHSNumber, String knownCondtions)
 			throws SQLException {
 
 		Connection con = con();
 		try {
 			pstmt = con
-					.prepareStatement("UPDATE Patient SET Known_Conditions = CONCAT(Known_Conditions, ' ', ?) WHERE NHS_number = ?");
+					.prepareStatement("UPDATE Patient SET Known_Conditions = CONCAT(Known_Conditions, ', ', ?) WHERE NHS_number = ?");
 			pstmt.setString(1, knownCondtions);
-			pstmt.setInt(2, NHS_Number);
+			pstmt.setInt(2, NHSNumber);
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -432,7 +569,7 @@ public class ReceptionistAccess {
 	 * @param nextOfKin
 	 * @throws SQLException
 	 */
-	public void updateNextOfKin(int NHS_Number, String nextOfKin)
+	public void updateNextOfKin(int NHSNumber, String nextOfKin)
 			throws SQLException {
 
 		Connection con = con();
@@ -440,7 +577,7 @@ public class ReceptionistAccess {
 			pstmt = con
 					.prepareStatement("UPDATE Patient SET Next_Of_Kin  = ? WHERE NHS_number = ?");
 			pstmt.setString(1, nextOfKin);
-			pstmt.setInt(2, NHS_Number);
+			pstmt.setInt(2, NHSNumber);
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -458,7 +595,7 @@ public class ReceptionistAccess {
 	 * @throws IllegalArgumentException
 	 * @throws Exception
 	 */
-	public static void admitPatient (int NHS_Number) throws IllegalArgumentException, Exception {
+	public static void admitPatient (int NHSNumber) throws IllegalArgumentException, Exception {
 		
 		try {
 
@@ -469,7 +606,7 @@ public class ReceptionistAccess {
 
 			String sql;
 
-			sql = "SELECT * FROM PATIENT WHERE NHS_Number = " + NHS_Number;
+			sql = "SELECT * FROM PATIENT WHERE NHS_Number = " + NHSNumber;
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -478,7 +615,7 @@ public class ReceptionistAccess {
 						rs.getString("First_Name"), 
 						rs.getString("Middle_Name"),
 						rs.getString("Last_Name"),
-						rs.getString("DOB"),
+						correctUKDateFormat(rs.getString("DOB")),
 						rs.getString("First_line_of_Address"),
 						rs.getString("Second_line_of_Address"), 
 						rs.getString("Third_line_of_Address"), 
@@ -533,7 +670,7 @@ public class ReceptionistAccess {
 						rs.getString("First_Name"), 
 						rs.getString("Middle_Name"),
 						rs.getString("Last_Name"),
-						rs.getString("DOB"),
+						correctUKDateFormat(rs.getString("DOB")),
 						rs.getString("First_line_of_Address"),
 						rs.getString("Second_line_of_Address"), 
 						rs.getString("Third_line_of_Address"), 
@@ -561,5 +698,37 @@ public class ReceptionistAccess {
 		}
 
 	}
+	
+	/**
+	 * Method to convert a date String in format yyyy-MM-dd to format dd-MM-yyyy
+	 * 
+	 * @param mysqlDOB, date in format yyyy-MM-dd
+	 * @return date in format dd-MM-yyyy
+	 * @throws ParseException 
+	 */
+	public static String correctUKDateFormat(String mysqlDOB) throws ParseException{
+		
+		Date dateDOB = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(mysqlDOB);
+		
+		return new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(dateDOB);
+	}
 
+	/**
+	 * Method to convert the seconds since the unix epoch (which is what unix_timestamp
+	 * is stored as in mysql) into a human readable format.
+	 * 
+	 * @param rawDischargeTime
+	 * @return
+	 */
+	public String unixTimestampConversion(long rawDischargeTime) {
+		
+		Date date = new Date(rawDischargeTime*1000L); 
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy"); 
+		
+		sdf.setTimeZone(TimeZone.getTimeZone("Europe/London")); 
+		
+		return sdf.format(date);
+	}
+	
 } // Class Close
