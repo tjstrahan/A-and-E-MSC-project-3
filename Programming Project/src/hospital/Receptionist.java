@@ -1,7 +1,11 @@
 package hospital;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Scanner;
 
 import hospital.Patient;
@@ -19,7 +23,7 @@ public class Receptionist extends Staff {
 	}
 
 	/**
-	 * constructor with arguemnts
+	 * constructor with arguments
 	 * 
 	 * @param title
 	 * @param firstName
@@ -55,25 +59,33 @@ public class Receptionist extends Staff {
 	 */
 	public void lookUpPatient() {
 
+		ReceptionistAccess rA = new ReceptionistAccess();
+
 		// PRint out look up patient
 		System.out.println("Look up Patient");
 		// declare the scanner
 		Scanner scanner = new Scanner(System.in);
 
+		try {
 		// ask the user to type in their first and last name of the person they
 		// seek
-		System.out.println("Enter Patient Name. First and Last");
-		String first1 = scanner.next();
-		String last1 = scanner.next();
+		System.out.println("Enter Patient Foreame.");
+		String foreName = scanner.next();
+		System.out.println("Enter Patient Surname.");
+		String surName = scanner.next();
+		System.out.println("Enter Patient DOB in the format dd-MM-yyyy.");
+		String rawDOB = scanner.next();
 		scanner.close();
+
 		// surrounded by a try catch block, send to the loopUpPatient class the
 		// first and last names typed in
-		try {
-			ReceptionistAccess.lookUpPatient("'" + first1 + "'", "'" + last1
-					+ "'");
+		
+			rA.displayPatientByNHSNumber(ReceptionistAccess
+					.lookUpPatientNHSNumber(foreName, surName,
+							correctMYSQLDateFormat(rawDOB)));
 
 			// if this fails catch the SQLException and print the stack trace
-		} catch (SQLException e) {
+		} catch (SQLException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -81,7 +93,7 @@ public class Receptionist extends Staff {
 	}
 
 	/**
-	 * Method to allow the receptionist to admit a patient
+	 * Method to allow the Receptionist to admit a patient
 	 */
 	public void admitPatient(int NHSNumber) {
 
@@ -112,4 +124,22 @@ public class Receptionist extends Staff {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Method to convert a date String in format dd-MM-yyyy to format yyyy-MM-dd
+	 * 
+	 * @param inputDOB
+	 *            , date in format dd-MM-yyyy
+	 * @return date in format yyyy-MM-dd
+	 * @throws ParseException
+	 */
+	public String correctMYSQLDateFormat(String inputDOB) throws ParseException {
+
+		Date dateDOB = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+				.parse(inputDOB);
+
+		return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+				.format(dateDOB);
+	}
+
 }
