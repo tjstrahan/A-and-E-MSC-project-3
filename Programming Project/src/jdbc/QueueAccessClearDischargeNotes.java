@@ -5,11 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/**
- * Class that uses JDBC code to connect to the database table 'Patient' to
- * add a discharge time
- */
-public class QueueAccessAddDischargeTime implements Runnable{
+public class QueueAccessClearDischargeNotes implements Runnable {
 
 	/**
 	 * Username for access to Database
@@ -83,7 +79,7 @@ public class QueueAccessAddDischargeTime implements Runnable{
 		return con;
 	}
 
-	public QueueAccessAddDischargeTime(int NHSNumber) {
+	public QueueAccessClearDischargeNotes(int NHSNumber) {
 		this.NHSNumber = NHSNumber;
 	}
 	
@@ -93,8 +89,9 @@ public class QueueAccessAddDischargeTime implements Runnable{
 		Connection con = getConnection();
 		try {
 			pstmt = con
-					.prepareStatement("UPDATE Patient SET Unix_Timestamp = unix_timestamp() WHERE NHS_number = ?");
-			pstmt.setInt(1, NHSNumber);
+					.prepareStatement("UPDATE Patient SET Notes = ? WHERE NHS_number = ?");
+			pstmt.setString(1, "");
+			pstmt.setInt(2, NHSNumber);
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -103,4 +100,7 @@ public class QueueAccessAddDischargeTime implements Runnable{
 		}
 
 	}
+
+
+
 }
