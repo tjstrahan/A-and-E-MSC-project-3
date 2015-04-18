@@ -586,6 +586,9 @@ public class QueueTimerAlt implements Runnable {
 		// Declare and initialise startTime variable
 		long startTime = TheQueue.OnCallTeam.get(0).getStartTimeTreat();
 
+		// Declare and initialise NHS number variable
+		int NHSNumber = 0;
+		
 		// Declare and initialise treatmentTime
 		long treatmentTime = currentTime - startTime;
 
@@ -598,6 +601,14 @@ public class QueueTimerAlt implements Runnable {
 			// Set the patients end treatment time
 			TheQueue.OnCallTeam.get(0).setEndTimeTreat(currentTime);
 
+			// Get NHS number of patient
+			NHSNumber = TheQueue.OnCallTeam.get(0).getNhsNumber();
+			
+			// Timestamp patients database record - run on separate thread in
+			// case network traffic slows down queue timer execution
+			Thread oCT = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
+			oCT.start();
+			
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.OnCallTeam.get(0));
 
