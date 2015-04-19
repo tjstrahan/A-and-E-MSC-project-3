@@ -41,20 +41,20 @@ public class QueueOperationsUT {
 
 		testPatients.add(new Patient("Mr", "FirstName1", "MiddleName1",
 				"LastName1", "01012001", "1 Test House", "Area", "Town",
-				"City", "BT1 1BT", 111111111, "Allergy", "Condition", "O-",
-				"M", "Mother", "Dr Doctor", "E0999"));
+				"City", "BT1 1BT", 100000000000L, 111111111, "Allergy", "Condition", "O-",
+				"M", "Mother", "Dr Doctor", "E0999", ""));
 		testPatients.add(new Patient("Mr", "FirstName2", "MiddleName2",
 				"LastName2", "01012001", "1 Test House", "Area", "Town",
-				"City", "BT1 1BT", 222222222, "Allergy", "Condition", "O-",
-				"M", "Mother", "Dr Doctor", "E0999"));
+				"City", "BT1 1BT", 100000000000L, 222222222, "Allergy", "Condition", "O-",
+				"M", "Mother", "Dr Doctor", "E0999", ""));
 		testPatients.add(new Patient("Mr", "FirstName3", "MiddleName3",
 				"LastName3", "01012001", "1 Test House", "Area", "Town",
-				"City", "BT1 1BT", 333333333, "Allergy", "Condition", "O-",
-				"M", "Mother", "Dr Doctor", "E0999"));
+				"City", "BT1 1BT", 100000000000L, 333333333, "Allergy", "Condition", "O-",
+				"M", "Mother", "Dr Doctor", "E0999", ""));
 		testPatients.add(new Patient("Mr", "FirstName4", "MiddleName4",
 				"LastName4", "01012001", "1 Test House", "Area", "Town",
-				"City", "BT1 1BT", 444444444, "Allergy", "Condition", "O-",
-				"M", "Mother", "Dr Doctor", "E0999"));
+				"City", "BT1 1BT", 100000000000L, 444444444, "Allergy", "Condition", "O-",
+				"M", "Mother", "Dr Doctor", "E0999", ""));
 	}
 
 	/**
@@ -524,7 +524,7 @@ public class QueueOperationsUT {
 	 * Test to ensure that the search by NHSNumber method works when no match is
 	 * found in the data
 	 */
-	@Test
+	@Test 
 	public void testSearchByNHSNumberNoMatch() {
 
 		// Temp LinkedList
@@ -540,7 +540,7 @@ public class QueueOperationsUT {
 		actualPatients.add(testPatients.get(3));
 
 		// Add expected patient to expectedPatients list
-		expectedPatients.add(testPatients.get(1));
+		expectedPatients.add(null);
 
 		// Temp LinkedList to hold search results
 		LinkedList<Patient> results = new LinkedList<Patient>();
@@ -549,7 +549,7 @@ public class QueueOperationsUT {
 		results.addAll(QueueOperations.searchByNHSNumber(actualPatients,
 				555555555));
 
-		// Check patients don't match
-		assertNotEquals(expectedPatients, results);
+		// Check number of results match - no results expected
+		assertEquals(0, results.size());
 	}
 }
