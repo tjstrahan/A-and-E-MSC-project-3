@@ -119,13 +119,12 @@ public class ReceptionistTest {
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
 				postcodeCorrect, StaffIDCorrect, contactNumberWrong,
 				loginIDCorrect, passwordCorrect);
-		assertEquals(contactNumberCorrect, receptionist.getMobileNumber());
+		assertEquals(contactNumberCorrect, receptionist.getContactNumber());
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoTitle() throws Exception {
-		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist(TitleWrong,
 				firstNameWrong, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
@@ -137,7 +136,6 @@ public class ReceptionistTest {
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoFirstName() throws Exception {
-		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist("Mr", firstNameWrong,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -173,7 +171,6 @@ public class ReceptionistTest {
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoDOB() throws Exception {
-		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist("Mr", firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthWrong,
 				addressLineOneCorrect, addressLineTwoCorrect,
@@ -185,7 +182,6 @@ public class ReceptionistTest {
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineOne() throws Exception {
-		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist(TitleCorrect,
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneWrong, addressLineTwoCorrect,
@@ -222,7 +218,6 @@ public class ReceptionistTest {
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoCity() throws Exception {
-		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist(TitleCorrect,
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
@@ -235,7 +230,6 @@ public class ReceptionistTest {
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoPostCode() throws Exception {
-		@SuppressWarnings("unused")
 		Receptionist receptionist = new Receptionist(TitleCorrect,
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
