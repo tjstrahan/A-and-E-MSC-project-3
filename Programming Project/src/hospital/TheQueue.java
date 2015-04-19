@@ -25,7 +25,7 @@ public class TheQueue {
 	 * If set to 40 it runs forty times faster than real time. To set to real
 	 * time set this variable to 1.
 	 */
-	public static final int TIME_FACTOR = 16;
+	public static final int TIME_FACTOR = 30;
 
 	/**
 	 * Maximum length of Waiting List as described in specifications
@@ -265,16 +265,16 @@ public class TheQueue {
 
 				// Reset timestamp on patients record - run on separate thread
 				// in case network traffic slows down queue execution
-				Thread oCTTimeClear = new Thread(new QueueAccessClearDischargeTime(
+				Thread oCT1TimeClear = new Thread(new QueueAccessClearDischargeTime(
 						OnCallTeam.get(0).getNhsNumber()));
-				oCTTimeClear.start();
+				oCT1TimeClear.start();
 
 				// Clear Notes (if any) from previous visit (if any) - run on
 				// separate thread in case network traffic slows down queue
 				// execution
-				Thread oCTNotesClear = new Thread(new QueueAccessClearDischargeNotes(
+				Thread oCT1NotesClear = new Thread(new QueueAccessClearDischargeNotes(
 						OnCallTeam.get(0).getNhsNumber()));
-				oCTNotesClear.start();
+				oCT1NotesClear.start();
 				
 				// Sets patients treatment start time
 				OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
@@ -686,6 +686,19 @@ public class TheQueue {
 
 				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
+				
+				// Reset timestamp on patients record - run on separate thread
+				// in case network traffic slows down queue execution
+				Thread tR1TimeClear = new Thread(new QueueAccessClearDischargeTime(
+						TreatmentRoom.get(index).getNhsNumber()));
+				tR1TimeClear.start();
+
+				// Clear Notes (if any) from previous visit (if any) - run on
+				// separate thread in case network traffic slows down queue
+				// execution
+				Thread tR1NotesClear = new Thread(new QueueAccessClearDischargeNotes(
+						TreatmentRoom.get(index).getNhsNumber()));
+				tR1NotesClear.start();
 
 				// Leave switch statement
 				break;
@@ -705,6 +718,19 @@ public class TheQueue {
 				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
 
+				// Reset timestamp on patients record - run on separate thread
+				// in case network traffic slows down queue execution
+				Thread tR2TimeClear = new Thread(new QueueAccessClearDischargeTime(
+						TreatmentRoom.get(index).getNhsNumber()));
+				tR2TimeClear.start();
+
+				// Clear Notes (if any) from previous visit (if any) - run on
+				// separate thread in case network traffic slows down queue
+				// execution
+				Thread tR2NotesClear = new Thread(new QueueAccessClearDischargeNotes(
+						TreatmentRoom.get(index).getNhsNumber()));
+				tR2NotesClear.start();
+
 				// Leave switch statement
 				break;
 
@@ -722,6 +748,19 @@ public class TheQueue {
 
 				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
+
+				// Reset timestamp on patients record - run on separate thread
+				// in case network traffic slows down queue execution
+				Thread tR3TimeClear = new Thread(new QueueAccessClearDischargeTime(
+						TreatmentRoom.get(index).getNhsNumber()));
+				tR3TimeClear.start();
+
+				// Clear Notes (if any) from previous visit (if any) - run on
+				// separate thread in case network traffic slows down queue
+				// execution
+				Thread tR3NotesClear = new Thread(new QueueAccessClearDischargeNotes(
+						TreatmentRoom.get(index).getNhsNumber()));
+				tR3NotesClear.start();
 
 				// Leave switch statement
 				break;
@@ -741,6 +780,19 @@ public class TheQueue {
 				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
 
+				// Reset timestamp on patients record - run on separate thread
+				// in case network traffic slows down queue execution
+				Thread tR4TimeClear = new Thread(new QueueAccessClearDischargeTime(
+						TreatmentRoom.get(index).getNhsNumber()));
+				tR4TimeClear.start();
+
+				// Clear Notes (if any) from previous visit (if any) - run on
+				// separate thread in case network traffic slows down queue
+				// execution
+				Thread tR4NotesClear = new Thread(new QueueAccessClearDischargeNotes(
+						TreatmentRoom.get(index).getNhsNumber()));
+				tR4NotesClear.start();
+
 				// Leave switch statement
 				break;
 
@@ -758,6 +810,19 @@ public class TheQueue {
 
 				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
+
+				// Reset timestamp on patients record - run on separate thread
+				// in case network traffic slows down queue execution
+				Thread tR5TimeClear = new Thread(new QueueAccessClearDischargeTime(
+						TreatmentRoom.get(index).getNhsNumber()));
+				tR5TimeClear.start();
+
+				// Clear Notes (if any) from previous visit (if any) - run on
+				// separate thread in case network traffic slows down queue
+				// execution
+				Thread tR5NotesClear = new Thread(new QueueAccessClearDischargeNotes(
+						TreatmentRoom.get(index).getNhsNumber()));
+				tR5NotesClear.start();
 
 				// Leave switch statement
 				break;
@@ -837,6 +902,20 @@ public class TheQueue {
 
 			// Set time that on call team started treating patient
 			OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
+			
+			// Reset timestamp on patients record - run on separate thread
+			// in case network traffic slows down queue execution
+			Thread oCT2TimeClear = new Thread(new QueueAccessClearDischargeTime(
+					OnCallTeam.get(0).getNhsNumber()));
+			oCT2TimeClear.start();
+
+			// Clear Notes (if any) from previous visit (if any) - run on
+			// separate thread in case network traffic slows down queue
+			// execution
+			Thread oCT2NotesClear = new Thread(new QueueAccessClearDischargeNotes(
+					OnCallTeam.get(0).getNhsNumber()));
+			oCT2NotesClear.start();
+
 		}
 
 	}
