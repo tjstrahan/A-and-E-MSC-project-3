@@ -64,11 +64,11 @@ public class StaffTest {
 		StaffIDLowerBoundary = 100000;
 		StaffIDUpperBoundary = 999999;
 
-		mobileNumberCorrect = (long) 447592010304L;
-		mobileNumberLowerBoundary = (long) 100000000000L;
-		mobileNumberUpperBoundary = (long) 999999999999L;
-		mobileNumberShort = (long) 44759201030L;
-		mobileNumberLong = (long) 4475920103040L;
+		mobileNumberCorrect = 447592010304L;
+		mobileNumberLowerBoundary = 100000000000L;
+		mobileNumberUpperBoundary = 999999999999L;
+		mobileNumberShort = 44759201030L;
+		mobileNumberLong = 4475920103040L;
 
 	}
 
@@ -84,7 +84,7 @@ public class StaffTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertNotNull(staff);
 	}
@@ -96,7 +96,7 @@ public class StaffTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDShort, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDShort, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(StaffIDCorrect, staff.getStaffID());
 	}
@@ -107,7 +107,7 @@ public class StaffTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordShort);
 		assertEquals(passwordCorrect, staff.getPassword());
 
@@ -119,7 +119,7 @@ public class StaffTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDShort,
+				mobileNumberCorrect, StaffIDCorrect, loginIDShort,
 				passwordCorrect);
 
 		assertEquals(loginIDCorrect, staff.getLoginID());
@@ -132,9 +132,9 @@ public class StaffTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberShort, loginIDCorrect,
+				mobileNumberShort, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(mobileNumberCorrect, staff.getMobileNumber());
+		assertEquals(mobileNumberCorrect, staff.getContactNumber());
 
 	}
 
@@ -143,7 +143,7 @@ public class StaffTest {
 		Staff staff = new Staff(TitleWrong, firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(TitleCorrect, staff.getTitle());
 
@@ -154,7 +154,7 @@ public class StaffTest {
 		Staff staff = new Staff("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(firstNameCorrect, staff.getFirstName());
 
@@ -165,7 +165,7 @@ public class StaffTest {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameWrong,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(middleNameCorrect, staff.getMiddleName());
 
@@ -176,7 +176,7 @@ public class StaffTest {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(lastNameCorrect, staff.getLastName());
 
@@ -187,7 +187,7 @@ public class StaffTest {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(dateOfBirthCorrect, staff.getDateOfBirth());
 
@@ -199,7 +199,7 @@ public class StaffTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneWrong, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(addressLineOneCorrect, staff.getAddressLineOne());
 
@@ -211,7 +211,7 @@ public class StaffTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoWrong,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(addressLineTwoCorrect, staff.getAddressLineTwo());
 
@@ -223,7 +223,7 @@ public class StaffTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeWrong, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(addressLineThreeCorrect, staff.getAddressLineThree());
 
@@ -235,7 +235,7 @@ public class StaffTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityWrong, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(cityCorrect, staff.getCity());
 
@@ -247,7 +247,7 @@ public class StaffTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postCodeWrong,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(postcodeCorrect, staff.getPostcode());
 
@@ -295,38 +295,38 @@ public class StaffTest {
 	public void testSetMobileNumber() throws IllegalArgumentException,
 			Exception {
 		Staff staff = new Staff();
-		staff.setMobileNumber(mobileNumberCorrect);
-		assertEquals(mobileNumberCorrect, staff.getMobileNumber());
+		staff.setContactNumber(mobileNumberCorrect);
+		assertEquals(mobileNumberCorrect, staff.getContactNumber());
 	}
 
 	@Test
 	public void testSetMobileNumberLowerBoundary()
 			throws IllegalArgumentException, Exception {
 		Staff staff = new Staff();
-		staff.setMobileNumber(mobileNumberLowerBoundary);
-		assertEquals(mobileNumberLowerBoundary, staff.getMobileNumber());
+		staff.setContactNumber(mobileNumberLowerBoundary);
+		assertEquals(mobileNumberLowerBoundary, staff.getContactNumber());
 	}
 
 	@Test
 	public void testSetMobileNumberUpperBoundary()
 			throws IllegalArgumentException, Exception {
 		Staff staff = new Staff();
-		staff.setMobileNumber(mobileNumberUpperBoundary);
-		assertEquals(mobileNumberUpperBoundary, staff.getMobileNumber());
+		staff.setContactNumber(mobileNumberUpperBoundary);
+		assertEquals(mobileNumberUpperBoundary, staff.getContactNumber());
 	}
 
 	@Test(expected = Exception.class)
 	public void testSetMobileNumberShort() throws IllegalArgumentException,
 			Exception {
 		Staff staff = new Staff();
-		staff.setMobileNumber(mobileNumberShort);
+		staff.setContactNumber(mobileNumberShort);
 	}
 
 	@Test(expected = Exception.class)
 	public void testSetMobileNumberLong() throws IllegalArgumentException,
 			Exception {
 		Staff staff = new Staff();
-		staff.setMobileNumber(mobileNumberLong);
+		staff.setContactNumber(mobileNumberLong);
 	}
 
 	@Test
@@ -388,7 +388,7 @@ public class StaffTest {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		staff.toString();
 	}
