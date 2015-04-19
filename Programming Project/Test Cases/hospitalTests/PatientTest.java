@@ -32,7 +32,7 @@ public class PatientTest {
 	int nhsNumberLowerBoundary, nhsNumberUpperBoundary, nhsNumberCorrect,
 			nhsNumberLowerBoundaryIncorrect, nhsNumberUpperBoundaryIncorrect,
 			nhsNumberIncorrect, incorrectGPCodeNumber;
-	
+
 	long contactNoCorrect;
 
 	@Before
@@ -101,10 +101,10 @@ public class PatientTest {
 		incorrectGPCode = "F1234";
 		incorrectGPCodeLong = "E12345";
 		incorrectEmptyGPCode = null;
-		
+
 		// Test data for notes
-		
-		notes = null;
+
+		notes = "";
 
 	}
 
@@ -120,65 +120,63 @@ public class PatientTest {
 		Patient patient = new Patient(titleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect, contactNoCorrect, 
-				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
-				aPositive, female, correctNextOfKin, correctGPName,
-				correctGPCode, notes);
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				contactNoCorrect, nhsNumberCorrect, allergiesCorrect,
+				knownConditionsCorrect, aPositive, female, correctNextOfKin,
+				correctGPName, correctGPCode, notes);
 		assertNotNull(patient);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testConstructorArgumentsIncorrectNHSNumber()
+	@Test (expected = IllegalArgumentException.class)
+	public void testConstructorArgumentsInCorrectNHSNumber()
 			throws IllegalArgumentException, Exception {
 		Patient patient = new Patient(titleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect, contactNoCorrect,
-				nhsNumberIncorrect, allergiesCorrect, knownConditionsCorrect,
-				aPositive, female, correctNextOfKin, correctGPName,
-				correctGPCode, notes);
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				contactNoCorrect, nhsNumberIncorrect, allergiesCorrect,
+				knownConditionsCorrect, aPositive, female, correctNextOfKin,
+				correctGPName, correctGPCode, notes);
 		assertNotNull(patient);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testConstructorArgumentsIncorrectBloodGroup()
+	@Test (expected = IllegalArgumentException.class)
+	public void testConstructorArgumentsInCorrectBloodGroup()
 			throws IllegalArgumentException, Exception {
 		Patient patient = new Patient(titleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect, contactNoCorrect,
-				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
-				incorrectBloodType, female, correctNextOfKin, correctGPName,
-				correctGPCode, notes);
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				contactNoCorrect, nhsNumberCorrect, allergiesCorrect,
+				knownConditionsCorrect, incorrectBloodType, female, correctNextOfKin,
+				correctGPName, correctGPCode, notes);
 		assertNotNull(patient);
 	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testConstructorArgumentsIncorrectSex()
+	
+	public void testConstructorArgumentsInCorrectSex()
 			throws IllegalArgumentException, Exception {
 		Patient patient = new Patient(titleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect, contactNoCorrect,
-				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
-				aPositive, incorrectSex, correctNextOfKin, correctGPName,
-				correctGPCode, notes);
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				contactNoCorrect, nhsNumberCorrect, allergiesCorrect,
+				knownConditionsCorrect, abNegative, incorrectSex, correctNextOfKin,
+				correctGPName, correctGPCode, notes);
 		assertNotNull(patient);
 	}
-
-	@Test(expected = NullPointerException.class)
-	public void testConstructorArgumentsIncorrectGPName()
+	
+	public void testConstructorArgumentsInCorrectGPName()
 			throws IllegalArgumentException, Exception {
 		Patient patient = new Patient(titleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect, contactNoCorrect,
-				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
-				aPositive, female, correctNextOfKin, incorrectGPName,
-				correctGPCode, notes);
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				contactNoCorrect, nhsNumberCorrect, allergiesCorrect,
+				knownConditionsCorrect, abNegative, male, correctNextOfKin,
+				incorrectGPName, correctGPCode, notes);
 		assertNotNull(patient);
 	}
-
+	
 	@Test
 	public void testSetCorrectNHSNumber() {
 		Patient patient = new Patient();
