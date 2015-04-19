@@ -2,6 +2,7 @@ package hospital;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class QueueOperations {
 
@@ -45,11 +46,106 @@ public class QueueOperations {
 	 */
 	public static long extraTime5 = 0L;
 
+	/**
+	 * To show if treatment time has already been extended
+	 */
 	public static boolean treatmentRoom1extended = false;
+	
+	/**
+	 * To show if treatment time has already been extended
+	 */
 	public static boolean treatmentRoom2extended = false;
+	
+	/**
+	 * To show if treatment time has already been extended
+	 */
 	public static boolean treatmentRoom3extended = false;
+	
+	/**
+	 * To show if treatment time has already been extended
+	 */
 	public static boolean treatmentRoom4extended = false;
+	
+	/**
+	 * To show if treatment time has already been extended
+	 */
 	public static boolean treatmentRoom5extended = false;
+
+	/**
+	 * Static instantiation of the scanner class
+	 */
+	static Scanner scanner = new Scanner(System.in);
+
+	/**
+	 * Method to get the NHS number of a patient in a treatment room
+	 * 
+	 * @param treatmentRoom
+	 * @return
+	 * @throws Exception
+	 * @throws IllegalArgumentException
+	 */
+	public int getNHSNumberOfTreatmentRoomPatient() throws IllegalArgumentException, Exception {
+
+		int NHSNumber = 0;
+		int treatmentRoom = 0;
+		System.out.println("Enter Treatment Room");
+		treatmentRoom = scanner.nextInt();
+
+		if (treatmentRoom > 0 && treatmentRoom < 5) {
+			int treatmentRoomElement = treatmentRoom - 1;
+
+			if (TheQueue.TreatmentRoom.get(treatmentRoomElement) == null) {
+				throw new IllegalArgumentException("Treatment Room Empty");
+			} else {
+
+				NHSNumber = TheQueue.TreatmentRoom.get(treatmentRoomElement)
+						.getNhsNumber();
+			}
+		} else {
+			throw new Exception("Invalid Treatment Room");
+		}
+		return NHSNumber;
+	}
+
+	/**
+	 * Method to get the NHS number of a patient being treated by on call team
+	 * 
+	 * @param treatmentRoom
+	 * @return
+	 * @throws Exception
+	 */
+	public int getNHSNumberOfOnCallPatient() throws Exception {
+
+		int NHSNumber = 0;
+		if (TheQueue.onCallInSitu) {
+			NHSNumber = TheQueue.OnCallTeam.get(0).getNhsNumber();
+		} else {
+			throw new Exception("On Call Team not treating anyone");
+		}
+		return NHSNumber;
+	}
+
+	/**
+	 * Method which takes input and passes it to the extraTreatmentTime method -
+	 * placed here so all relevant classes can call it and reduce duplication of
+	 * code
+	 * 
+	 * @throws Exception
+	 */
+	public void extendTreatment() throws Exception {
+
+		boolean extend = false;
+		int treatmentRoom = 0;
+		System.out.println("Enter Treatment Room you wish to extend");
+		treatmentRoom = scanner.nextInt();
+		System.out.println("Confirm you wish to extend treatment"); // could be tick box
+		extend = scanner.nextBoolean();
+		if (treatmentRoom > 0 && treatmentRoom < 5) {
+			extraTreatmentTime(extend, treatmentRoom);
+		} else {
+			throw new Exception("Invalid Treatment Room");
+		}
+	}
 
 	/**
 	 * Method which can be called by a doctor to increase a patients period of
@@ -141,6 +237,46 @@ public class QueueOperations {
 	}
 
 	/**
+	 * Method to take input from user and search the Treatment Rooms for
+	 * patients of a particular triage category
+	 * 
+	 * @throws Exception
+	 */
+	public void searchTreatmentRoomsForTriageCategory() throws Exception {
+
+		int category = 0;
+		System.out.println("Enter Triage Category");
+		category = scanner.nextInt();
+
+		if (category > 0 && category < 5) {
+			System.out.println(searchForTriageCategory(TheQueue.TreatmentRoom,
+					category));
+		} else {
+			throw new Exception("Invalid Triage Category");
+		}
+	}
+
+	/**
+	 * Method to take input from user and search the Waiting List for patients
+	 * of a particular triage category
+	 * 
+	 * @throws Exception
+	 */
+	public void searchWaitingListForTriageCategory() throws Exception {
+
+		int category = 0;
+		System.out.println("Enter Triage Category");
+		category = scanner.nextInt();
+
+		if (category > 0 && category < 5) {
+			System.out.println(searchForTriageCategory(TheQueue.WaitingList,
+					category));
+		} else {
+			throw new Exception("Invalid Triage Category");
+		}
+	}
+
+	/**
 	 * Method to search a list of patients for a specific Triage category and
 	 * display to screen
 	 * 
@@ -196,6 +332,40 @@ public class QueueOperations {
 	}
 
 	/**
+	 * Method to take user input for patient forename and surname and search the
+	 * treatment rooms
+	 */
+	public void searchTreatmentRoomsByName() {
+
+		String forename = "";
+		String surname = "";
+		System.out.println("Please enter forename");
+		forename = scanner.next();
+		System.out.println("Please enter surname");
+		surname = scanner.next();
+
+		System.out.println(searchForPatientByName(TheQueue.TreatmentRoom,
+				forename, surname));
+	}
+
+	/**
+	 * Method to take user input for patient forename and surname and search the
+	 * waiting list
+	 */
+	public void searchWaitingListByName() {
+
+		String forename = "";
+		String surname = "";
+		System.out.println("Please enter forename");
+		forename = scanner.next();
+		System.out.println("Please enter surname");
+		surname = scanner.next();
+
+		System.out.println(searchForPatientByName(TheQueue.WaitingList,
+				forename, surname));
+	}
+
+	/**
 	 * Method to search a list of patients by patient forename and surname and
 	 * display to screen
 	 * 
@@ -241,14 +411,50 @@ public class QueueOperations {
 	}
 
 	/**
+	 * Method to take input from the user and search Treatment Room by NHS
+	 * number
+	 * 
+	 * @throws Exception
+	 */
+	public void searchTreatmentRoomByNHSNumber() throws Exception {
+
+		int NHSNumber = 0;
+		System.out.println("Enter NHS Number");
+		NHSNumber = scanner.nextInt();
+		if (NHSNumber >= NHS_NUMBER_MIN && NHSNumber <= NHS_NUMBER_MAX) {
+			System.out.println(searchByNHSNumber(TheQueue.TreatmentRoom,
+					NHSNumber));
+		} else {
+			throw new Exception();
+		}
+	}
+
+	/**
+	 * Method to take input from the user and search Waiting List by NHS number
+	 * 
+	 * @throws Exception
+	 */
+	public void searchWaitingListByNHSNumber() throws Exception {
+
+		int NHSNumber = 0;
+		System.out.println("Enter NHS Number");
+		NHSNumber = scanner.nextInt();
+		if (NHSNumber >= NHS_NUMBER_MIN && NHSNumber <= NHS_NUMBER_MAX) {
+			System.out.println(searchByNHSNumber(TheQueue.WaitingList,
+					NHSNumber));
+		} else {
+			throw new Exception();
+		}
+	}
+
+	/**
 	 * Method to search a list of patients by NHS number and display to screen
 	 * 
 	 * @param patient
 	 *            , a <code>List</code> of Patient objects
 	 * @param numberBeingSearchedFor
 	 *            , an <code>int</code>, the NHS number being searched for
-	 * @return a <code>Patient</code>, the patient who match the
-	 *         search criteria
+	 * @return a <code>Patient</code>, the patient who match the search criteria
 	 */
 	public static LinkedList<Patient> searchByNHSNumber(List<Patient> patient,
 			int numberBeingSearchedFor) {
@@ -260,20 +466,12 @@ public class QueueOperations {
 		// searched for criteria
 		boolean matches = false;
 
-		// Check number being searched for is a valid NHS number
-		if (numberBeingSearchedFor < NHS_NUMBER_MIN
-				|| numberBeingSearchedFor > NHS_NUMBER_MAX) {
-			throw new IllegalArgumentException("NHS number is 9 digits long");
+		for (Patient patientWaiting : patient) {
 
-		} else {
-			// Enhanced For Loop to search for patient
-			for (Patient patientWaiting : patient) {
-
-				// If the NHS number matches print out patient
-				if (patientWaiting.getNhsNumber() == numberBeingSearchedFor) {
-					matchedPatient.add(patientWaiting);
-					matches = true;
-				}
+			// If the NHS number matches print out patient
+			if (patientWaiting.getNhsNumber() == numberBeingSearchedFor) {
+				matchedPatient.add(patientWaiting);
+				matches = true;
 			}
 		}
 
@@ -281,13 +479,11 @@ public class QueueOperations {
 		if (!matches) {
 			System.out.println("No Matches");
 		}
-		
+
 		return matchedPatient;
 	}
-	
+
 	public static void changeTriageCategory() {
-		
-		
-		
+
 	}
 }
