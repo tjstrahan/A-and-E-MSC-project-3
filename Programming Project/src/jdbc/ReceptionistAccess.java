@@ -368,12 +368,12 @@ public class ReceptionistAccess {
 	 * @param contactNumber
 	 * @throws SQLException
 	 */
-	public void updateContactNumber(int NHSNumber, String phoneNumber)
+	public void updateContactNumber(int NHSNumber, long contactNumber2)
 			throws SQLException, IllegalArgumentException {
 
 		Long contactNumber;
 		
-		contactNumber = Long.parseLong(phoneNumber);
+		contactNumber = contactNumber2;
 		
 		if (contactNumber < MOBILE_NUMBER_MIN_LENGTH
 				|| contactNumber > MOBILE_NUMBER_MAX_LENGTH) {
