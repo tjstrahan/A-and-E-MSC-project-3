@@ -181,18 +181,6 @@ public class ReceptionistAccess {
 
 		return con;
 	}
-
-	/**
-	 * Method for Looking up Patients and displaying details by NHS_number in the table 'Patient'
-	 * 
-	 * @throws SQLException
-	 * @throws ParseException 
-	 */
-	public void displayPatientByNHSNumber(int NHSNumber)
-			throws SQLException, ParseException {
-		GeneralAccess gA = new GeneralAccess();
-		gA.displayPatientByNHSNumber(NHSNumber);
-	}
 	
 	/**
 	 * Method for finding a patients NHS number in the database
@@ -226,8 +214,6 @@ public class ReceptionistAccess {
 		return NHS_number;
 	}
 
-
-	
 	/**
 	 * Method to update the first line of the address
 	 * 
@@ -628,7 +614,5 @@ public class ReceptionistAccess {
 		}
 
 	}
-	
-
 	
 } // Class Close
