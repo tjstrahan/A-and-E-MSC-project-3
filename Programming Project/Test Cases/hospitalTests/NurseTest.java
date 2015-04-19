@@ -68,7 +68,7 @@ public class NurseTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertNotNull(nurse);
 	}
@@ -80,7 +80,7 @@ public class NurseTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDWrong, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDWrong, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(StaffIDCorrect, nurse.getStaffID());
 	}
@@ -91,7 +91,7 @@ public class NurseTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordWrong);
 		assertEquals(passwordCorrect, nurse.getPassword());
 
@@ -103,7 +103,7 @@ public class NurseTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDWrong,
+				mobileNumberCorrect, StaffIDCorrect, loginIDWrong,
 				passwordCorrect);
 
 		assertEquals(loginIDCorrect, nurse.getLoginID());
@@ -116,9 +116,9 @@ public class NurseTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberWrong, loginIDCorrect,
+				mobileNumberWrong, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(mobileNumberCorrect, nurse.getMobileNumber());
+		assertEquals(mobileNumberCorrect, nurse.getContactNumber());
 
 	}
 
@@ -128,7 +128,7 @@ public class NurseTest {
 		Nurse nurse = new Nurse(TitleWrong, firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 
 	}
@@ -139,7 +139,7 @@ public class NurseTest {
 		Nurse nurse = new Nurse("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 	
 	}
@@ -149,7 +149,7 @@ public class NurseTest {
 		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameWrong,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(middleNameCorrect, nurse.getMiddleName());
 
@@ -161,7 +161,7 @@ public class NurseTest {
 		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 	
 	}
@@ -172,7 +172,7 @@ public class NurseTest {
 		Nurse nurse = new Nurse("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 
 	}
@@ -184,7 +184,7 @@ public class NurseTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneWrong, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 	
 	}
@@ -195,7 +195,7 @@ public class NurseTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoWrong,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(addressLineTwoCorrect, nurse.getAddressLineTwo());
 
@@ -207,7 +207,7 @@ public class NurseTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeWrong, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(addressLineThreeCorrect, nurse.getAddressLineThree());
 
@@ -220,7 +220,7 @@ public class NurseTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityWrong, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 	
 	}
@@ -232,7 +232,7 @@ public class NurseTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postCodeWrong,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				mobileNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 
 	}
