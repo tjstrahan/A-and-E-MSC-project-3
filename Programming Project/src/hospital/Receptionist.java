@@ -9,12 +9,15 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import hospital.Patient;
+import jdbc.GeneralAccess;
 import jdbc.ReceptionistAccess;
 
 public class Receptionist extends Staff {
 
 	public static LinkedList<Patient> patientsFromDB = new LinkedList<Patient>();
 	static Scanner scanner = new Scanner(System.in);
+	static ReceptionistAccess rA = new ReceptionistAccess();
+	
 	private static final int NHS_NUMBER_MAX = 999999999;
 
 	/**
@@ -66,17 +69,17 @@ public class Receptionist extends Staff {
 
 		// declared int var to hold input from user
 		int input;
-		System.out.println("please make a selection");
-		System.out.println("1. Change address line one");
-		System.out.println("2. Change address line two");
-		System.out.println("3. Change address line three");
-		System.out.println("4. Update city");
-		System.out.println("5. Update Postcode");
-		System.out.println("6. Update Contact number");
-		System.out.println("7. Update allergies");
-		System.out.println("8, Add allergies");
-		System.out.println("9. Update first condition");
-		System.out.println("10. Update conditions");
+		System.out.println("Please make a selection");
+		System.out.println("1.  Change address line one");
+		System.out.println("2.  Change address line two");
+		System.out.println("3.  Change address line three");
+		System.out.println("4.  Update city");
+		System.out.println("5.  Update Postcode");
+		System.out.println("6.  Update Contact number");
+		System.out.println("7.  Update allergies");
+		System.out.println("8.  Add allergies");
+		System.out.println("9.  Update conditions");
+		System.out.println("10. Add conditions");
 		System.out.println("11. Update next of kin");
 		System.out.println("12. Look up patient");
 
@@ -134,7 +137,7 @@ public class Receptionist extends Staff {
 	 */
 	public void lookUpPatient() {
 
-		ReceptionistAccess rA = new ReceptionistAccess();
+		GeneralAccess gA = new GeneralAccess();
 
 		String firstName, lastName, dob;
 		// PRint out look up patient
@@ -156,7 +159,7 @@ public class Receptionist extends Staff {
 		// surrounded by a try catch block, send to the loopUpPatient class the
 		// first and last names typed in
 		try {
-			rA.displayPatientByNHSNumber(ReceptionistAccess
+			gA.displayPatientByNHSNumber(ReceptionistAccess
 					.lookUpPatientNHSNumber(firstName, lastName,
 							correctMYSQLDateFormat(dob)));
 
@@ -172,11 +175,11 @@ public class Receptionist extends Staff {
 	 * Method to allow the Receptionist to admit a patient
 	 */
 	public void admitPatient(int nhsNumber) {
-		do {
-			System.out.print("Please enter nhsNumber : ");
-			nhsNumber = scanner.nextInt();
+		//do {
+			//System.out.print("Please enter nhsNumber : ");
+			//nhsNumber = scanner.nextInt();
 			// Check that the NHS number is nine figures long
-		} while (nhsNumber >= NHS_NUMBER_MIN && nhsNumber <= NHS_NUMBER_MAX);
+		//} while (nhsNumber >= NHS_NUMBER_MIN && nhsNumber <= NHS_NUMBER_MAX);
 
 		try {
 			ReceptionistAccess.admitPatient(nhsNumber);
@@ -224,7 +227,7 @@ public class Receptionist extends Staff {
 	}
 
 	public static void updateFirstLinePatientAddress() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		String addressLineOne;
 
@@ -247,7 +250,7 @@ public class Receptionist extends Staff {
 	}
 
 	public static void updateSecondLineOfPatientAddress() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		String addressLineTwo;
 
@@ -269,7 +272,7 @@ public class Receptionist extends Staff {
 	}
 
 	public static void updateThirdLineOfPatientAddress() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		String addressLineThree;
 
@@ -292,7 +295,7 @@ public class Receptionist extends Staff {
 	}
 
 	public static void updatePatientCity() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		String city;
 
@@ -315,7 +318,7 @@ public class Receptionist extends Staff {
 	}
 
 	public static void updatePatientPostcode() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		String postCode;
 
@@ -337,11 +340,11 @@ public class Receptionist extends Staff {
 	}
 
 	public static void updatePatientContactNumber() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		long contactNumber = 0;
 
-		Long contact = contactNumber;
+		//Long contact = contactNumber;
 
 		System.out.print("Please enter contact number : ");
 		contactNumber = scanner.nextLong();
@@ -364,7 +367,7 @@ public class Receptionist extends Staff {
 	}
 
 	public static void addPatientFirstAllergies() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		String allergies;
 
@@ -385,7 +388,7 @@ public class Receptionist extends Staff {
 	}
 
 	public static void addPatientMoreAllergies() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		String allergies;
 
@@ -407,7 +410,7 @@ public class Receptionist extends Staff {
 	}
 
 	public static void addFirstKnownPatientConditions() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		String knownConditions;
 
@@ -429,7 +432,7 @@ public class Receptionist extends Staff {
 	}
 
 	public static void addMoreKnownPatientConditions() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		String knownConditions;
 
@@ -450,7 +453,7 @@ public class Receptionist extends Staff {
 	}
 
 	public static void updateNextOfKin() {
-		ReceptionistAccess rA = new ReceptionistAccess();
+		
 		int nhsNumber;
 		String nextOfKin = null;
 
