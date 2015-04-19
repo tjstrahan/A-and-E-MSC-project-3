@@ -280,7 +280,6 @@ public class QueueOperations {
 		// If no matches
 		if (!matches) {
 			System.out.println("No Matches");
-		//	matchedPatient = null;
 		}
 		
 		return matchedPatient;
