@@ -43,6 +43,7 @@ public class AdHocJDBCTest {
 		
 			doc.writeNotesOnPatientRecord(111121111, "Compound fracture of tibula and fibula. Could require physio and OT follow-up");
 			ra.displayPatientByNHSNumber(111121111);
+			doc.displayPatientByNHSNumber(111121111);
 		} catch (SQLException | ParseException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

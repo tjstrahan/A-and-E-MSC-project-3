@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 /**
  * Class that uses JDBC code to connect to the database table 'Patient' and
@@ -82,6 +83,18 @@ public class DoctorAccess {
 		return con;
 	}
 
+	/**
+	 * Method for Looking up Patients and displaying details by NHS_number in the table 'Patient'
+	 * 
+	 * @throws SQLException
+	 * @throws ParseException 
+	 */
+	public void displayPatientByNHSNumber(int NHSNumber)
+			throws SQLException, ParseException {
+		GeneralAccess gA = new GeneralAccess();
+		gA.displayPatientByNHSNumber(NHSNumber);
+	}
+	
 	/**
 	 * Method to get the NHS number of a patient in a treatment room
 	 * 
