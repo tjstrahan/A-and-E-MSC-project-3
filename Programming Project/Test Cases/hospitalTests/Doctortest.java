@@ -19,7 +19,7 @@ public class Doctortest{
 
 	int loginIDCorrect, loginIDWrong, StaffIDCorrect, StaffIDWrong;
 
-	long mobileNumberCorrect, mobileNumberWrong;
+	long contactNumberCorrect, contactNumberWrong;
 
 	@Before
 	public void setUp() throws Exception {
@@ -53,8 +53,8 @@ public class Doctortest{
 		StaffIDCorrect = 555555;
 		StaffIDWrong = 5555;
 
-		mobileNumberCorrect = 44759456781L;
-		mobileNumberWrong = 4475920103040L;
+		contactNumberCorrect = 447594567811L;
+		contactNumberWrong = 4475920103040L;
 	}
 
 	@Test
@@ -75,7 +75,7 @@ public class Doctortest{
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertNotNull(doctor);
 	}
@@ -87,7 +87,7 @@ public class Doctortest{
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDWrong, mobileNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDWrong, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(StaffIDCorrect, doctor.getStaffID());
 	}
@@ -98,7 +98,7 @@ public class Doctortest{
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordWrong);
 		assertEquals(passwordCorrect, doctor.getPassword());
 
@@ -110,7 +110,7 @@ public class Doctortest{
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDWrong,
+				contactNumberCorrect, StaffIDCorrect, loginIDWrong,
 				passwordCorrect);
 
 		assertEquals(loginIDCorrect, doctor.getLoginID());
@@ -123,9 +123,9 @@ public class Doctortest{
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberWrong, loginIDCorrect,
+				contactNumberWrong, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
-		assertEquals(mobileNumberCorrect, doctor.getMobileNumber());
+		assertEquals(contactNumberCorrect, doctor.getContactNumber());
 
 	}
 
@@ -135,7 +135,7 @@ public class Doctortest{
 		Doctor doctor = new Doctor(TitleWrong, firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 
 	}
@@ -146,7 +146,7 @@ public class Doctortest{
 		Doctor doctor = new Doctor("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 
 	}
@@ -156,7 +156,7 @@ public class Doctortest{
 		Doctor doctor = new Doctor("Mr", firstNameCorrect, middleNameWrong,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(middleNameCorrect, doctor.getMiddleName());
 
@@ -168,7 +168,7 @@ public class Doctortest{
 		Doctor doctor = new Doctor("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 
 	}
@@ -179,7 +179,7 @@ public class Doctortest{
 		Doctor doctor = new Doctor("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, mobileNumberCorrect,
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 
 	}
@@ -191,7 +191,7 @@ public class Doctortest{
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneWrong, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 
 	}
@@ -202,7 +202,7 @@ public class Doctortest{
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoWrong,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(addressLineTwoCorrect, doctor.getAddressLineTwo());
 
@@ -214,7 +214,7 @@ public class Doctortest{
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeWrong, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(addressLineThreeCorrect, doctor.getAddressLineThree());
 
@@ -227,7 +227,7 @@ public class Doctortest{
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityWrong, postcodeCorrect,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 	
 	}
@@ -239,7 +239,7 @@ public class Doctortest{
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postCodeWrong,
-				StaffIDCorrect, mobileNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 
 	}
