@@ -27,11 +27,13 @@ public class PatientTest {
 			oNegative, incorrectBloodType, incorrectBloodTypeLong,
 			correctNextOfKin, correctGPName, incorrectGPName, correctGPCode,
 			incorrectGPCode, incorrectEmptyGPCode, incorrectGPCodeLong, female,
-			male, incorrectSex;
+			male, incorrectSex, notes;
 
 	int nhsNumberLowerBoundary, nhsNumberUpperBoundary, nhsNumberCorrect,
 			nhsNumberLowerBoundaryIncorrect, nhsNumberUpperBoundaryIncorrect,
 			nhsNumberIncorrect, incorrectGPCodeNumber;
+	
+	long contactNoCorrect;
 
 	@Before
 	public void setUp() throws Exception {
@@ -54,6 +56,7 @@ public class PatientTest {
 		cityWrong = null;
 		postcodeCorrect = "BT33 5LJ";
 		postCodeWrong = null;
+		contactNoCorrect = 441234567899L;
 
 		// Test data for NHS number
 		nhsNumberCorrect = 123456789;
@@ -98,6 +101,10 @@ public class PatientTest {
 		incorrectGPCode = "F1234";
 		incorrectGPCodeLong = "E12345";
 		incorrectEmptyGPCode = null;
+		
+		// Test data for notes
+		
+		notes = null;
 
 	}
 
@@ -113,10 +120,10 @@ public class PatientTest {
 		Patient patient = new Patient(titleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect, contactNoCorrect, 
 				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
 				aPositive, female, correctNextOfKin, correctGPName,
-				correctGPCode);
+				correctGPCode, notes);
 		assertNotNull(patient);
 	}
 
@@ -126,10 +133,10 @@ public class PatientTest {
 		Patient patient = new Patient(titleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect, contactNoCorrect,
 				nhsNumberIncorrect, allergiesCorrect, knownConditionsCorrect,
 				aPositive, female, correctNextOfKin, correctGPName,
-				correctGPCode);
+				correctGPCode, notes);
 		assertNotNull(patient);
 	}
 
@@ -139,10 +146,10 @@ public class PatientTest {
 		Patient patient = new Patient(titleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect, contactNoCorrect,
 				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
 				incorrectBloodType, female, correctNextOfKin, correctGPName,
-				correctGPCode);
+				correctGPCode, notes);
 		assertNotNull(patient);
 	}
 
@@ -152,10 +159,10 @@ public class PatientTest {
 		Patient patient = new Patient(titleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect, contactNoCorrect,
 				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
 				aPositive, incorrectSex, correctNextOfKin, correctGPName,
-				correctGPCode);
+				correctGPCode, notes);
 		assertNotNull(patient);
 	}
 
@@ -165,10 +172,10 @@ public class PatientTest {
 		Patient patient = new Patient(titleCorrect, firstNameCorrect,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect, contactNoCorrect,
 				nhsNumberCorrect, allergiesCorrect, knownConditionsCorrect,
 				aPositive, female, correctNextOfKin, incorrectGPName,
-				correctGPCode);
+				correctGPCode, notes);
 		assertNotNull(patient);
 	}
 

@@ -200,6 +200,7 @@ public class Patient extends Person {
 		setNextOfKin(nextOfKin);
 		setGpName(gpName);
 		setGpCode(gpCode);
+		this.notes = notes;
 
 		// following are variables which have preset values when a patient
 		// object if created, therefore are automatically set
