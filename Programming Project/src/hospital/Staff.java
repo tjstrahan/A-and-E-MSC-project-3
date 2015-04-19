@@ -128,15 +128,6 @@ public class Staff extends Person {
 	}
 
 	/**
-	 * Get method which will return the mobile number
-	 * 
-	 * @return
-	 */
-	public long getMobileNumber() {
-		return mobileNumber;
-	}
-
-	/**
 	 * Get login ID method
 	 * 
 	 * @return
