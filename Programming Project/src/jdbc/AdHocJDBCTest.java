@@ -11,7 +11,9 @@ public class AdHocJDBCTest {
 		ReceptionistAccess ra = new ReceptionistAccess();
 		GeneralAccess gA = new GeneralAccess();
 		DoctorAccess doc = new DoctorAccess();
+		HospitalManagerAccess hMa = new HospitalManagerAccess();
 		int NHSnumber;
+		int staffID;
 		
 		try {
 			
@@ -28,6 +30,9 @@ public class AdHocJDBCTest {
 			ra.addMoreKnownConditions(NHSnumber, "Epilepsy");
 			ra.updateNextOfKin(NHSnumber, "Johnny Vegas");
 			gA.displayPatientByNHSNumber(111121111);
+			
+			staffID = 700300;
+			hMa.setOnCall(1, staffID);
 			
 			Thread timeClear = new Thread(new QueueAccessClearDischargeTime(111121111));
 			timeClear.start();

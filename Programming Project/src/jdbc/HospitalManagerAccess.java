@@ -73,4 +73,26 @@ public class HospitalManagerAccess {
 
 		return con;
 	}
-}
+
+	public void setOnCall(int onCall, int staffID) throws SQLException {
+		Connection con = getConnection();
+
+	//	if ((onCall != 0) || (onCall != 1)) {
+		//	throw new IllegalArgumentException("On Call must be either 0 or 1");
+		//} else { 
+
+			try {
+				pstmt = con
+						.prepareStatement("UPDATE Staff SET on_Call_Status = ? WHERE staffID = ?");
+				pstmt.setInt(1, onCall);
+				pstmt.setInt(2, staffID);
+				pstmt.executeUpdate();
+				pstmt.close();
+				con.close();
+			} catch (SQLException e) {
+				System.err.println("Failed to update \'On Call\'");
+			}
+
+		}
+	}
+//}
