@@ -9,6 +9,7 @@ public class AdHocJDBCTest {
 
 		
 		ReceptionistAccess ra = new ReceptionistAccess();
+		GeneralAccess gA = new GeneralAccess();
 		DoctorAccess doc = new DoctorAccess();
 		int NHSnumber;
 		
@@ -20,13 +21,13 @@ public class AdHocJDBCTest {
 			ra.updateThirdLineOfAddress(NHSnumber, "Milebush");
 			ra.updateCity(NHSnumber, "Carrickfergus");
 			ra.updatePostcode(NHSnumber, "BT38 6ST");
-			ra.updateContactNumber(NHSnumber, "447557648697");
+			ra.updateContactNumber(NHSnumber, 447557648697L);
 			ra.addFirstAllergies(NHSnumber, "Penicillin");
 			ra.addMoreAllergies(NHSnumber, "Ciproxin");
 			ra.addFirstKnownConditions(NHSnumber, "Heart disease");
 			ra.addMoreKnownConditions(NHSnumber, "Epilepsy");
 			ra.updateNextOfKin(NHSnumber, "Johnny Vegas");
-			ra.displayPatientByNHSNumber(111121111);
+			gA.displayPatientByNHSNumber(111121111);
 			
 			Thread timeClear = new Thread(new QueueAccessClearDischargeTime(111121111));
 			timeClear.start();
@@ -36,13 +37,13 @@ public class AdHocJDBCTest {
 
 			Thread.sleep(200);
 			
-			ra.displayPatientByNHSNumber(111121111);
+			gA.displayPatientByNHSNumber(111121111);
 			
 			Thread setTime = new Thread(new QueueAccessAddDischargeTime(111121111));
 			setTime.start();
 		
 			doc.writeNotesOnPatientRecord(111121111, "Compound fracture of tibula and fibula. Could require physio and OT follow-up");
-			ra.displayPatientByNHSNumber(111121111);
+			gA.displayPatientByNHSNumber(111121111);
 			doc.displayPatientByNHSNumber(111121111);
 		} catch (SQLException | ParseException | InterruptedException e) {
 			// TODO Auto-generated catch block
