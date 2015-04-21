@@ -39,20 +39,27 @@ public class Nurse extends Staff implements iOnCall {
 	}
 
 	/**
-	 * Method which once called will allow the Nurse to amend Patients record
+	 * Method which once called will allow a nurse to extend the treatment time
+	 * of a patient
+	 * @throws Exception 
 	 */
-	public void amendRecord() {
-
+	public void extendTreatment() throws Exception {
+		MedicalTeamOperations mA = new MedicalTeamOperations();
+		mA.extendTreatment();
 	}
 
 	/**
-	 * Method which once called will allow a Nurse to extend the treatment time
-	 * of a patient
+	 * Method to allow nurse to access the queue searching methods in queue
+	 * operations
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
 	 */
-	public void extendTreatment(boolean extend, int treatmentRoom) {
-		QueueOperations.extraTreatmentTime(extend, treatmentRoom);
+	public void QueueCommmands() throws IllegalArgumentException, Exception {
+		QueueOperations qA = new QueueOperations();
+		qA.QueueCommmands();
 	}
-
+	
 	/**
 	 * Overridden method from the isOnCall interface to set if the nurse is out
 	 * on call

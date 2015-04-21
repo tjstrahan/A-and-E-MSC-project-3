@@ -15,12 +15,6 @@ public class Staff extends Person {
 	private int staffID;
 
 	/**
-	 * privately declaring the variable for the mobileNumber as long
-	 * 
-	 */
-	private long mobileNumber;
-
-	/**
 	 * privately declaring the variable for the loginID as String
 	 */
 	private int loginID;
