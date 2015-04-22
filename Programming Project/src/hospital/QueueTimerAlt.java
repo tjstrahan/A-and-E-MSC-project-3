@@ -2,9 +2,13 @@ package hospital;
 
 // imports
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Locale;
 
 import jdbc.QueueAccessAddDischargeTime;
 
@@ -18,6 +22,11 @@ import jdbc.QueueAccessAddDischargeTime;
  */
 public class QueueTimerAlt implements Runnable {
 
+	/**
+	 * Constant for int which refers to a specific email message in Email.java
+	 */
+	public static final int WAITING_TIME_EXCEEDED_EMAIL = 1;
+	
 	/**
 	 * ArrayList to hold a temporary copy of Treatment Room list.
 	 */
@@ -162,7 +171,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// If treatmentTime is greater than the allowed time, consisting of the
 		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + QueueOperations.extraTime1)) {
+		if (treatmentTime > (TREATMENT_ROOM_TIME + MedicalTeamOperations.extraTime1)) {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(0).setEndTimeTreat(currentTime);
@@ -180,9 +189,9 @@ public class QueueTimerAlt implements Runnable {
 
 			// If patient had their treatment extended reset treatment room time
 			// to standard
-			if (QueueOperations.treatmentRoom1extended) {
-				QueueOperations.extraTime1 = 0;
-				QueueOperations.treatmentRoom1extended = false;
+			if (MedicalTeamOperations.treatmentRoom1extended) {
+				MedicalTeamOperations.extraTime1 = 0;
+				MedicalTeamOperations.treatmentRoom1extended = false;
 			}
 
 			// Let everyone know the room is now empty
@@ -249,7 +258,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// If treatmentTime is greater than the allowed time, consisting of the
 		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + QueueOperations.extraTime2)) {
+		if (treatmentTime > (TREATMENT_ROOM_TIME + MedicalTeamOperations.extraTime2)) {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(1).setEndTimeTreat(currentTime);
@@ -267,9 +276,9 @@ public class QueueTimerAlt implements Runnable {
 
 			// If patient had their treatment extended reset treatment room time
 			// to standard
-			if (QueueOperations.treatmentRoom2extended) {
-				QueueOperations.extraTime2 = 0;
-				QueueOperations.treatmentRoom2extended = false;
+			if (MedicalTeamOperations.treatmentRoom2extended) {
+				MedicalTeamOperations.extraTime2 = 0;
+				MedicalTeamOperations.treatmentRoom2extended = false;
 			}
 
 			// Let everyone know the room is now empty
@@ -336,7 +345,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// If treatmentTime is greater than the allowed time, consisting of the
 		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + QueueOperations.extraTime3)) {
+		if (treatmentTime > (TREATMENT_ROOM_TIME + MedicalTeamOperations.extraTime3)) {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(2).setEndTimeTreat(currentTime);
@@ -354,9 +363,9 @@ public class QueueTimerAlt implements Runnable {
 
 			// If patient had their treatment extended reset treatment room time
 			// to standard
-			if (QueueOperations.treatmentRoom3extended) {
-				QueueOperations.extraTime3 = 0;
-				QueueOperations.treatmentRoom3extended = false;
+			if (MedicalTeamOperations.treatmentRoom3extended) {
+				MedicalTeamOperations.extraTime3 = 0;
+				MedicalTeamOperations.treatmentRoom3extended = false;
 			}
 
 			// Let everyone know the room is now empty
@@ -423,7 +432,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// If treatmentTime is greater than the allowed time, consisting of the
 		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + QueueOperations.extraTime4)) {
+		if (treatmentTime > (TREATMENT_ROOM_TIME + MedicalTeamOperations.extraTime4)) {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(3).setEndTimeTreat(currentTime);
@@ -441,9 +450,9 @@ public class QueueTimerAlt implements Runnable {
 
 			// If patient had their treatment extended reset treatment room time
 			// to standard
-			if (QueueOperations.treatmentRoom4extended) {
-				QueueOperations.extraTime4 = 0;
-				QueueOperations.treatmentRoom4extended = false;
+			if (MedicalTeamOperations.treatmentRoom4extended) {
+				MedicalTeamOperations.extraTime4 = 0;
+				MedicalTeamOperations.treatmentRoom4extended = false;
 			}
 
 			// Let everyone know the room is now empty
@@ -511,7 +520,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// If treatmentTime is greater than the allowed time, consisting of the
 		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + QueueOperations.extraTime5)) {
+		if (treatmentTime > (TREATMENT_ROOM_TIME + MedicalTeamOperations.extraTime5)) {
 
 			// Set treatment room end time to the currentTime
 			TheQueue.TreatmentRoom.get(4).setEndTimeTreat(currentTime);
@@ -529,9 +538,9 @@ public class QueueTimerAlt implements Runnable {
 
 			// If patient had their treatment extended reset treatment room time
 			// to standard
-			if (QueueOperations.treatmentRoom5extended) {
-				QueueOperations.extraTime5 = 0;
-				QueueOperations.treatmentRoom5extended = false;
+			if (MedicalTeamOperations.treatmentRoom5extended) {
+				MedicalTeamOperations.extraTime5 = 0;
+				MedicalTeamOperations.treatmentRoom5extended = false;
 			}
 
 			// Let everyone know the room is now empty
@@ -654,12 +663,17 @@ public class QueueTimerAlt implements Runnable {
 	public void printTime() {
 
 		// Get a new instant of time
-		Instant now = Instant.now();
+		//Instant now = Instant.now();
+		LocalDateTime dateTime = LocalDateTime.now();
 
+		DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
+			    .withLocale(new Locale("de"));
+		String germanDateTime = dateTime.format(formatter);
 		// Print time to screen - some work possibly needed here to make
 		// this more user friendly rather than the standard ISO-8601
 		// format
-		System.out.println(now.toString());
+		//System.out.println(now.toString());
+		System.out.println(germanDateTime);
 
 	}
 
@@ -676,8 +690,8 @@ public class QueueTimerAlt implements Runnable {
 		treatmentCopy.addAll(TheQueue.TreatmentRoom);
 		waitingCopy.addAll(TheQueue.WaitingList);
 		onCallCopy.addAll(TheQueue.OnCallTeam);
-		treatedCopy.addAll(TheQueue.Treated);
-		turnedAwayCopy.addAll(TheQueue.SentElsewhere);
+		//treatedCopy.addAll(TheQueue.Treated);
+		//turnedAwayCopy.addAll(TheQueue.SentElsewhere);
 
 	}
 
@@ -704,17 +718,17 @@ public class QueueTimerAlt implements Runnable {
 		// Call method which uses iterator to print list contents
 		printOnCall();
 
-		System.out.println("Treated Patients");
-		System.out.println("================");
+		//System.out.println("Treated Patients");
+		//System.out.println("================");
 
 		// Call method which uses iterator to print list contents
-		printTreated();
+		//printTreated();
 
-		System.out.println("Turned Away Patients");
-		System.out.println("====================");
+		//System.out.println("Turned Away Patients");
+		//System.out.println("====================");
 
 		// Call method which uses iterator to print list contents
-		printTurnedAway();
+		//printTurnedAway();
 
 	}
 
@@ -814,18 +828,14 @@ public class QueueTimerAlt implements Runnable {
 		// Call the checkIfTwoPatientsMoreThan30 method which returns a
 		// boolean value, if true contact the hospital manager
 		if (checkIfTwoPatientsMoreThan30()) {
-			System.out
-					.println("More than 2 patients are waiting 30 mins - contact hosp manager");
-
-			// alert to hospital manager
 
 			// SendSMS sendSMS = new SendSMS();
 			// Thread sms = new Thread(sendSMS);
 			// sms.start();
 
-			// SendEmail sendEmail = new SendEmail();
-			// Thread email = new Thread(sendEmail);
-			// email.start();
+			// Thread to send email to hospital manager
+			Thread email1 = new Thread(new Email(WAITING_TIME_EXCEEDED_EMAIL));
+			email1.start();
 
 		}
 	}
@@ -877,8 +887,8 @@ public class QueueTimerAlt implements Runnable {
 		treatmentCopy.clear();
 		waitingCopy.clear();
 		onCallCopy.clear();
-		treatedCopy.clear();
-		turnedAwayCopy.clear();
+		//treatedCopy.clear();
+		//turnedAwayCopy.clear();
 
 	}
 

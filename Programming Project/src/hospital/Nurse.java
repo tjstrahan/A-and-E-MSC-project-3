@@ -3,6 +3,11 @@ package hospital;
 public class Nurse extends Staff implements iOnCall {
 
 	/**
+	 * number of medical team doctor belongs to
+	 */
+	private int medicalTeam;
+
+	/**
 	 * Default Constructor
 	 */
 	public Nurse() {
@@ -25,23 +30,50 @@ public class Nurse extends Staff implements iOnCall {
 	 * @param staffID
 	 * @param loginID
 	 * @param password
-	 * @throws IllegalArgumentException 
-	 * @throws Exception 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
 	 */
 	public Nurse(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
-			String postcode,long contactNumber, int staffID, int loginID,
-			String password) throws IllegalArgumentException, Exception {
+			String postcode, long contactNumber, int staffID, int loginID,
+			String password, int medicalTeam)
+			throws IllegalArgumentException, Exception {
 		super(title, firstName, middleName, lastName, dateOfBirth,
 				addressLineOne, addressLineTwo, addressLineThree, city,
 				postcode, contactNumber, staffID, loginID, password);
+		setMedicalTeam(medicalTeam);
+	
+	}
+
+	/**
+	 * Get number of nurses on medical team
+	 * 
+	 * @return
+	 */
+	public int getMedicalTeam() {
+		return medicalTeam;
+	}
+
+	/**
+	 * Set number of nurses on medical team
+	 * 
+	 * @param onCallTeam
+	 */
+	public void setMedicalTeam(int medicalTeam) {
+		if (medicalTeam < 1 || medicalTeam > 5) {
+			throw new IllegalArgumentException("Invalid number");
+		} else {
+			this.medicalTeam = medicalTeam;
+		}
+
 	}
 
 	/**
 	 * Method which once called will allow a nurse to extend the treatment time
 	 * of a patient
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	public void extendTreatment() throws Exception {
 		MedicalTeamOperations mA = new MedicalTeamOperations();
@@ -59,28 +91,27 @@ public class Nurse extends Staff implements iOnCall {
 		QueueOperations qA = new QueueOperations();
 		qA.QueueCommmands();
 	}
-	
+
 	/**
 	 * Overridden method from the isOnCall interface to set if the nurse is out
 	 * on call
 	 */
 	@Override
 	public void isOnCall() {
-		
+
 		this.isOnCallToString();
 
 	}
-
-	/* (non-Javadoc)
+	
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	
+
 	public String isOnCallToString() {
-		return "Nurse " + getTitle() + " " + getFirstName()
-				+ " " + getMiddleName() + " " + getLastName()
-				+ "is on call";
+		return "Nurse " + getTitle() + " " + getFirstName() + " "
+				+ getMiddleName() + " " + getLastName() + "is on call";
 	}
-	
-	
 
 }

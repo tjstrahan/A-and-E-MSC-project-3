@@ -25,7 +25,7 @@ public class TheQueue {
 	 * If set to 40 it runs forty times faster than real time. To set to real
 	 * time set this variable to 1.
 	 */
-	public static final int TIME_FACTOR = 30;
+	public static final int TIME_FACTOR = 16;
 
 	/**
 	 * Maximum length of Waiting List as described in specifications
@@ -36,6 +36,11 @@ public class TheQueue {
 	 * Number of treatment rooms in Accident and Emergency
 	 */
 	public static final int NUMBER_OF_TREATMENT_ROOMS = 5;
+	
+	/**
+	 * Constant for int which refers to a specific email message in Email.java
+	 */
+	public static final int PATIENT_TURNED_AWAY_EMAIL = 2;
 
 	/**
 	 * To ensure that patients moved from Treatment Room to the Waiting List
@@ -224,19 +229,10 @@ public class TheQueue {
 					// order they joined the waiting list
 					keepPatientsOfSameTriageInOrder();
 
-					// alert to hospital manager
+					// Thread to send email to hospital manager
+					Thread email1 = new Thread(new Email(PATIENT_TURNED_AWAY_EMAIL));
+					email1.start();
 
-					// SendSMS sendSMS = new SendSMS();
-					// Thread sms = new Thread(sendSMS);
-					// sms.start();
-
-					// SendEmail sendEmail = new SendEmail();
-					// Thread email = new Thread(sendEmail);
-					// email.start();
-
-					// for demo purposes
-					System.out
-							.println("Alert hospital manager - SMS and Email");
 				}
 
 			} else if (!onCallInSitu) {
@@ -303,23 +299,12 @@ public class TheQueue {
 				// Add last patient to send elsewhere list
 				SentElsewhere.add(patient);
 
-				// alert to hospital manager
-
-				// SendSMS sendSMS = new SendSMS();
-				// Thread sms = new Thread(sendSMS);
-				// sms.start();
-
-				// SendEmail sendEmail = new SendEmail();
-				// Thread email = new Thread(sendEmail);
-				// email.start();
-
-				// for demo purposes
-				System.out.println("Alert hospital manager - SMS and Email");
+				// Thread to send email to hospital manager
+				Thread email2 = new Thread(new Email(PATIENT_TURNED_AWAY_EMAIL));
+				email2.start();
 
 			}
-
 		}
-
 	}
 
 	/**

@@ -191,20 +191,31 @@ public class Staff extends Person {
 		}
 	}
 
+	public String getStaffType() {
+		
+		String staffType = "";
+		
+		if (getStaffID() >= 100000 && getStaffID() < 200000) {
+			staffType = "Doctor";
+		} else if (getStaffID() >= 300000 && getStaffID() < 400000) {
+			staffType = "Hospital Manager";
+		} else if (getStaffID() >= 500000 && getStaffID() < 600000) {
+			staffType = "Receptionist";
+		} else if (getStaffID() >= 700000 && getStaffID() < 800000) {
+			staffType = "Nurse";
+		} else {
+			staffType = "Invalid";
+		}
+		return staffType;
+	}
+	
 	/*
-	 * Generate toString method to display all the details of the given staff
+	 * Generate toString method to display the details of the given staff
 	 * but will be overriden when calling particular staff type
 	 */
 	@Override
 	public String toString() {
-		return "Staff [staffID=" + staffID + ", mobileNumber=" + getContactNumber()
-				+ ", loginID=" + loginID + ", password=" + password
-				+ ", title=" + getTitle() + ", firstName=" + getFirstName()
-				+ ", middleName=" + getMiddleName() + ", lastName=" + getLastName()
-				+ ", dateOfBirth=" + getDateOfBirth() + ", addressLineOne="
-				+ getAddressLineOne() + ", addressLineTwo=" + getAddressLineTwo()
-				+ ", addressLineThree=" + getAddressLineThree() + ", city=" + getCity()
-				+ ", postcode=" + getPostcode() + "]";
+		return "" + getStaffType() + " " + getFirstName() + " " + getLastName() + "  Staff ID: " + getStaffID();
 	}
 
 }

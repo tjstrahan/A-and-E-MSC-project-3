@@ -2,10 +2,15 @@
  * Program that reads the Hospital Managers GMAIL Email Inbox and outputs its contents.
  */
 package hospital;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Properties;
+import java.util.Scanner;
+
 import javax.mail.Address;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -15,13 +20,62 @@ import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.Store;
 
+import jdbc.HospitalManagerAccess;
+
 /**
  * @author James Maguire
  *
  */
 public class HospitalManager {
 
-	public static void main (String [] args) {
+	/**
+	 * LinkedList of doctors and nurses working in medical team on site
+	 */
+	public static LinkedList<Object> medicalTeam = new LinkedList<Object>();
+
+	/**
+	 * LinkedList of doctors and nurses part of the current on call team
+	 */
+	public static LinkedList<Object> onCallTeam = new LinkedList<Object>();
+
+	static HospitalManagerAccess hMa = new HospitalManagerAccess();
+	static Scanner scanner = new Scanner(System.in);
+
+	public void populateMedicalTeam() throws Exception {
+
+		hMa.getMedicalTeamDocs();
+		hMa.getMedicalTeamNurses();
+
+	}
+
+	public void setOnCallTeam() throws Exception {
+
+		int team = 0;
+		System.out.println("Select medical team 4 or 5 for on call duties");
+		team = scanner.nextInt();
+		if (team == 4) {
+			hMa.getOnCallTeamDocs(team);
+			hMa.getOnCallTeamNurses(team);
+			printOnCallTeam();
+		} else if (team == 5) {
+			hMa.getOnCallTeamDocs(team);
+			hMa.getOnCallTeamNurses(team);
+			printOnCallTeam();
+		} else {
+			throw new IllegalArgumentException("Invalid Team");
+		}
+	}
+	
+	public void printOnCallTeam() {
+		Iterator<Object> Object = onCallTeam.iterator();
+		System.out.println("Current On Call Team");
+		System.out.println("====================");
+		while (Object.hasNext()) {
+			System.out.println(Object.next());
+		}
+	}
+
+	public static void main(String[] args) {
 
 		String host = "pop.gmail.com";
 		String mailStoreType = "pop3";
@@ -31,8 +85,8 @@ public class HospitalManager {
 		fetch(host, mailStoreType, username, password);
 	}
 
-	public static void fetch(String pop3Host, String storeType,
-			String user, String password) {
+	public static void fetch(String pop3Host, String storeType, String user,
+			String password) {
 		try {
 			// create properties field
 			Properties properties = new Properties();
@@ -86,7 +140,9 @@ public class HospitalManager {
 	}
 
 	/**
-	 * Method that checks if content is of plain text - Else it says it's an unknown type.
+	 * Method that checks if content is of plain text - Else it says it's an
+	 * unknown type.
+	 * 
 	 * @param p
 	 * @throws Exception
 	 */
@@ -111,6 +167,7 @@ public class HospitalManager {
 
 	/**
 	 * Method that prints the FROM, TO AND SUBJECT of the email.
+	 * 
 	 * @param m
 	 * @throws Exception
 	 */
@@ -134,6 +191,6 @@ public class HospitalManager {
 		// SUBJECT
 		if (m.getSubject() != null)
 			System.out.println("SUBJECT: " + m.getSubject());
-		}
+	}
 
 } // Class close
