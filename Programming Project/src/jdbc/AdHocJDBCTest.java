@@ -1,5 +1,7 @@
 package jdbc;
 
+import hospital.HospitalManager;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 
@@ -7,17 +9,20 @@ public class AdHocJDBCTest {
 
 	public static void main(String[] args) {
 
-		
 		ReceptionistAccess ra = new ReceptionistAccess();
 		GeneralAccess gA = new GeneralAccess();
 		DoctorAccess doc = new DoctorAccess();
-		HospitalManagerAccess hMa = new HospitalManagerAccess();
+		HospitalManager hM = new HospitalManager();
 		int NHSnumber;
 		int staffID;
-		
+
 		try {
+			hM.populateMedicalTeam();
+			hM.setOnCallTeam();
 			
-			NHSnumber = ReceptionistAccess.lookUpPatientNHSNumber("Alice", "Hanna", "1945-06-05");
+/*
+			NHSnumber = ReceptionistAccess.lookUpPatientNHSNumber("Alice",
+					"Hanna", "1945-06-05");
 			ra.updateFirstLineOfAddress(NHSnumber, "The Manse");
 			ra.updateSecondLineOfAddress(NHSnumber, "North Road");
 			ra.updateThirdLineOfAddress(NHSnumber, "Milebush");
@@ -30,31 +35,37 @@ public class AdHocJDBCTest {
 			ra.addMoreKnownConditions(NHSnumber, "Epilepsy");
 			ra.updateNextOfKin(NHSnumber, "Johnny Vegas");
 			gA.displayPatientByNHSNumber(111121111);
-			
+
 			staffID = 700300;
 			hMa.setOnCall(1, staffID);
-			
-			Thread timeClear = new Thread(new QueueAccessClearDischargeTime(111121111));
+
+			Thread timeClear = new Thread(new QueueAccessClearDischargeTime(
+					111121111));
 			timeClear.start();
 
-			Thread notesClear = new Thread(new QueueAccessClearDischargeNotes(111121111));
+			Thread notesClear = new Thread(new QueueAccessClearDischargeNotes(
+					111121111));
 			notesClear.start();
 
 			Thread.sleep(200);
-			
+
 			gA.displayPatientByNHSNumber(111121111);
-			
-			Thread setTime = new Thread(new QueueAccessAddDischargeTime(111121111));
+
+			Thread setTime = new Thread(new QueueAccessAddDischargeTime(
+					111121111));
 			setTime.start();
-		
-			doc.writeNotesOnPatientRecord(111121111, "Compound fracture of tibula and fibula. Could require physio and OT follow-up");
+
+			doc.writeNotesOnPatientRecord(111121111,
+					"Compound fracture of tibula and fibula. Could require physio and OT follow-up");
 			gA.displayPatientByNHSNumber(111121111);
 			doc.displayPatientByNHSNumber(111121111);
-		} catch (SQLException | ParseException | InterruptedException e) {
+			*/
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
 		}
-			
+
 	}
 
 }
