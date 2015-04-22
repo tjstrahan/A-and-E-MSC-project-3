@@ -2,34 +2,34 @@ CREATE TABLE StaffAccess (
  Staff_id NUMERIC(5) PRIMARY key,
  Password VARCHAR(20)NOT NULL);
  
- INSERT INTO StaffAccess VALUES("70030", "Password0");
- INSERT INTO StaffAccess VALUES("70031", "Password1");
- INSERT INTO StaffAccess VALUES("70032", "Password2");
- INSERT INTO StaffAccess VALUES("70033", "Password3");
- INSERT INTO StaffAccess VALUES("70034", "Password4");
- INSERT INTO StaffAccess VALUES("70035", "Password5");
- INSERT INTO StaffAccess VALUES("70036", "Password6");
- INSERT INTO StaffAccess VALUES("70037", "Password7");
- INSERT INTO StaffAccess VALUES("70038", "Password8");
- INSERT INTO StaffAccess VALUES("70039", "Password9");
- INSERT INTO StaffAccess VALUES("70310", "Password10");
- INSERT INTO StaffAccess VALUES("70311", "Password11");
- INSERT INTO StaffAccess VALUES("70312", "Password12");
- INSERT INTO StaffAccess VALUES("70313", "Password13");
- INSERT INTO StaffAccess VALUES("70314", "Password14");
- INSERT INTO StaffAccess VALUES("70315", "Password15");
- INSERT INTO StaffAccess VALUES("70316", "Password16");
- INSERT INTO StaffAccess VALUES("70317", "Password17");
- INSERT INTO StaffAccess VALUES("70318", "Password18");
- INSERT INTO StaffAccess VALUES("70019", "Password19");
- INSERT INTO StaffAccess VALUES("70320", "Password20");
- INSERT INTO StaffAccess VALUES("70321", "Password21");
- INSERT INTO StaffAccess VALUES("70322", "Password22");
- INSERT INTO StaffAccess VALUES("70323", "Password23");
- INSERT INTO StaffAccess VALUES("70324", "Password24");
- INSERT INTO StaffAccess VALUES("70325", "Password25");
- INSERT INTO StaffAccess VALUES("70326", "Password26");
- INSERT INTO StaffAccess VALUES("70327", "Password27");
+ INSERT INTO StaffAccess VALUES("700030", "Password0");
+ INSERT INTO StaffAccess VALUES("700031", "Password1");
+ INSERT INTO StaffAccess VALUES("700032", "Password2");
+ INSERT INTO StaffAccess VALUES("700033", "Password3");
+ INSERT INTO StaffAccess VALUES("700034", "Password4");
+ INSERT INTO StaffAccess VALUES("700035", "Password5");
+ INSERT INTO StaffAccess VALUES("700036", "Password6");
+ INSERT INTO StaffAccess VALUES("700037", "Password7");
+ INSERT INTO StaffAccess VALUES("700038", "Password8");
+ INSERT INTO StaffAccess VALUES("700039", "Password9");
+ INSERT INTO StaffAccess VALUES("700310", "Password10");
+ INSERT INTO StaffAccess VALUES("700311", "Password11");
+ INSERT INTO StaffAccess VALUES("700312", "Password12");
+ INSERT INTO StaffAccess VALUES("700313", "Password13");
+ INSERT INTO StaffAccess VALUES("700314", "Password14");
+ INSERT INTO StaffAccess VALUES("700315", "Password15");
+ INSERT INTO StaffAccess VALUES("700316", "Password16");
+ INSERT INTO StaffAccess VALUES("700317", "Password17");
+ INSERT INTO StaffAccess VALUES("700318", "Password18");
+ INSERT INTO StaffAccess VALUES("700319", "Password19");
+ INSERT INTO StaffAccess VALUES("700320", "Password20");
+ INSERT INTO StaffAccess VALUES("700321", "Password21");
+ INSERT INTO StaffAccess VALUES("700322", "Password22");
+ INSERT INTO StaffAccess VALUES("700323", "Password23");
+ INSERT INTO StaffAccess VALUES("700324", "Password24");
+ INSERT INTO StaffAccess VALUES("700325", "Password25");
+ INSERT INTO StaffAccess VALUES("700326", "Password26");
+ INSERT INTO StaffAccess VALUES("700327", "Password27");
  
  
  
