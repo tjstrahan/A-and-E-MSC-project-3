@@ -115,31 +115,31 @@ INSERT INTO Staff VALUES ("500319", "Receptionist", "Mrs", "Denise", null, "Tone
 
 Stone Road", null, null, "Belfast", "BT21 6YR", "447988123456", null, 0, null);
 
-INSERT INTO Staff VALUES ("700320", "Nurse", "Mr", "Kieron", null, "Allsop", "1972-04-02", "M", "22 
+INSERT INTO Staff VALUES ("700320", "Nurse", "Mr", "Frank", null, "Marlo", "1972-04-02", "M", "22 
 
 Lavender Close", null, null, "Belfast", "BT5 3ER", "447557648697", 3, 0, null);
 
-INSERT INTO Staff VALUES ("700321", "Nurse", "Mr", "Naveed", null, "Agahi", "1967-10-10", "M", 
+INSERT INTO Staff VALUES ("700321", "Nurse", "Mr", "William", null, "Green", "1967-10-10", "M", 
 
 "28 Heather Drive", null, null, "Belfast", "BT6 6YT", "447752040070", 5, 0, null);
 
-INSERT INTO Staff VALUES ("700322", "Nurse", "Miss", "Emma", null, "Scroggie", "1962-12-12", "F", "1 
+INSERT INTO Staff VALUES ("700322", "Nurse", "Miss", "Fiona", null, "Bruce", "1962-12-12", "F", "1 
 
 Heather Road", null, null, "Belfast", "BT7 8PO", "447922673599", 5, 0, null);
 
-INSERT INTO Staff VALUES ("700323", "Nurse", "Mr", "Tom", null, "McDonnell", "1975-08-01", "M", 
+INSERT INTO Staff VALUES ("700323", "Nurse", "Mr", "Tomas", null, "Darnuk", "1975-08-01", "M", 
 
 "28 Lavender Street", null, null, "Belfast", "BT8 5TY", "447594010105", 4, 0, null);
 
-INSERT INTO Staff VALUES ("700324", "Nurse", "Mr", "James", null, "Maguire", "1983-09-03", "M", 
+INSERT INTO Staff VALUES ("700324", "Nurse", "Mr", "Peter", null, "Gibson", "1983-09-03", "M", 
 
 "16 Rose Park", null, null, "Belfast", "BT9 4ED", "0447845896938", 5, 1, null); 
 
-INSERT INTO Staff VALUES ("700325", "Nurse", "Miss", "Janine", null, "Kelly", "1980-06-11", "F", "108 
+INSERT INTO Staff VALUES ("700325", "Nurse", "Miss", "Valerie", null, "Walls", "1980-06-11", "F", "108 
 
 Daffodil Street", null, null, "Belfast", "BT10 7UY", "0447724927494", 2, 1, null); 
 
-INSERT INTO Staff VALUES ("700326", "Nurse", "Mr", "James", null, "Strahan", "1965-11-11", "M", 
+INSERT INTO Staff VALUES ("700326", "Nurse", "Mr", "John", null, "Barnes", "1965-11-11", "M", 
 
 "119 Daffodil Gardens", null, null, "Belfast", "BT11 2UQ", "447914219569", 4, 1, null);
 
