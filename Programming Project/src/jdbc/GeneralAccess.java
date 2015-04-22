@@ -12,39 +12,10 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class GeneralAccess {
-
 	/**
-	 * Username for access to Database
+	 * Instantiation of DatabaseSettings class
 	 */
-	private static final String DB_USERNAME = "40142115";
-
-	/**
-	 * Use if Username is part of the Databases URL, otherwise leave blank
-	 */
-	private static final String URL_USERNAME = "40142115";
-
-	/**
-	 * Password for access to Database
-	 */
-	private static final String DB_PASSWORD = "YCR2335";
-
-	/**
-	 * Main body of URL of Database, eg //web2.eeecs.qub.ac.uk/ or
-	 * thin:@db.yale.edu:univdb
-	 */
-	public static final String WEB_ADDRESS = "//web2.eeecs.qub.ac.uk/";
-
-	/**
-	 * Type of database, eg mysql: or oracle: etc
-	 */
-	public static final String DB_PROTOCOL = "mysql:";
-
-	/**
-	 * name of Database driver to be called, for mysql com.mysql.jdbc.Driver or
-	 * for oracle oracle.jdbc.driver.OracleDriver
-	 */
-	public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-
+	static DatabaseSettings db = new DatabaseSettings();
 	/**
 	 * Instance Var for Connection to database
 	 */
@@ -57,18 +28,20 @@ public class GeneralAccess {
 
 	public static Connection con() {
 
-		String url = "jdbc:" + DB_PROTOCOL + WEB_ADDRESS + URL_USERNAME;
+		String url = "jdbc:" + db.getDB_PROTOCOL() + db.getWEB_ADDRESS()
+				+ db.getURL_USERNAME();
 		// Load Driver
 		try {
 			// Driver
-			Class.forName(DB_DRIVER);
+			Class.forName(db.getDB_DRIVER());
 		} catch (java.lang.ClassNotFoundException e) {
 			System.err.print("ClassNotFoundException: ");
 			System.err.println(e.getMessage());
 		}
 		// Make Connection
 		try {
-			con = DriverManager.getConnection(url, DB_USERNAME, DB_PASSWORD);
+			con = DriverManager.getConnection(url, db.getDB_USERNAME(),
+					db.getDB_PASSWORD());
 			System.out.println("You are Connected to Database");
 
 			/**
@@ -81,16 +54,17 @@ public class GeneralAccess {
 
 		return con;
 	}
-	
+
 	/**
-	 * Method for Looking up Patients and displaying details by NHS_number in the table 'Patient'
+	 * Method for Looking up Patients and displaying details by NHS_number in
+	 * the table 'Patient'
 	 * 
 	 * @throws SQLException
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
-	public void displayPatientByNHSNumber(int NHSNumber)
-			throws SQLException, ParseException {
-		
+	public void displayPatientByNHSNumber(int NHSNumber) throws SQLException,
+			ParseException {
+
 		Connection con = con();
 		stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
@@ -123,16 +97,16 @@ public class GeneralAccess {
 		String nextOfKin = rs.getString("Next_of_Kin");
 		String rawNotes = rs.getString("Notes");
 		long rawDischargeTime = rs.getLong("Unix_Timestamp");
-	    
+
 		String dischargeTime = "";
 		String notes = "";
-		
+
 		if (rawDischargeTime == 0L) {
 			dischargeTime = "n/a";
-		} else {		
-			dischargeTime = unixTimestampConversion(rawDischargeTime);		
+		} else {
+			dischargeTime = unixTimestampConversion(rawDischargeTime);
 		}
-		
+
 		if (rawNotes.isEmpty()) {
 			notes = "n/a";
 		} else {
@@ -140,8 +114,10 @@ public class GeneralAccess {
 		}
 
 		// Display values
-		System.out.println("________________________________________________________________");
-		System.out.println("Name: " + title + " " + firstName + " "+ middleName + " " + lastName);
+		System.out
+				.println("________________________________________________________________");
+		System.out.println("Name: " + title + " " + firstName + " "
+				+ middleName + " " + lastName);
 		System.out.print("Date of Birth: " + correctUKDateFormat(mysqlDOB));
 		System.out.println("\tSex : " + sex);
 		System.out.println("NHS Number: " + NHSNumber);
@@ -151,46 +127,52 @@ public class GeneralAccess {
 		System.out.println("City:      " + city);
 		System.out.println("Postcode:  " + postcode);
 		System.out.println("Contact Number: +" + contactNumber);
-		System.out.println("General Practitioner: " + GPName + "(" + GPCode + ")");
+		System.out.println("General Practitioner: " + GPName + "(" + GPCode
+				+ ")");
 		System.out.println("Allergies: " + allergies);
-		System.out.println("Conditions: "+ knownConditions);
+		System.out.println("Conditions: " + knownConditions);
 		System.out.println("Blood Group: " + bloodGroup);
 		System.out.println("Next of Kin: " + nextOfKin);
 		System.out.println("Last A\'n\'E visit: " + dischargeTime);
 		System.out.println("Notes from visit: " + notes);
-		System.out.println("________________________________________________________________");
+		System.out
+				.println("________________________________________________________________");
 		con.close();
 	}// lookUpPatient Close
-	
+
 	/**
 	 * Method to convert a date String in format yyyy-MM-dd to format dd-MM-yyyy
 	 * 
-	 * @param mysqlDOB, date in format yyyy-MM-dd
+	 * @param mysqlDOB
+	 *            , date in format yyyy-MM-dd
 	 * @return date in format dd-MM-yyyy
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
-	public static String correctUKDateFormat(String mysqlDOB) throws ParseException{
-		
-		Date dateDOB = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(mysqlDOB);
-		
-		return new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(dateDOB);
+	public static String correctUKDateFormat(String mysqlDOB)
+			throws ParseException {
+
+		Date dateDOB = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+				.parse(mysqlDOB);
+
+		return new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+				.format(dateDOB);
 	}
 
 	/**
-	 * Method to convert the seconds since the unix epoch (which is what unix_timestamp
-	 * is stored as in mysql) into a human readable format.
+	 * Method to convert the seconds since the unix epoch (which is what
+	 * unix_timestamp is stored as in mysql) into a human readable format.
 	 * 
 	 * @param rawDischargeTime
 	 * @return
 	 */
 	public String unixTimestampConversion(long rawDischargeTime) {
-		
-		Date date = new Date(rawDischargeTime*1000L); 
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy"); 
-		
-		sdf.setTimeZone(TimeZone.getTimeZone("Europe/London")); 
-		
+
+		Date date = new Date(rawDischargeTime * 1000L);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
+
+		sdf.setTimeZone(TimeZone.getTimeZone("Europe/London"));
+
 		return sdf.format(date);
 	}
 }

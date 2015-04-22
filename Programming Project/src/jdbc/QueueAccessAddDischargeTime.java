@@ -6,43 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * Class that uses JDBC code to connect to the database table 'Patient' to
- * add a discharge time
+ * Class that uses JDBC code to connect to the database table 'Patient' to add a
+ * discharge time
  */
-public class QueueAccessAddDischargeTime implements Runnable{
+public class QueueAccessAddDischargeTime implements Runnable {
 
 	/**
-	 * Username for access to Database
+	 * Instantiation of DatabaseSettings class
 	 */
-	private static final String DB_USERNAME = "40142115";
-
-	/**
-	 * Use if Username is part of the Databases URL, otherwise leave blank
-	 */
-	private static final String URL_USERNAME = "40142115";
-
-	/**
-	 * Password for access to Database
-	 */
-	private static final String DB_PASSWORD = "YCR2335";
-
-	/**
-	 * Main body of URL of Database, eg //web2.eeecs.qub.ac.uk/ or
-	 * thin:@db.yale.edu:univdb
-	 */
-	public static final String WEB_ADDRESS = "//web2.eeecs.qub.ac.uk/";
-
-	/**
-	 * Type of database, eg mysql: or oracle: etc
-	 */
-	public static final String DB_PROTOCOL = "mysql:";
-
-	/**
-	 * name of Database driver to be called, for mysql com.mysql.jdbc.Driver or
-	 * for oracle oracle.jdbc.driver.OracleDriver
-	 */
-	public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-
+	static DatabaseSettings db = new DatabaseSettings();
 	/**
 	 * Instance Var for Connection to database
 	 */
@@ -64,18 +36,20 @@ public class QueueAccessAddDischargeTime implements Runnable{
 	 * @returns connection
 	 */
 	public static Connection getConnection() {
-		String url = "jdbc:" + DB_PROTOCOL + WEB_ADDRESS + URL_USERNAME;
+		String url = "jdbc:" + db.getDB_PROTOCOL() + db.getWEB_ADDRESS()
+				+ db.getURL_USERNAME();
 		// Load Driver
 		try {
 			// Driver
-			Class.forName(DB_DRIVER);
+			Class.forName(db.getDB_DRIVER());
 		} catch (java.lang.ClassNotFoundException e) {
 			System.err.print("ClassNotFoundException: ");
 			System.err.println(e.getMessage());
 		}
 		// Make Connection
 		try {
-			con = DriverManager.getConnection(url, DB_USERNAME, DB_PASSWORD);
+			con = DriverManager.getConnection(url, db.getDB_USERNAME(),
+					db.getDB_PASSWORD());
 		} catch (SQLException ex) {
 			System.err.println("SQLException: " + ex.getMessage());
 		}
@@ -86,7 +60,7 @@ public class QueueAccessAddDischargeTime implements Runnable{
 	public QueueAccessAddDischargeTime(int NHSNumber) {
 		this.NHSNumber = NHSNumber;
 	}
-	
+
 	@Override
 	public void run() {
 

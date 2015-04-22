@@ -12,39 +12,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class HospitalManagerAccess {
-
+	
 	/**
-	 * Username for access to Database
+	 * Instantiation of DatabaseSettings class
 	 */
-	private static final String DB_USERNAME = "40142115";
-
-	/**
-	 * Use if Username is part of the Databases URL, otherwise leave blank
-	 */
-	private static final String URL_USERNAME = "40142115";
-
-	/**
-	 * Password for access to Database
-	 */
-	private static final String DB_PASSWORD = "YCR2335";
-
-	/**
-	 * Main body of URL of Database, eg //web2.eeecs.qub.ac.uk/ or
-	 * thin:@db.yale.edu:univdb
-	 */
-	public static final String WEB_ADDRESS = "//web2.eeecs.qub.ac.uk/";
-
-	/**
-	 * Type of database, eg mysql: or oracle: etc
-	 */
-	public static final String DB_PROTOCOL = "mysql:";
-
-	/**
-	 * name of Database driver to be called, for mysql com.mysql.jdbc.Driver or
-	 * for oracle oracle.jdbc.driver.OracleDriver
-	 */
-	public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-
+	static DatabaseSettings db = new DatabaseSettings();
 	/**
 	 * Instance Var for Connection to database
 	 */
@@ -54,7 +26,7 @@ public class HospitalManagerAccess {
 	 * Prepared statement
 	 */
 	public static PreparedStatement pstmt;
-	
+
 	/**
 	 * Instance Var for statements made into the database
 	 */
@@ -66,18 +38,20 @@ public class HospitalManagerAccess {
 	 * @returns connection
 	 */
 	public static Connection getConnection() throws SQLException {
-		String url = "jdbc:" + DB_PROTOCOL + WEB_ADDRESS + URL_USERNAME;
+		String url = "jdbc:" + db.getDB_PROTOCOL() + db.getWEB_ADDRESS()
+				+ db.getURL_USERNAME();
 		// Load Driver
 		try {
 			// Driver
-			Class.forName(DB_DRIVER);
+			Class.forName(db.getDB_DRIVER());
 		} catch (java.lang.ClassNotFoundException e) {
 			System.err.print("ClassNotFoundException: ");
 			System.err.println(e.getMessage());
 		}
 		// Make Connection
 		try {
-			con = DriverManager.getConnection(url, DB_USERNAME, DB_PASSWORD);
+			con = DriverManager.getConnection(url, db.getDB_USERNAME(),
+					db.getDB_PASSWORD());
 		} catch (SQLException ex) {
 			System.err.println("SQLException: " + ex.getMessage());
 		}
@@ -107,9 +81,9 @@ public class HospitalManagerAccess {
 			System.err.println("Failed to update \'On Call\'");
 		}
 	}
-	
+
 	public void getMedicalTeamDocs() throws Exception {
-		
+
 		try {
 
 			Connection con = getConnection();
@@ -123,21 +97,16 @@ public class HospitalManagerAccess {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				HospitalManager.medicalTeam.add(new Doctor(
-						rs.getString("Title"),
-						rs.getString("First_Name"), 
-						rs.getString("Middle_Name"),
-						rs.getString("Last_Name"),
+				HospitalManager.medicalTeam.add(new Doctor(rs
+						.getString("Title"), rs.getString("First_Name"), rs
+						.getString("Middle_Name"), rs.getString("Last_Name"),
 						GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
-						rs.getString("First_line_of_Address"),
-						rs.getString("Second_line_of_Address"), 
-						rs.getString("Third_line_of_Address"), 
-						rs.getString("City"),
-						rs.getString("Postcode"),
-						rs.getLong("Contact_Number"),
-						rs.getInt("StaffID"),
-						rs.getInt("StaffID"), 
-						rs.getString("Password"),
+						rs.getString("First_line_of_Address"), rs
+								.getString("Second_line_of_Address"), rs
+								.getString("Third_line_of_Address"), rs
+								.getString("City"), rs.getString("Postcode"),
+						rs.getLong("Contact_Number"), rs.getInt("StaffID"), rs
+								.getInt("StaffID"), rs.getString("Password"),
 						rs.getInt("Medical_Team")));
 			}
 
@@ -148,9 +117,9 @@ public class HospitalManagerAccess {
 			System.err.println("SQLException: " + ex.getMessage());
 		}
 	}
-	
+
 	public void getMedicalTeamNurses() throws Exception {
-		
+
 		try {
 
 			Connection con = getConnection();
@@ -165,20 +134,16 @@ public class HospitalManagerAccess {
 
 			while (rs.next()) {
 				HospitalManager.medicalTeam.add(new Nurse(
-						rs.getString("Title"),
-						rs.getString("First_Name"), 
-						rs.getString("Middle_Name"),
-						rs.getString("Last_Name"),
-						GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
-						rs.getString("First_line_of_Address"),
-						rs.getString("Second_line_of_Address"), 
-						rs.getString("Third_line_of_Address"), 
-						rs.getString("City"),
-						rs.getString("Postcode"),
-						rs.getLong("Contact_Number"),
-						rs.getInt("StaffID"),
-						rs.getInt("StaffID"), 
-						rs.getString("Password"),
+						rs.getString("Title"), rs.getString("First_Name"), rs
+								.getString("Middle_Name"), rs
+								.getString("Last_Name"), GeneralAccess
+								.correctUKDateFormat(rs.getString("DOB")), rs
+								.getString("First_line_of_Address"), rs
+								.getString("Second_line_of_Address"), rs
+								.getString("Third_line_of_Address"), rs
+								.getString("City"), rs.getString("Postcode"),
+						rs.getLong("Contact_Number"), rs.getInt("StaffID"), rs
+								.getInt("StaffID"), rs.getString("Password"),
 						rs.getInt("Medical_Team")));
 			}
 
@@ -189,9 +154,9 @@ public class HospitalManagerAccess {
 			System.err.println("SQLException: " + ex.getMessage());
 		}
 	}
-	
+
 	public void getOnCallTeamDocs(int medicalTeam) throws Exception {
-		
+
 		try {
 
 			Connection con = getConnection();
@@ -201,25 +166,22 @@ public class HospitalManagerAccess {
 
 			String sql;
 
-			sql = "SELECT * FROM staff NATURAL JOIN staffaccess WHERE Role = \"Doctor\" AND Medical_Team = " + medicalTeam + ";";
+			sql = "SELECT * FROM staff NATURAL JOIN staffaccess WHERE Role = \"Doctor\" AND Medical_Team = "
+					+ medicalTeam + ";";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
 				HospitalManager.onCallTeam.add(new Doctor(
-						rs.getString("Title"),
-						rs.getString("First_Name"), 
-						rs.getString("Middle_Name"),
-						rs.getString("Last_Name"),
-						GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
-						rs.getString("First_line_of_Address"),
-						rs.getString("Second_line_of_Address"), 
-						rs.getString("Third_line_of_Address"), 
-						rs.getString("City"),
-						rs.getString("Postcode"),
-						rs.getLong("Contact_Number"),
-						rs.getInt("StaffID"),
-						rs.getInt("StaffID"), 
-						rs.getString("Password"),
+						rs.getString("Title"), rs.getString("First_Name"), rs
+								.getString("Middle_Name"), rs
+								.getString("Last_Name"), GeneralAccess
+								.correctUKDateFormat(rs.getString("DOB")), rs
+								.getString("First_line_of_Address"), rs
+								.getString("Second_line_of_Address"), rs
+								.getString("Third_line_of_Address"), rs
+								.getString("City"), rs.getString("Postcode"),
+						rs.getLong("Contact_Number"), rs.getInt("StaffID"), rs
+								.getInt("StaffID"), rs.getString("Password"),
 						rs.getInt("Medical_Team")));
 			}
 
@@ -230,9 +192,9 @@ public class HospitalManagerAccess {
 			System.err.println("SQLException: " + ex.getMessage());
 		}
 	}
-	
+
 	public void getOnCallTeamNurses(int medicalTeam) throws Exception {
-		
+
 		try {
 
 			Connection con = getConnection();
@@ -242,25 +204,21 @@ public class HospitalManagerAccess {
 
 			String sql;
 
-			sql = "SELECT * FROM staff NATURAL JOIN staffaccess WHERE Role = \"Nurse\" AND Medical_Team = " + medicalTeam + ";";
+			sql = "SELECT * FROM staff NATURAL JOIN staffaccess WHERE Role = \"Nurse\" AND Medical_Team = "
+					+ medicalTeam + ";";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				HospitalManager.onCallTeam.add(new Nurse(
-						rs.getString("Title"),
-						rs.getString("First_Name"), 
-						rs.getString("Middle_Name"),
-						rs.getString("Last_Name"),
+				HospitalManager.onCallTeam.add(new Nurse(rs.getString("Title"),
+						rs.getString("First_Name"),
+						rs.getString("Middle_Name"), rs.getString("Last_Name"),
 						GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
-						rs.getString("First_line_of_Address"),
-						rs.getString("Second_line_of_Address"), 
-						rs.getString("Third_line_of_Address"), 
-						rs.getString("City"),
-						rs.getString("Postcode"),
-						rs.getLong("Contact_Number"),
-						rs.getInt("StaffID"),
-						rs.getInt("StaffID"), 
-						rs.getString("Password"),
+						rs.getString("First_line_of_Address"), rs
+								.getString("Second_line_of_Address"), rs
+								.getString("Third_line_of_Address"), rs
+								.getString("City"), rs.getString("Postcode"),
+						rs.getLong("Contact_Number"), rs.getInt("StaffID"), rs
+								.getInt("StaffID"), rs.getString("Password"),
 						rs.getInt("Medical_Team")));
 			}
 

@@ -19,39 +19,10 @@ import hospital.Receptionist;
  * @author James Maguire, Emma Scroggie, Tom McDonnell and Kieron Allsop
  */
 public class ReceptionistAccess {
-
 	/**
-	 * Username for access to Database
+	 * Instantiation of DatabaseSettings class
 	 */
-	private static final String DB_USERNAME = "40142115";
-
-	/**
-	 * Use if Username is part of the Databases URL, otherwise leave blank
-	 */
-	private static final String URL_USERNAME = "40142115";
-
-	/**
-	 * Password for access to Database
-	 */
-	private static final String DB_PASSWORD = "YCR2335";
-
-	/**
-	 * Main body of URL of Database, eg //web2.eeecs.qub.ac.uk/ or
-	 * thin:@db.yale.edu:univdb
-	 */
-	public static final String WEB_ADDRESS = "//web2.eeecs.qub.ac.uk/";
-
-	/**
-	 * Type of database, eg mysql: or oracle: etc
-	 */
-	public static final String DB_PROTOCOL = "mysql:";
-
-	/**
-	 * name of Database driver to be called, for mysql com.mysql.jdbc.Driver or
-	 * for oracle oracle.jdbc.driver.OracleDriver
-	 */
-	public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-
+	static DatabaseSettings db = new DatabaseSettings();
 	/**
 	 * Instance Var for Connection to database
 	 */
@@ -156,18 +127,20 @@ public class ReceptionistAccess {
 	 */
 	public static Connection con() {
 
-		String url = "jdbc:" + DB_PROTOCOL + WEB_ADDRESS + URL_USERNAME;
+		String url = "jdbc:" + db.getDB_PROTOCOL() + db.getWEB_ADDRESS()
+				+ db.getURL_USERNAME();
 		// Load Driver
 		try {
 			// Driver
-			Class.forName(DB_DRIVER);
+			Class.forName(db.getDB_DRIVER());
 		} catch (java.lang.ClassNotFoundException e) {
 			System.err.print("ClassNotFoundException: ");
 			System.err.println(e.getMessage());
 		}
 		// Make Connection
 		try {
-			con = DriverManager.getConnection(url, DB_USERNAME, DB_PASSWORD);
+			con = DriverManager.getConnection(url, db.getDB_USERNAME(),
+					db.getDB_PASSWORD());
 			System.out.println("You are Connected to Database");
 
 			/**
@@ -180,7 +153,7 @@ public class ReceptionistAccess {
 
 		return con;
 	}
-	
+
 	/**
 	 * Method for finding a patients NHS number in the database
 	 * 
@@ -357,9 +330,9 @@ public class ReceptionistAccess {
 			throws SQLException, IllegalArgumentException {
 
 		Long contactNumber;
-		
+
 		contactNumber = contactNumber2;
-		
+
 		if (contactNumber < MOBILE_NUMBER_MIN_LENGTH
 				|| contactNumber > MOBILE_NUMBER_MAX_LENGTH) {
 			throw new IllegalArgumentException(
@@ -404,7 +377,7 @@ public class ReceptionistAccess {
 			System.err.println("Failed to update \'Allergies\'");
 		}
 	}
-	
+
 	/**
 	 * Method to Append to list of allergies a patient has
 	 * 
@@ -452,7 +425,7 @@ public class ReceptionistAccess {
 			System.err.println("Failed to update \'Known Condtions\'");
 		}
 	}
-	
+
 	/**
 	 * Method to Append to list of known conditions a patient has
 	 * 
@@ -501,17 +474,18 @@ public class ReceptionistAccess {
 		}
 	}
 
-	/** 
-	 * Method to add one patient manually to the queue having searched
-	 * for them in the database using the nhs-number which is the primary 
-	 * key of the patient table.
+	/**
+	 * Method to add one patient manually to the queue having searched for them
+	 * in the database using the nhs-number which is the primary key of the
+	 * patient table.
 	 * 
 	 * @param NHS_Number
 	 * @throws IllegalArgumentException
 	 * @throws Exception
 	 */
-	public static void admitPatient (int NHSNumber) throws IllegalArgumentException, Exception {
-		
+	public static void admitPatient(int NHSNumber)
+			throws IllegalArgumentException, Exception {
+
 		try {
 
 			Connection con = con();
@@ -525,27 +499,20 @@ public class ReceptionistAccess {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				Receptionist.patientsFromDB.addFirst(new Patient(
-						rs.getString("Title"), 
-						rs.getString("First_Name"), 
-						rs.getString("Middle_Name"),
-						rs.getString("Last_Name"),
+				Receptionist.patientsFromDB.addFirst(new Patient(rs
+						.getString("Title"), rs.getString("First_Name"), rs
+						.getString("Middle_Name"), rs.getString("Last_Name"),
 						GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
-						rs.getString("First_line_of_Address"),
-						rs.getString("Second_line_of_Address"), 
-						rs.getString("Third_line_of_Address"), 
-						rs.getString("City"),
-						rs.getString("Postcode"),
-						rs.getLong("Contact_Number"),
-						rs.getInt("NHS_number"),
-						rs.getString("Allergies"), 
-						rs.getString("Known_Conditions"),
-						rs.getString("Blood_Group"),
-						rs.getString("Sex"),
-						rs.getString("Next_of_Kin"),
-						rs.getString("Gp_Name"),
-						rs.getString("Gp_Code"),
-						rs.getString("Notes")));
+						rs.getString("First_line_of_Address"), rs
+								.getString("Second_line_of_Address"), rs
+								.getString("Third_line_of_Address"), rs
+								.getString("City"), rs.getString("Postcode"),
+						rs.getLong("Contact_Number"), rs.getInt("NHS_number"),
+						rs.getString("Allergies"), rs
+								.getString("Known_Conditions"), rs
+								.getString("Blood_Group"), rs.getString("Sex"),
+						rs.getString("Next_of_Kin"), rs.getString("Gp_Name"),
+						rs.getString("Gp_Code"), rs.getString("Notes")));
 			}
 
 			// close statement object
@@ -557,7 +524,7 @@ public class ReceptionistAccess {
 			System.err.println("SQLException: " + ex.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Method to get all patients from the database
 	 * 
@@ -580,27 +547,20 @@ public class ReceptionistAccess {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				Receptionist.patientsFromDB.add(new Patient(
-						rs.getString("Title"), 
-						rs.getString("First_Name"), 
-						rs.getString("Middle_Name"),
-						rs.getString("Last_Name"),
+				Receptionist.patientsFromDB.add(new Patient(rs
+						.getString("Title"), rs.getString("First_Name"), rs
+						.getString("Middle_Name"), rs.getString("Last_Name"),
 						GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
-						rs.getString("First_line_of_Address"),
-						rs.getString("Second_line_of_Address"), 
-						rs.getString("Third_line_of_Address"), 
-						rs.getString("City"),
-						rs.getString("Postcode"),
-						rs.getLong("Contact_Number"),
-						rs.getInt("NHS_number"),
-						rs.getString("Allergies"), 
-						rs.getString("Known_Conditions"),
-						rs.getString("Blood_Group"),
-						rs.getString("Sex"),
-						rs.getString("Next_of_Kin"),
-						rs.getString("Gp_Name"),
-						rs.getString("Gp_Code"),
-						rs.getString("Notes")));
+						rs.getString("First_line_of_Address"), rs
+								.getString("Second_line_of_Address"), rs
+								.getString("Third_line_of_Address"), rs
+								.getString("City"), rs.getString("Postcode"),
+						rs.getLong("Contact_Number"), rs.getInt("NHS_number"),
+						rs.getString("Allergies"), rs
+								.getString("Known_Conditions"), rs
+								.getString("Blood_Group"), rs.getString("Sex"),
+						rs.getString("Next_of_Kin"), rs.getString("Gp_Name"),
+						rs.getString("Gp_Code"), rs.getString("Notes")));
 			}
 
 			// close statement object
@@ -613,5 +573,5 @@ public class ReceptionistAccess {
 		}
 
 	}
-	
+
 } // Class Close
