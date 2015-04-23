@@ -22,7 +22,7 @@ public class TheQueue {
 	 * If set to 40 it runs forty times faster than real time. To set to real
 	 * time set this variable to 1.
 	 */
-	public static final int TIME_FACTOR = 40;
+	public static final int TIME_FACTOR = 20;
 
 	/**
 	 * Maximum length of Waiting List as described in specifications
@@ -33,7 +33,7 @@ public class TheQueue {
 	 * Number of treatment rooms in Accident and Emergency
 	 */
 	public static final int NUMBER_OF_TREATMENT_ROOMS = 5;
-	
+
 	/**
 	 * Constant for int which refers to a specific email message in Email.java
 	 */
@@ -66,7 +66,7 @@ public class TheQueue {
 	 * during the course of their stay.
 	 */
 	static boolean firstRun = true;
-	
+
 	/**
 	 * Variable to be passed to sms method to select particular message.
 	 */
@@ -172,7 +172,7 @@ public class TheQueue {
 				// Send SMS to the On Call Team on new thread
 				Thread sms1 = new Thread(new SendSMS(SMS_TO_ON_CALL_TEAM));
 				sms1.start();
-				
+
 			}
 
 			// If the patient arriving from triage has a rating of 1, that is
@@ -217,9 +217,21 @@ public class TheQueue {
 					// order they joined the waiting list
 					keepPatientsOfSameTriageInOrder();
 
-					// Thread to send email to hospital manager
-					Thread email1 = new Thread(new Email(PATIENT_TURNED_AWAY_EMAIL));
-					email1.start();
+				} else {
+
+					// For testing
+					System.out.println("Emergency Patient sent elsewhere: "
+							+ patient);
+
+					// Add patient to send elsewhere list
+					SentElsewhere.add(patient);
+
+					// Thread to send email to hospital manager because an
+					// Emergency
+					// patient has been turned away
+					Thread email2 = new Thread(new Email(
+							PATIENT_TURNED_AWAY_EMAIL));
+					email2.start();
 
 				}
 
@@ -246,7 +258,7 @@ public class TheQueue {
 				// Sets patients end wait time, which will have automatically
 				// been started at triage
 				OnCallTeam.get(0).setEndTimeWait(onCallStart.toEpochMilli());
-				
+
 				// Sets patients treatment start time
 				OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
 
@@ -258,10 +270,8 @@ public class TheQueue {
 				// order they joined the waiting list
 				keepPatientsOfSameTriageInOrder();
 
-			} else {
-
 				// Patient is sent elsewhere
-				System.out.println("go elsewhere");
+			} else {
 
 				// Ensure that patient moved from treatment room is put to
 				// the top of the waiting list regardless of triage category
@@ -273,10 +283,6 @@ public class TheQueue {
 
 				// Add last patient to send elsewhere list
 				SentElsewhere.add(patient);
-
-				// Thread to send email to hospital manager
-				Thread email2 = new Thread(new Email(PATIENT_TURNED_AWAY_EMAIL));
-				email2.start();
 
 			}
 		}
@@ -290,7 +296,7 @@ public class TheQueue {
 		// Temporary ArrayList to allow for moving of patient objects around
 		ArrayList<Patient> temp = new ArrayList<Patient>();
 
-		// For loop to iterate through each of the 5 treatment rooms
+		// For loop to iterate through each of the treatment rooms
 		for (int loop = 0; loop < NUMBER_OF_TREATMENT_ROOMS; loop++) {
 
 			// If treatment is set to null, in otherwords the room is empty, and
@@ -446,13 +452,13 @@ public class TheQueue {
 		// temporary ArrayList - copy of treatment room
 		ArrayList<Patient> tempList = new ArrayList<Patient>();
 
-		// Populate the temporary ArrayList with all the elements from the
-		// TreatmentRoom list
-		tempList.add(0, TreatmentRoom.get(0));
-		tempList.add(1, TreatmentRoom.get(1));
-		tempList.add(2, TreatmentRoom.get(2));
-		tempList.add(3, TreatmentRoom.get(3));
-		tempList.add(4, TreatmentRoom.get(4));
+		// For loop to iterate through each of the treatment rooms
+		for (int loop = 0; loop < NUMBER_OF_TREATMENT_ROOMS; loop++) {
+
+			// Populate the temporary ArrayList with all the elements from the
+			// TreatmentRoom list
+			tempList.add(loop, TreatmentRoom.get(loop));
+		}
 
 		// Initialise variable for the index of the element
 		int indexOfElement = 0;
@@ -460,85 +466,38 @@ public class TheQueue {
 		// Sort the temporary ArrayList by triage number - lowest first
 		sortListByTriage(tempList);
 
-		// If triage number of elements 0 and 1 are the same
-		if (tempList.get(0).getTriageNumber() == tempList.get(1)
-				.getTriageNumber()) {
+		// For loop to iterate through each of the treatment rooms - because you
+		// are comparing elements you need it to loop one less time than normal,
+		// otherwise the last compare throws and IndexOutOfBounds exception
+		for (int loop = 0; loop < NUMBER_OF_TREATMENT_ROOMS - 1; loop++) {
 
-			// And if element 0 was added after element 1 to the queue, swap
-			// them in the list
-			if (tempList.get(0).getAdmissionNumber() > tempList.get(1)
-					.getAdmissionNumber()) {
-				Collections.swap(tempList, 0, 1);
+			// If triage number of elements 0 and 1 are the same
+			if (tempList.get(loop).getTriageNumber() == tempList.get(loop + 1)
+					.getTriageNumber()) {
 
-				// This will ensure that if two patients have negative admission
-				// numbers they will be ordered correctly
-				if (tempList.get(0).getAdmissionNumber() < 0
-						&& tempList.get(1).getAdmissionNumber() < 0) {
-					Collections.swap(tempList, 0, 1);
+				// And if element 0 was added after element 1 to the queue, swap
+				// them in the list
+				if (tempList.get(loop).getAdmissionNumber() > tempList.get(
+						loop + 1).getAdmissionNumber()) {
+					Collections.swap(tempList, loop, loop + 1);
+
+					// This will ensure that if two patients have negative
+					// admission
+					// numbers they will be ordered correctly
+					if (tempList.get(loop).getAdmissionNumber() < 0
+							&& tempList.get(loop + 1).getAdmissionNumber() < 0) {
+						Collections.swap(tempList, loop, loop + 1);
+					}
 				}
 			}
 		}
 
-		// if triage number of elements 1 and 2 are the same
-		if (tempList.get(1).getTriageNumber() == tempList.get(2)
-				.getTriageNumber()) {
-
-			// And if element 1 was added after element 2 to the queue, swap
-			// them in the list
-			if (tempList.get(1).getAdmissionNumber() > tempList.get(2)
-					.getAdmissionNumber()) {
-				Collections.swap(tempList, 1, 2);
-
-				// This will ensure that if two patients have negative admission
-				// numbers they will be ordered correctly
-				if (tempList.get(1).getAdmissionNumber() < 0
-						&& tempList.get(2).getAdmissionNumber() < 0) {
-					Collections.swap(tempList, 1, 2);
-				}
-			}
-		}
-
-		// if triage number of elements 2 and 3 are the same
-		if (tempList.get(2).getTriageNumber() == tempList.get(3)
-				.getTriageNumber()) {
-
-			// And if element 2 was added after element 3 to the queue, swap
-			// them in the list
-			if (tempList.get(2).getAdmissionNumber() > tempList.get(3)
-					.getAdmissionNumber()) {
-				Collections.swap(tempList, 2, 3);
-
-				// This will ensure that if two patients have negative admission
-				// numbers they will be ordered correctly
-				if (tempList.get(2).getAdmissionNumber() < 0
-						&& tempList.get(3).getAdmissionNumber() < 0) {
-					Collections.swap(tempList, 2, 3);
-				}
-			}
-		}
-
-		// if triage number of elements 3 and 4 are the same
-		if (tempList.get(3).getTriageNumber() == tempList.get(4)
-				.getTriageNumber()) {
-
-			// And if element 3 was added after element 4 to the queue, swap
-			// them in the list
-			if (tempList.get(3).getAdmissionNumber() > tempList.get(4)
-					.getAdmissionNumber()) {
-				Collections.swap(tempList, 3, 4);
-
-				// This will ensure that if two patients have negative admission
-				// numbers they will be ordered correctly
-				if (tempList.get(3).getAdmissionNumber() < 0
-						&& tempList.get(4).getAdmissionNumber() < 0) {
-					Collections.swap(tempList, 3, 4);
-
-				}
-			}
-		}
+		// The index of the last element of the list is the size of the list
+		// minus 1
+		int lastIndex = NUMBER_OF_TREATMENT_ROOMS - 1;
 
 		// Get treatment room number of last element
-		indexOfElement = tempList.get(4).getTreatmentRoom();
+		indexOfElement = tempList.get(lastIndex).getTreatmentRoom();
 
 		// Clear the temporary ArrayList for next use
 		tempList.clear();
@@ -582,6 +541,10 @@ public class TheQueue {
 			// Ensure their end treatment time is also set to zero
 			TreatmentRoom.get(index).setEndTimeTreat(0);
 
+			// Set boolean to false for extended treatment - in case they had
+			// had treatment extended whilst in treatment room
+			TreatmentRoom.get(index).setExtraTime(false);
+
 			// Copy patient in treatment room to be moved to a temporary
 			// ArrayList
 			tempListFromTreatment.add(TreatmentRoom.get(index));
@@ -614,95 +577,25 @@ public class TheQueue {
 			// Remove first element of Waiting List
 			WaitingList.remove(0);
 
-			// Switch on index - element corresponding to each treatment room -
-			// elements in an ArrayList start at zero, therefore an index of
-			// zero refers to treatment room 1 and so on
-			switch (index) {
+			// For loop to iterate through each of the treatment rooms
+			for (int loop = 0; loop < NUMBER_OF_TREATMENT_ROOMS; loop++) {
 
-			// Treatment Room 1
-			case 0:
+				if (loop == index) {
 
-				// Add patient to treatment room 1
-				TreatmentRoom.add(index, tempListFromWaiting.get(0));
+					// Add patient to treatment room 1
+					TreatmentRoom.add(index, tempListFromWaiting.get(0));
 
-				// Call patient
-				System.out.println("Can "
-						+ TreatmentRoom.get(index).getFirstName() + " "
-						+ TreatmentRoom.get(index).getLastName()
-						+ " go to Treatment Room " + (index + 1) + "");
+					// Call patient
+					System.out.println("Can "
+							+ TreatmentRoom.get(index).getFirstName() + " "
+							+ TreatmentRoom.get(index).getLastName()
+							+ " go to Treatment Room " + (index + 1) + "");
 
-				// Set Treatment Room in patient
-				TreatmentRoom.get(index).setTreatmentRoom(index);
+					// Set Treatment Room in patient
+					TreatmentRoom.get(index).setTreatmentRoom(index);
 
-				break;
+				}
 
-			// Treatment Room 2
-			case 1:
-
-				// Add patient to treatment room 2
-				TreatmentRoom.add(index, tempListFromWaiting.get(0));
-
-				// Call patient
-				System.out.println("Can "
-						+ TreatmentRoom.get(index).getFirstName() + " "
-						+ TreatmentRoom.get(index).getLastName()
-						+ " go to Treatment Room " + (index + 1) + "");
-
-				// Set Treatment Room in patient
-				TreatmentRoom.get(index).setTreatmentRoom(index);
-
-				break;
-
-			// Treatment Room 3
-			case 2:
-
-				// Add patient to treatment room 3
-				TreatmentRoom.add(index, tempListFromWaiting.get(0));
-
-				// Call patient
-				System.out.println("Can "
-						+ TreatmentRoom.get(index).getFirstName() + " "
-						+ TreatmentRoom.get(index).getLastName()
-						+ " go to Treatment Room " + (index + 1) + "");
-
-				// Set Treatment Room in patient
-				TreatmentRoom.get(index).setTreatmentRoom(index);
-
-				break;
-
-			// Treatment Room 4
-			case 3:
-
-				// Add patient to treatment room 4
-				TreatmentRoom.add(index, tempListFromWaiting.get(0));
-
-				// Call patient
-				System.out.println("Can "
-						+ TreatmentRoom.get(index).getFirstName() + " "
-						+ TreatmentRoom.get(index).getLastName()
-						+ " go to Treatment Room " + (index + 1) + "");
-
-				// Set Treatment Room in patient
-				TreatmentRoom.get(index).setTreatmentRoom(index);
-
-				break;
-
-			// Treatment Room 5
-			case 4:
-
-				// Add patient to treatment room 5
-				TreatmentRoom.add(index, tempListFromWaiting.get(0));
-
-				// Call patient
-				System.out.println("Can "
-						+ TreatmentRoom.get(index).getFirstName() + " "
-						+ TreatmentRoom.get(index).getLastName()
-						+ " go to Treatment Room " + (index + 1) + "");
-
-				// Set Treatment Room in patient
-				TreatmentRoom.get(index).setTreatmentRoom(index);
-
-				break;
 			}
 
 			// for testing purposes
@@ -732,7 +625,7 @@ public class TheQueue {
 			// Send SMS to the On Call Team on new thread
 			Thread sms2 = new Thread(new SendSMS(SMS_TO_ON_CALL_TEAM));
 			sms2.start();
-			
+
 			// Set boolean to true
 			onCallInSitu = true;
 
@@ -764,7 +657,7 @@ public class TheQueue {
 
 			// Set time that on call team started treating patient
 			OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
-			
+
 		}
 
 	}

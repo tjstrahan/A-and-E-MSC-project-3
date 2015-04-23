@@ -27,7 +27,7 @@ public class QueueTimerAlt implements Runnable {
 	 * Constant for int which refers to a specific email message in Email.java
 	 */
 	static final int WAITING_TIME_EXCEEDED_EMAIL = 1;
-	
+
 	/**
 	 * Variable to be passed to sms method to select particular message.
 	 */
@@ -84,6 +84,13 @@ public class QueueTimerAlt implements Runnable {
 	static final long numberOfMilliSeconds = 60000 / TheQueue.TIME_FACTOR;
 
 	/**
+	 * Static to state the extra time which can be allocated to a patients
+	 * treatment in a treatment room should a member of the medical team extend
+	 * their treatment
+	 */
+	static final long FIVE_MINUTES = 300000 / TheQueue.TIME_FACTOR;
+
+	/**
 	 * Create an instance of the TheQueue class so it can be used throughout the
 	 * class.
 	 */
@@ -105,11 +112,7 @@ public class QueueTimerAlt implements Runnable {
 		while (Starter.isAlive) {
 
 			printTime();
-			checkTreatmentRoom1();
-			checkTreatmentRoom2();
-			checkTreatmentRoom3();
-			checkTreatmentRoom4();
-			checkTreatmentRoom5();
+			checkTreatmentRooms();
 			checkOnCallTeam();
 			setWaitingTimes();
 			checkPatientsWaitingLongTime();
@@ -132,11 +135,11 @@ public class QueueTimerAlt implements Runnable {
 	}
 
 	/**
-	 * Method which gets current time and checks if Treatment Room 1 is occupied
-	 * then calls a another method to see if the patients treatment has
+	 * Method which gets current time and checks if each Treatment Room is
+	 * occupied then calls a another method to see if the patients treatment has
 	 * finished.
 	 */
-	public void checkTreatmentRoom1() {
+	public void checkTreatmentRooms() {
 
 		// New instant of time
 		Instant now = Instant.now();
@@ -144,464 +147,87 @@ public class QueueTimerAlt implements Runnable {
 		// Set current time as time since the 1970 epoch in milliseconds
 		long currentTime = now.toEpochMilli();
 
-		// If Treatment Room 1 is occupied
-		if (TheQueue.TreatmentRoom.get(0) != null) {
+		// For loop to iterate through each of the treatment rooms
+		for (int loop = 0; loop < TheQueue.NUMBER_OF_TREATMENT_ROOMS; loop++) {
 
-			// Check to see if patient has finished their treatment
-			endTreatmentRoomTreatment1(currentTime);
+			// If Treatment Room is occupied
+			if (TheQueue.TreatmentRoom.get(loop) != null) {
+
+				// Check to see if patient has finished their treatment
+				endTreatmentRoomTreatment(loop, currentTime);
+			}
 		}
 	}
 
 	/**
-	 * Method to determine if the patient in Treatment Room 1 has completed
+	 * Method to determine if the patient in a Treatment Room has completed
 	 * their treatment which is standardly 10 minutes, however this can be
-	 * extended at the request of a doctor in increments of 5 minutes.
+	 * extended at the request of a doctor by 5 minutes.
 	 * 
 	 * @param currentTime
 	 *            , a <code>long</code> which is time in milliseconds since the
 	 *            1970 epoch
 	 */
-	public void endTreatmentRoomTreatment1(long currentTime) {
+	public void endTreatmentRoomTreatment(int loop, long currentTime) {
 
 		// Declare and initialise treatmentTime variable
-		long treatmentTime = 0;
+		long treatmentTime = 0L;
+
+		// Declare and initialise extraTime variable
+		long extraTime = 0;
 
 		// Declare and initialise NHS number variable
 		int NHSNumber = 0;
 
 		// Declare and initialise startTime variable
-		long startTime = TheQueue.TreatmentRoom.get(0).getStartTimeTreat();
+		long startTime = TheQueue.TreatmentRoom.get(loop).getStartTimeTreat();
 
 		// How treatmentTime is calculated
 		treatmentTime = currentTime - startTime;
 
-		// If treatmentTime is greater than the allowed time, consisting of the
-		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + MedicalTeamOperations.extraTime1)) {
+		// Check if patient has been given extra treatment time
+		if (TheQueue.TreatmentRoom.get(loop).isExtraTime()) {
+			extraTime = FIVE_MINUTES;
+		}
+
+		// If treatmentTime is greater than the allowed time, consisting of
+		// the standard treatment time and any extra time requested
+		if (treatmentTime > (TREATMENT_ROOM_TIME + extraTime)) {
 
 			// Set treatment room end time to the currentTime
-			TheQueue.TreatmentRoom.get(0).setEndTimeTreat(currentTime);
+			TheQueue.TreatmentRoom.get(loop).setEndTimeTreat(currentTime);
 
 			// Get NHS number of patient
-			NHSNumber = TheQueue.TreatmentRoom.get(0).getNhsNumber();
+			NHSNumber = TheQueue.TreatmentRoom.get(loop).getNhsNumber();
 
-			// Timestamp patients database record - run on separate thread in
+			// Timestamp patients database record - run on separate thread
+			// in
 			// case network traffic slows down queue timer execution - will
 			// overwrite any previous entry
 			Thread tR1 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
 			tR1.start();
-			
-			// Clear Notes if doctor has not made any new notes - ie clear notes
+
+			// Clear Notes if doctor has not made any new notes - ie clear
+			// notes
 			// from previous visit
-			if (!TheQueue.TreatmentRoom.get(0).isMadeNewNote()) {
+			if (!TheQueue.TreatmentRoom.get(loop).isMadeNewNote()) {
 				Thread tR1NotesClear = new Thread(
 						new QueueAccessClearDischargeNotes(NHSNumber));
 				tR1NotesClear.start();
 			}
 
 			// Add patient to the Treated LinkedList
-			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(0));
-
-			// If patient had their treatment extended reset treatment room time
-			// to standard
-			if (MedicalTeamOperations.treatmentRoom1extended) {
-				MedicalTeamOperations.extraTime1 = 0;
-				MedicalTeamOperations.treatmentRoom1extended = false;
-			}
+			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(loop));
 
 			// Let everyone know the room is now empty
-			System.out.println("Treatment Room 1 ready for next patient");
+			System.out.println("Treatment Room " + (loop + 1)
+					+ " ready for next patient");
 
 			// Remove patient from the Treatment Room ArrayList
-			TheQueue.TreatmentRoom.remove(0);
+			TheQueue.TreatmentRoom.remove(loop);
 
 			// Set Treatment Room 1 (element 0) to null, that is empty
-			TheQueue.TreatmentRoom.add(0, null);
-
-			// Reset treatmentTime to zero
-			treatmentTime = 0;
-
-			// Run the Fill Treatment Room method in TheQueue
-			theQueue.fillTreatmentRoom();
-		}
-
-	}
-
-	/**
-	 * Method which gets current time and checks if Treatment Room 2 is occupied
-	 * then calls a another method to see if the patients treatment has
-	 * finished.
-	 */
-	public void checkTreatmentRoom2() {
-
-		// New instant of time
-		Instant now = Instant.now();
-
-		// Set current time as time since the 1970 epoch in milliseconds
-		long currentTime = now.toEpochMilli();
-
-		// If Treatment Room 2 is occupied
-		if (TheQueue.TreatmentRoom.get(1) != null) {
-
-			// Check to see if patient has finished their treatment
-			endTreatmentRoomTreatment2(currentTime);
-		}
-	}
-
-	/**
-	 * Method to determine if the patient in Treatment Room 2 has completed
-	 * their treatment which is standardly 10 minutes, however this can be
-	 * extended at the request of a doctor in increments of 5 minutes.
-	 * 
-	 * @param currentTime
-	 *            , a <code>long</code> which is time in milliseconds since the
-	 *            1970 epoch
-	 */
-	public void endTreatmentRoomTreatment2(long currentTime) {
-
-		// Declare and initialise treatmentTime variable
-		long treatmentTime = 0;
-
-		// Declare and initialise NHS number variable
-		int NHSNumber = 0;
-
-		// Declare and initialise startTime variable
-		long startTime = TheQueue.TreatmentRoom.get(1).getStartTimeTreat();
-
-		// How treatmentTime is calculated
-		treatmentTime = currentTime - startTime;
-
-		// If treatmentTime is greater than the allowed time, consisting of the
-		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + MedicalTeamOperations.extraTime2)) {
-
-			// Set treatment room end time to the currentTime
-			TheQueue.TreatmentRoom.get(1).setEndTimeTreat(currentTime);
-
-			// Get NHS number of patient
-			NHSNumber = TheQueue.TreatmentRoom.get(1).getNhsNumber();
-
-			// Timestamp patients database record - run on separate thread in
-			// case network traffic slows down queue timer execution - will
-			// overwrite any previous entry
-			Thread tR2 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
-			tR2.start();
-
-			// Clear Notes if doctor has not made any new notes - ie clear notes
-			// from previous visit
-			if (!TheQueue.TreatmentRoom.get(1).isMadeNewNote()) {
-				Thread tR2NotesClear = new Thread(
-						new QueueAccessClearDischargeNotes(NHSNumber));
-				tR2NotesClear.start();
-			}
-
-			// Add patient to the Treated LinkedList
-			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(1));
-
-			// If patient had their treatment extended reset treatment room time
-			// to standard
-			if (MedicalTeamOperations.treatmentRoom2extended) {
-				MedicalTeamOperations.extraTime2 = 0;
-				MedicalTeamOperations.treatmentRoom2extended = false;
-			}
-
-			// Let everyone know the room is now empty
-			System.out.println("Treatment Room 2 ready for next patient");
-
-			// Remove patient from the Treatment Room ArrayList
-			TheQueue.TreatmentRoom.remove(1);
-
-			// Set Treatment Room 2 (element 1) to null, that is empty
-			TheQueue.TreatmentRoom.add(1, null);
-
-			// Reset treatmentTime to zero
-			treatmentTime = 0;
-
-			// Run the Fill Treatment Room method in TheQueue
-			theQueue.fillTreatmentRoom();
-		}
-	}
-
-	/**
-	 * Method which gets current time and checks if Treatment Room 3 is occupied
-	 * then calls a another method to see if the patients treatment has
-	 * finished.
-	 */
-	public void checkTreatmentRoom3() {
-
-		// New instant of time
-		Instant now = Instant.now();
-
-		// Set current time as time since the 1970 epoch in milliseconds
-		long currentTime = now.toEpochMilli();
-
-		// If Treatment Room 3 is occupied
-		if (TheQueue.TreatmentRoom.get(2) != null) {
-
-			// Check to see if patient has finished their treatment
-			endTreatmentRoomTreatment3(currentTime);
-		}
-
-	}
-
-	/**
-	 * Method to determine if the patient in Treatment Room 3 has completed
-	 * their treatment which is standardly 10 minutes, however this can be
-	 * extended at the request of a doctor in increments of 5 minutes.
-	 * 
-	 * @param currentTime
-	 *            , a <code>long</code> which is time in milliseconds since the
-	 *            1970 epoch
-	 */
-	public void endTreatmentRoomTreatment3(long currentTime) {
-
-		// Declare and initialise treatmentTime variable
-		long treatmentTime = 0;
-
-		// Declare and initialise NHS number variable
-		int NHSNumber = 0;
-
-		// Declare and initialise startTime variable
-		long startTime = TheQueue.TreatmentRoom.get(2).getStartTimeTreat();
-
-		// How treatmentTime is calculated
-		treatmentTime = currentTime - startTime;
-
-		// If treatmentTime is greater than the allowed time, consisting of the
-		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + MedicalTeamOperations.extraTime3)) {
-
-			// Set treatment room end time to the currentTime
-			TheQueue.TreatmentRoom.get(2).setEndTimeTreat(currentTime);
-
-			// Get NHS number of patient
-			NHSNumber = TheQueue.TreatmentRoom.get(2).getNhsNumber();
-
-			// Timestamp patients database record - run on separate thread in
-			// case network traffic slows down queue timer execution - will
-			// overwrite any previous entry
-			Thread tR3 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
-			tR3.start();
-			
-			// Clear Notes if doctor has not made any new notes - ie clear notes
-			// from previous visit
-			if (!TheQueue.TreatmentRoom.get(2).isMadeNewNote()) {
-				Thread tR3NotesClear = new Thread(
-						new QueueAccessClearDischargeNotes(NHSNumber));
-				tR3NotesClear.start();
-			}
-
-			// Add patient to the Treated LinkedList
-			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(2));
-
-			// If patient had their treatment extended reset treatment room time
-			// to standard
-			if (MedicalTeamOperations.treatmentRoom3extended) {
-				MedicalTeamOperations.extraTime3 = 0;
-				MedicalTeamOperations.treatmentRoom3extended = false;
-			}
-
-			// Let everyone know the room is now empty
-			System.out.println("Treatment Room 3 ready for next patient");
-
-			// Remove patient from the Treatment Room ArrayList
-			TheQueue.TreatmentRoom.remove(2);
-
-			// Set Treatment Room 3 (element 2) to null, that is empty
-			TheQueue.TreatmentRoom.add(2, null);
-
-			// Reset treatmentTime to zero
-			treatmentTime = 0;
-
-			// Run the Fill Treatment Room method in TheQueue
-			theQueue.fillTreatmentRoom();
-		}
-
-	}
-
-	/**
-	 * Method which gets current time and checks if Treatment Room 4 is occupied
-	 * then calls a another method to see if the patients treatment has
-	 * finished.
-	 */
-	public void checkTreatmentRoom4() {
-
-		// New instant of time
-		Instant now = Instant.now();
-
-		// Set current time as time since the 1970 epoch in milliseconds
-		long currentTime = now.toEpochMilli();
-
-		// If Treatment Room 4 is occupied
-		if (TheQueue.TreatmentRoom.get(3) != null) {
-
-			// Check to see if patient has finished their treatment
-			endTreatmentRoomTreatment4(currentTime);
-		}
-	}
-
-	/**
-	 * Method to determine if the patient in Treatment Room 4 has completed
-	 * their treatment which is standardly 10 minutes, however this can be
-	 * extended at the request of a doctor in increments of 5 minutes.
-	 * 
-	 * @param currentTime
-	 *            , a <code>long</code> which is time in milliseconds since the
-	 *            1970 epoch
-	 */
-	public void endTreatmentRoomTreatment4(long currentTime) {
-
-		// Declare and initialise treatmentTime variable
-		long treatmentTime = 0;
-
-		// Declare and initialise NHS number variable
-		int NHSNumber = 0;
-
-		// Declare and initialise startTime variable
-		long startTime = TheQueue.TreatmentRoom.get(3).getStartTimeTreat();
-
-		// How treatmentTime is calculated
-		treatmentTime = currentTime - startTime;
-
-		// If treatmentTime is greater than the allowed time, consisting of the
-		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + MedicalTeamOperations.extraTime4)) {
-
-			// Set treatment room end time to the currentTime
-			TheQueue.TreatmentRoom.get(3).setEndTimeTreat(currentTime);
-
-			// Get NHS number of patient
-			NHSNumber = TheQueue.TreatmentRoom.get(3).getNhsNumber();
-
-			// Timestamp patients database record - run on separate thread in
-			// case network traffic slows down queue timer execution - will
-			// overwrite any previous entry
-			Thread tR4 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
-			tR4.start();
-
-			// Clear Notes if doctor has not made any new notes - ie clear notes
-			// from previous visit
-			if (!TheQueue.TreatmentRoom.get(3).isMadeNewNote()) {
-				Thread tR4NotesClear = new Thread(
-						new QueueAccessClearDischargeNotes(NHSNumber));
-				tR4NotesClear.start();
-			}
-			
-			// Add patient to the Treated LinkedList
-			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(3));
-
-			// If patient had their treatment extended reset treatment room time
-			// to standard
-			if (MedicalTeamOperations.treatmentRoom4extended) {
-				MedicalTeamOperations.extraTime4 = 0;
-				MedicalTeamOperations.treatmentRoom4extended = false;
-			}
-
-			// Let everyone know the room is now empty
-			System.out.println("Treatment Room 4 ready for next patient");
-
-			// Remove patient from the Treatment Room ArrayList
-			TheQueue.TreatmentRoom.remove(3);
-
-			// Set Treatment Room 4 (element 3) to null, that is empty
-			TheQueue.TreatmentRoom.add(3, null);
-
-			// Reset treatmentTime to zero
-			treatmentTime = 0;
-
-			// Run the Fill Treatment Room method in TheQueue
-			theQueue.fillTreatmentRoom();
-		}
-
-	}
-
-	/**
-	 * Method which gets current time and checks if Treatment Room 5 is occupied
-	 * then calls a another method to see if the patients treatment has
-	 * finished.
-	 */
-	public void checkTreatmentRoom5() {
-
-		// New instant of time
-		Instant now = Instant.now();
-
-		// Set current time as time since the 1970 epoch in milliseconds
-		long currentTime = now.toEpochMilli();
-
-		// If Treatment Room 5 is occupied
-		if (TheQueue.TreatmentRoom.get(4) != null) {
-
-			// Check to see if patient has finished their treatment
-			endTreatmentRoomTreatment5(currentTime);
-		}
-
-	}
-
-	/**
-	 * Method to determine if the patient in Treatment Room 5 has completed
-	 * their treatment which is standardly 10 minutes, however this can be
-	 * extended at the request of a doctor in increments of 5 minutes.
-	 * 
-	 * @param currentTime
-	 *            , a <code>long</code> which is time in milliseconds since the
-	 *            1970 epoch
-	 */
-	public void endTreatmentRoomTreatment5(long currentTime) {
-
-		// Declare and initialise treatmentTime variable
-		long treatmentTime = 0;
-
-		// Declare and initialise NHS number variable
-		int NHSNumber = 0;
-
-		// Declare and initialise startTime variable
-		long startTime = TheQueue.TreatmentRoom.get(4).getStartTimeTreat();
-
-		// How treatmentTime is calculated
-		treatmentTime = currentTime - startTime;
-
-		// If treatmentTime is greater than the allowed time, consisting of the
-		// standard treatment time and any extra time requested
-		if (treatmentTime > (TREATMENT_ROOM_TIME + MedicalTeamOperations.extraTime5)) {
-
-			// Set treatment room end time to the currentTime
-			TheQueue.TreatmentRoom.get(4).setEndTimeTreat(currentTime);
-
-			// Get NHS number of patient
-			NHSNumber = TheQueue.TreatmentRoom.get(4).getNhsNumber();
-
-			// Timestamp patients database record - run on separate thread in
-			// case network traffic slows down queue timer execution - will
-			// overwrite any previous entry
-			Thread tR5 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
-			tR5.start();
-
-			// Clear Notes if doctor has not made any new notes - ie clear notes
-			// from previous visit
-			if (!TheQueue.TreatmentRoom.get(4).isMadeNewNote()) {
-				Thread tR5NotesClear = new Thread(
-						new QueueAccessClearDischargeNotes(NHSNumber));
-				tR5NotesClear.start();
-			}
-
-			// Add patient to the Treated LinkedList
-			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(4));
-
-			// If patient had their treatment extended reset treatment room time
-			// to standard
-			if (MedicalTeamOperations.treatmentRoom5extended) {
-				MedicalTeamOperations.extraTime5 = 0;
-				MedicalTeamOperations.treatmentRoom5extended = false;
-			}
-
-			// Let everyone know the room is now empty
-			System.out.println("Treatment Room 5 ready for next patient");
-
-			// Remove patient from the Treatment Room ArrayList
-			TheQueue.TreatmentRoom.remove(4);
-
-			// Set Treatment Room 5 (element 4) to null, that is empty
-			TheQueue.TreatmentRoom.add(4, null);
+			TheQueue.TreatmentRoom.add(loop, null);
 
 			// Reset treatmentTime to zero
 			treatmentTime = 0;
@@ -669,7 +295,7 @@ public class QueueTimerAlt implements Runnable {
 			// overwrite any previous entry
 			Thread oCT = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
 			oCT.start();
-			
+
 			// Clear Notes if doctor has not made any new notes - ie clear notes
 			// from previous visit
 			if (!TheQueue.OnCallTeam.get(0).isMadeNewNote()) {
@@ -890,8 +516,8 @@ public class QueueTimerAlt implements Runnable {
 		if (checkIfTwoPatientsMoreThan30()) {
 
 			// Send SMS to the On Call Team on new thread
-			Thread sms = new Thread(new SendSMS(SMS_TO_HOSP_MANAGER));
-			sms.start();
+			// Thread sms = new Thread(new SendSMS(SMS_TO_HOSP_MANAGER));
+			// sms.start();
 
 			// Thread to send email to hospital manager
 			Thread email1 = new Thread(new Email(WAITING_TIME_EXCEEDED_EMAIL));
@@ -1027,12 +653,21 @@ public class QueueTimerAlt implements Runnable {
 	 */
 	public void checkIfAlive() {
 
-		if (TheQueue.TreatmentRoom.get(0) == null
-				&& TheQueue.TreatmentRoom.get(1) == null
-				&& TheQueue.TreatmentRoom.get(2) == null
-				&& TheQueue.TreatmentRoom.get(3) == null
-				&& TheQueue.TreatmentRoom.get(4) == null
-				&& TheQueue.WaitingList.isEmpty()
+		int countNulls = 0;
+		boolean checkForNull = false;
+
+		// For loop to iterate through each of the treatment rooms
+		for (int loop = 0; loop < TheQueue.NUMBER_OF_TREATMENT_ROOMS; loop++) {
+			if (TheQueue.TreatmentRoom.get(loop) == null) {
+				countNulls++;
+			}
+		}
+
+		if (countNulls == TheQueue.NUMBER_OF_TREATMENT_ROOMS) {
+			checkForNull = true;
+		}
+
+		if (checkForNull && TheQueue.WaitingList.isEmpty()
 				&& TheQueue.OnCallTeam.isEmpty()) {
 
 			// If all above then call method to set boolean to false

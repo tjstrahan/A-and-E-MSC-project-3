@@ -106,7 +106,7 @@ public class QueueOperations {
 		System.out.println("Enter Treatment Room");
 		treatmentRoom = scanner.nextInt();
 
-		if (treatmentRoom > 0 && treatmentRoom < 6) {
+		if (treatmentRoom > 0 && treatmentRoom <= TheQueue.NUMBER_OF_TREATMENT_ROOMS) {
 			int treatmentRoomElement = treatmentRoom - 1;
 
 			if (TheQueue.TreatmentRoom.get(treatmentRoomElement) == null) {
@@ -135,7 +135,7 @@ public class QueueOperations {
 
 		int NHSNumber = 0;
 		
-		if (treatmentRoom > 0 && treatmentRoom < 6) {
+		if (treatmentRoom > 0 && treatmentRoom <= TheQueue.NUMBER_OF_TREATMENT_ROOMS) {
 			int treatmentRoomElement = treatmentRoom - 1;
 
 			if (TheQueue.TreatmentRoom.get(treatmentRoomElement) == null) {

@@ -31,6 +31,7 @@ public class Starter {
 		// Set boolean to true
 		makeQueueAlive();
 
+		
 		try {
 
 			// Get receptionist to start adding patients
@@ -51,15 +52,19 @@ public class Starter {
 		Thread t1 = new Thread(triNurse);
 		t1.start();
 		
-		// manually add patient
-		receptionist.admitPatient(111121111);
-		
 		// Start the QueueTimeAlt class (named Alt as it was an alternative
 		// approach to the original which had used a thread pool approach)
 		QueueTimerAlt qta = new QueueTimerAlt();
 		Thread t2 = new Thread(qta);
 		t2.start();
 
+
+		
+		// manually add patient
+		receptionist.admitPatient(111121111);
+		
+		
+		
 	}
 
 	/**

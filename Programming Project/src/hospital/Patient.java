@@ -143,6 +143,12 @@ public class Patient extends Person {
 	private boolean madeNewNote;
 
 	/**
+	 * Instance var to store the boolean verifying if a member of the medical
+	 * team has requested an extra treatment time of 5 minutes
+	 */
+	private boolean extraTime;
+
+	/**
 	 * Constant for NHS number maximum value
 	 */
 	private static final int NHS_NUMBER_MAX = 999999999;
@@ -222,7 +228,7 @@ public class Patient extends Person {
 		this.treatedByOnCallTeam = false;
 		this.waitingMoreThan30 = false;
 		this.madeNewNote = false;
-
+		this.extraTime = false;
 	}
 
 	/**
@@ -514,7 +520,9 @@ public class Patient extends Person {
 	public String toString() {
 		return "[" + getTitle() + " " + getFirstName() + " " + getLastName()
 				+ ", Date of Birth: " + getDateOfBirth() + ", Triaged as: "
-				+ triageCategory() + ", NHS number: " + this.nhsNumber + "]";
+				+ triageCategory() + ", NHS number: " + this.nhsNumber
+				+ ", Waiting Time: " + getTimeOnWaitingList() + " Ad: "
+				+ getAdmissionNumber() + "]";
 	}
 
 	/**
@@ -705,6 +713,7 @@ public class Patient extends Person {
 
 	/**
 	 * Method to get the madeNewNote boolean
+	 * 
 	 * @return
 	 */
 	public boolean isMadeNewNote() {
@@ -713,10 +722,27 @@ public class Patient extends Person {
 
 	/**
 	 * Method to set the madeNewNote boolean
+	 * 
 	 * @param madeNewNote
 	 */
 	public void setMadeNewNote(boolean madeNewNote) {
 		this.madeNewNote = madeNewNote;
+	}
+
+	/**
+	 * Method to get the extraTime boolean
+	 * @return
+	 */
+	public boolean isExtraTime() {
+		return extraTime;
+	}
+
+	/**
+	 * Method to set the extraTime boolean
+	 * @param extraTime
+	 */
+	public void setExtraTime(boolean extraTime) {
+		this.extraTime = extraTime;
 	}
 
 	/**
