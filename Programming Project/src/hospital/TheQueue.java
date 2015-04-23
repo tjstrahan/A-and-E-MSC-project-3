@@ -8,9 +8,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import jdbc.QueueAccessClearDischargeNotes;
-import jdbc.QueueAccessClearDischargeTime;
-
 /**
  * Class to represent the queueing system of both the treatment rooms and
  * waiting list in a hospital accident and emergency department
@@ -25,7 +22,7 @@ public class TheQueue {
 	 * If set to 40 it runs forty times faster than real time. To set to real
 	 * time set this variable to 1.
 	 */
-	public static final int TIME_FACTOR = 16;
+	public static final int TIME_FACTOR = 40;
 
 	/**
 	 * Maximum length of Waiting List as described in specifications
@@ -40,7 +37,7 @@ public class TheQueue {
 	/**
 	 * Constant for int which refers to a specific email message in Email.java
 	 */
-	public static final int PATIENT_TURNED_AWAY_EMAIL = 2;
+	static final int PATIENT_TURNED_AWAY_EMAIL = 2;
 
 	/**
 	 * To ensure that patients moved from Treatment Room to the Waiting List
@@ -69,6 +66,11 @@ public class TheQueue {
 	 * during the course of their stay.
 	 */
 	static boolean firstRun = true;
+	
+	/**
+	 * Variable to be passed to sms method to select particular message.
+	 */
+	static final int SMS_TO_ON_CALL_TEAM = 2;
 
 	/**
 	 * LinkedList of patients to represent the Waiting List in the hospital it
@@ -167,24 +169,10 @@ public class TheQueue {
 			// If the On Call team has not be contacted
 			if (!onCallTeamContacted) {
 
-				// Set boolean to true
-				onCallTeamContacted = true;
-
-				// Send SMS to the On Call Team, do this by instantiating SMS
-				// class and starting it as a new thread, the SMS class will
-				// check back to TheQueue to see if the boolean value
-				// onCallTeamContacted is true. Then if true it will extract the
-				// mobile numbers of the 2 doctors and 3 nurses that are flagged
-				// as on call from the database into an array and send them an
-				// sms message, once message is sent the thread will end, this
-				// structure means that the queue can continue without delay
-
-				// SendSMS sendSMS = new SendSMS();
-				// Thread sms = new Thread(sms);
-				// sms.start();
-
-				// for demo purposes
-				System.out.println("On-call team called - SMS");
+				// Send SMS to the On Call Team on new thread
+				Thread sms1 = new Thread(new SendSMS(SMS_TO_ON_CALL_TEAM));
+				sms1.start();
+				
 			}
 
 			// If the patient arriving from triage has a rating of 1, that is
@@ -258,19 +246,6 @@ public class TheQueue {
 				// Sets patients end wait time, which will have automatically
 				// been started at triage
 				OnCallTeam.get(0).setEndTimeWait(onCallStart.toEpochMilli());
-
-				// Reset timestamp on patients record - run on separate thread
-				// in case network traffic slows down queue execution
-				Thread oCT1TimeClear = new Thread(new QueueAccessClearDischargeTime(
-						OnCallTeam.get(0).getNhsNumber()));
-				oCT1TimeClear.start();
-
-				// Clear Notes (if any) from previous visit (if any) - run on
-				// separate thread in case network traffic slows down queue
-				// execution
-				Thread oCT1NotesClear = new Thread(new QueueAccessClearDischargeNotes(
-						OnCallTeam.get(0).getNhsNumber()));
-				oCT1NotesClear.start();
 				
 				// Sets patients treatment start time
 				OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
@@ -364,19 +339,6 @@ public class TheQueue {
 				// this is required when bubblesorting the treatment room to
 				// find the patient of lowest priority
 				TreatmentRoom.get(loop).setTreatmentRoom(loop);
-
-				// Reset timestamp on patients record - run on separate thread
-				// in case network traffic slows down queue execution
-				Thread tRTimeClear = new Thread(new QueueAccessClearDischargeTime(
-						TreatmentRoom.get(loop).getNhsNumber()));
-				tRTimeClear.start();
-
-				// Clear Notes (if any) from previous visit (if any) - run on
-				// separate thread in case network traffic slows down queue
-				// execution
-				Thread tRNotesClear = new Thread(new QueueAccessClearDischargeNotes(
-						TreatmentRoom.get(loop).getNhsNumber()));
-				tRNotesClear.start();
 
 				// Get a new instance of time
 				Instant startTreat = Instant.now();
@@ -671,21 +633,7 @@ public class TheQueue {
 
 				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
-				
-				// Reset timestamp on patients record - run on separate thread
-				// in case network traffic slows down queue execution
-				Thread tR1TimeClear = new Thread(new QueueAccessClearDischargeTime(
-						TreatmentRoom.get(index).getNhsNumber()));
-				tR1TimeClear.start();
 
-				// Clear Notes (if any) from previous visit (if any) - run on
-				// separate thread in case network traffic slows down queue
-				// execution
-				Thread tR1NotesClear = new Thread(new QueueAccessClearDischargeNotes(
-						TreatmentRoom.get(index).getNhsNumber()));
-				tR1NotesClear.start();
-
-				// Leave switch statement
 				break;
 
 			// Treatment Room 2
@@ -703,20 +651,6 @@ public class TheQueue {
 				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
 
-				// Reset timestamp on patients record - run on separate thread
-				// in case network traffic slows down queue execution
-				Thread tR2TimeClear = new Thread(new QueueAccessClearDischargeTime(
-						TreatmentRoom.get(index).getNhsNumber()));
-				tR2TimeClear.start();
-
-				// Clear Notes (if any) from previous visit (if any) - run on
-				// separate thread in case network traffic slows down queue
-				// execution
-				Thread tR2NotesClear = new Thread(new QueueAccessClearDischargeNotes(
-						TreatmentRoom.get(index).getNhsNumber()));
-				tR2NotesClear.start();
-
-				// Leave switch statement
 				break;
 
 			// Treatment Room 3
@@ -734,20 +668,6 @@ public class TheQueue {
 				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
 
-				// Reset timestamp on patients record - run on separate thread
-				// in case network traffic slows down queue execution
-				Thread tR3TimeClear = new Thread(new QueueAccessClearDischargeTime(
-						TreatmentRoom.get(index).getNhsNumber()));
-				tR3TimeClear.start();
-
-				// Clear Notes (if any) from previous visit (if any) - run on
-				// separate thread in case network traffic slows down queue
-				// execution
-				Thread tR3NotesClear = new Thread(new QueueAccessClearDischargeNotes(
-						TreatmentRoom.get(index).getNhsNumber()));
-				tR3NotesClear.start();
-
-				// Leave switch statement
 				break;
 
 			// Treatment Room 4
@@ -765,20 +685,6 @@ public class TheQueue {
 				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
 
-				// Reset timestamp on patients record - run on separate thread
-				// in case network traffic slows down queue execution
-				Thread tR4TimeClear = new Thread(new QueueAccessClearDischargeTime(
-						TreatmentRoom.get(index).getNhsNumber()));
-				tR4TimeClear.start();
-
-				// Clear Notes (if any) from previous visit (if any) - run on
-				// separate thread in case network traffic slows down queue
-				// execution
-				Thread tR4NotesClear = new Thread(new QueueAccessClearDischargeNotes(
-						TreatmentRoom.get(index).getNhsNumber()));
-				tR4NotesClear.start();
-
-				// Leave switch statement
 				break;
 
 			// Treatment Room 5
@@ -796,20 +702,6 @@ public class TheQueue {
 				// Set Treatment Room in patient
 				TreatmentRoom.get(index).setTreatmentRoom(index);
 
-				// Reset timestamp on patients record - run on separate thread
-				// in case network traffic slows down queue execution
-				Thread tR5TimeClear = new Thread(new QueueAccessClearDischargeTime(
-						TreatmentRoom.get(index).getNhsNumber()));
-				tR5TimeClear.start();
-
-				// Clear Notes (if any) from previous visit (if any) - run on
-				// separate thread in case network traffic slows down queue
-				// execution
-				Thread tR5NotesClear = new Thread(new QueueAccessClearDischargeNotes(
-						TreatmentRoom.get(index).getNhsNumber()));
-				tR5NotesClear.start();
-
-				// Leave switch statement
 				break;
 			}
 
@@ -837,25 +729,10 @@ public class TheQueue {
 				&& (WaitingList.getFirst().getTriageNumber() == 1)
 				&& !onCallInSitu) {
 
-			// Set boolean to true
-			onCallTeamContacted = true;
-
-			// Send SMS to the On Call Team, do this by instantiating SMS
-			// class and starting it as a new thread, the SMS class will
-			// check back to TheQueue to see if the boolean value
-			// onCallTeamContacted is true. Then if true it will extract the
-			// mobile numbers of the 2 doctors and 3 nurses that are flagged
-			// as on call from the database into an array and send them an
-			// sms message, once message is sent the thread will end, this
-			// structure means that the queue can continue without delay
-
-			// SendSMS sendSMS = new SendSMS();
-			// Thread sms = new Thread(sms);
-			// sms.start();
-
-			// for demo purposes
-			System.out.println("On-call team called - SMS");
-
+			// Send SMS to the On Call Team on new thread
+			Thread sms2 = new Thread(new SendSMS(SMS_TO_ON_CALL_TEAM));
+			sms2.start();
+			
 			// Set boolean to true
 			onCallInSitu = true;
 
@@ -888,19 +765,6 @@ public class TheQueue {
 			// Set time that on call team started treating patient
 			OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
 			
-			// Reset timestamp on patients record - run on separate thread
-			// in case network traffic slows down queue execution
-			Thread oCT2TimeClear = new Thread(new QueueAccessClearDischargeTime(
-					OnCallTeam.get(0).getNhsNumber()));
-			oCT2TimeClear.start();
-
-			// Clear Notes (if any) from previous visit (if any) - run on
-			// separate thread in case network traffic slows down queue
-			// execution
-			Thread oCT2NotesClear = new Thread(new QueueAccessClearDischargeNotes(
-					OnCallTeam.get(0).getNhsNumber()));
-			oCT2NotesClear.start();
-
 		}
 
 	}

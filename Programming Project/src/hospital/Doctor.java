@@ -1,5 +1,9 @@
 package hospital;
 
+import java.util.Scanner;
+
+import jdbc.DoctorAccess;
+
 /**
  * Class to extend staff class details to class doctor and to implement iOnCall
  * interface
@@ -8,12 +12,14 @@ package hospital;
  *
  */
 
-public class Doctor extends Staff implements iOnCall {
+public class Doctor extends Staff {
 
 	/**
 	 * number of medical team doctor belongs to
 	 */
 	private int medicalTeam;
+
+	static Scanner scanner = new Scanner(System.in);
 
 	/**
 	 * default constructor for doctor
@@ -29,8 +35,8 @@ public class Doctor extends Staff implements iOnCall {
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode, long contactNumber, int staffID, int loginID,
-			String password, int medicalTeam)
-			throws IllegalArgumentException, Exception {
+			String password, int medicalTeam) throws IllegalArgumentException,
+			Exception {
 		super(title, firstName, middleName, lastName, dateOfBirth,
 				addressLineOne, addressLineTwo, addressLineThree, city,
 				postcode, contactNumber, staffID, loginID, password);
@@ -84,20 +90,40 @@ public class Doctor extends Staff implements iOnCall {
 		qA.QueueCommmands();
 	}
 
-	/**
-	 * Overridden method from the isOnCall interface to set if the doctor is out
-	 * on call
-	 */
-	@Override
-	public void isOnCall() {
+	public void makeNotesTreatmentRoom() throws IllegalArgumentException,
+			Exception {
 
-		this.isOnCallToString();
+		DoctorAccess dA = new DoctorAccess();
+		QueueOperations qA = new QueueOperations();
+
+		String notes = "";
+		int NHSNumber = 0;
+		int treatmentRoom = 0;
+		int treatmentRoomElement = 0;
+		System.out
+				.print("Enter treatment room number to get NHS Number of patient.");
+		treatmentRoom = scanner.nextInt();
+		NHSNumber = qA.getNHSNumberOfTreatmentRoomPatient(treatmentRoom);
+		treatmentRoomElement = treatmentRoom - 1;
+		TheQueue.TreatmentRoom.get(treatmentRoomElement).setMadeNewNote(true);
+		System.out.println("Please enter notes : ");
+		notes = scanner.next();
+		dA.writeNotesOnPatientRecord(NHSNumber, notes);
 
 	}
 
-	public String isOnCallToString() {
-		return "Doctor " + getTitle() + " " + getFirstName() + " "
-				+ getMiddleName() + " " + getLastName() + "is on call";
-	}
+	public void makeNotesOnCall() throws IllegalArgumentException, Exception {
 
+		DoctorAccess dA = new DoctorAccess();
+		QueueOperations qA = new QueueOperations();
+
+		String notes = "";
+		int NHSNumber = 0;
+		NHSNumber = qA.getNHSNumberOfOnCallPatient();
+		TheQueue.OnCallTeam.get(0).setMadeNewNote(true);
+		System.out.println("Please enter notes : ");
+		notes = scanner.next();
+		dA.writeNotesOnPatientRecord(NHSNumber, notes);
+
+	}
 }

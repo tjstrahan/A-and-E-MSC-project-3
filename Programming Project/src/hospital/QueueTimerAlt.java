@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 
 import jdbc.QueueAccessAddDischargeTime;
+import jdbc.QueueAccessClearDischargeNotes;
 
 /**
  * The class which allows several methods such as printing lists, checking
@@ -25,8 +26,13 @@ public class QueueTimerAlt implements Runnable {
 	/**
 	 * Constant for int which refers to a specific email message in Email.java
 	 */
-	public static final int WAITING_TIME_EXCEEDED_EMAIL = 1;
+	static final int WAITING_TIME_EXCEEDED_EMAIL = 1;
 	
+	/**
+	 * Variable to be passed to sms method to select particular message.
+	 */
+	static final int SMS_TO_HOSP_MANAGER = 1;
+
 	/**
 	 * ArrayList to hold a temporary copy of Treatment Room list.
 	 */
@@ -180,9 +186,18 @@ public class QueueTimerAlt implements Runnable {
 			NHSNumber = TheQueue.TreatmentRoom.get(0).getNhsNumber();
 
 			// Timestamp patients database record - run on separate thread in
-			// case network traffic slows down queue timer execution
+			// case network traffic slows down queue timer execution - will
+			// overwrite any previous entry
 			Thread tR1 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
 			tR1.start();
+			
+			// Clear Notes if doctor has not made any new notes - ie clear notes
+			// from previous visit
+			if (!TheQueue.TreatmentRoom.get(0).isMadeNewNote()) {
+				Thread tR1NotesClear = new Thread(
+						new QueueAccessClearDischargeNotes(NHSNumber));
+				tR1NotesClear.start();
+			}
 
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(0));
@@ -249,7 +264,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// Declare and initialise NHS number variable
 		int NHSNumber = 0;
-		
+
 		// Declare and initialise startTime variable
 		long startTime = TheQueue.TreatmentRoom.get(1).getStartTimeTreat();
 
@@ -267,10 +282,19 @@ public class QueueTimerAlt implements Runnable {
 			NHSNumber = TheQueue.TreatmentRoom.get(1).getNhsNumber();
 
 			// Timestamp patients database record - run on separate thread in
-			// case network traffic slows down queue timer execution
+			// case network traffic slows down queue timer execution - will
+			// overwrite any previous entry
 			Thread tR2 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
 			tR2.start();
-			
+
+			// Clear Notes if doctor has not made any new notes - ie clear notes
+			// from previous visit
+			if (!TheQueue.TreatmentRoom.get(1).isMadeNewNote()) {
+				Thread tR2NotesClear = new Thread(
+						new QueueAccessClearDischargeNotes(NHSNumber));
+				tR2NotesClear.start();
+			}
+
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(1));
 
@@ -354,9 +378,18 @@ public class QueueTimerAlt implements Runnable {
 			NHSNumber = TheQueue.TreatmentRoom.get(2).getNhsNumber();
 
 			// Timestamp patients database record - run on separate thread in
-			// case network traffic slows down queue timer execution
+			// case network traffic slows down queue timer execution - will
+			// overwrite any previous entry
 			Thread tR3 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
 			tR3.start();
+			
+			// Clear Notes if doctor has not made any new notes - ie clear notes
+			// from previous visit
+			if (!TheQueue.TreatmentRoom.get(2).isMadeNewNote()) {
+				Thread tR3NotesClear = new Thread(
+						new QueueAccessClearDischargeNotes(NHSNumber));
+				tR3NotesClear.start();
+			}
 
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(2));
@@ -441,10 +474,19 @@ public class QueueTimerAlt implements Runnable {
 			NHSNumber = TheQueue.TreatmentRoom.get(3).getNhsNumber();
 
 			// Timestamp patients database record - run on separate thread in
-			// case network traffic slows down queue timer execution
+			// case network traffic slows down queue timer execution - will
+			// overwrite any previous entry
 			Thread tR4 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
 			tR4.start();
 
+			// Clear Notes if doctor has not made any new notes - ie clear notes
+			// from previous visit
+			if (!TheQueue.TreatmentRoom.get(3).isMadeNewNote()) {
+				Thread tR4NotesClear = new Thread(
+						new QueueAccessClearDischargeNotes(NHSNumber));
+				tR4NotesClear.start();
+			}
+			
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(3));
 
@@ -529,9 +571,18 @@ public class QueueTimerAlt implements Runnable {
 			NHSNumber = TheQueue.TreatmentRoom.get(4).getNhsNumber();
 
 			// Timestamp patients database record - run on separate thread in
-			// case network traffic slows down queue timer execution
+			// case network traffic slows down queue timer execution - will
+			// overwrite any previous entry
 			Thread tR5 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
 			tR5.start();
+
+			// Clear Notes if doctor has not made any new notes - ie clear notes
+			// from previous visit
+			if (!TheQueue.TreatmentRoom.get(4).isMadeNewNote()) {
+				Thread tR5NotesClear = new Thread(
+						new QueueAccessClearDischargeNotes(NHSNumber));
+				tR5NotesClear.start();
+			}
 
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(4));
@@ -597,7 +648,7 @@ public class QueueTimerAlt implements Runnable {
 
 		// Declare and initialise NHS number variable
 		int NHSNumber = 0;
-		
+
 		// Declare and initialise treatmentTime
 		long treatmentTime = currentTime - startTime;
 
@@ -612,12 +663,21 @@ public class QueueTimerAlt implements Runnable {
 
 			// Get NHS number of patient
 			NHSNumber = TheQueue.OnCallTeam.get(0).getNhsNumber();
-			
+
 			// Timestamp patients database record - run on separate thread in
-			// case network traffic slows down queue timer execution
+			// case network traffic slows down queue timer execution - will
+			// overwrite any previous entry
 			Thread oCT = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
 			oCT.start();
 			
+			// Clear Notes if doctor has not made any new notes - ie clear notes
+			// from previous visit
+			if (!TheQueue.OnCallTeam.get(0).isMadeNewNote()) {
+				Thread oCTNotesClear = new Thread(
+						new QueueAccessClearDischargeNotes(NHSNumber));
+				oCTNotesClear.start();
+			}
+
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.OnCallTeam.get(0));
 
@@ -663,16 +723,16 @@ public class QueueTimerAlt implements Runnable {
 	public void printTime() {
 
 		// Get a new instant of time
-		//Instant now = Instant.now();
+		// Instant now = Instant.now();
 		LocalDateTime dateTime = LocalDateTime.now();
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-			    .withLocale(new Locale("de"));
+		DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(
+				FormatStyle.SHORT).withLocale(new Locale("de"));
 		String germanDateTime = dateTime.format(formatter);
 		// Print time to screen - some work possibly needed here to make
 		// this more user friendly rather than the standard ISO-8601
 		// format
-		//System.out.println(now.toString());
+		// System.out.println(now.toString());
 		System.out.println(germanDateTime);
 
 	}
@@ -690,8 +750,8 @@ public class QueueTimerAlt implements Runnable {
 		treatmentCopy.addAll(TheQueue.TreatmentRoom);
 		waitingCopy.addAll(TheQueue.WaitingList);
 		onCallCopy.addAll(TheQueue.OnCallTeam);
-		//treatedCopy.addAll(TheQueue.Treated);
-		//turnedAwayCopy.addAll(TheQueue.SentElsewhere);
+		// treatedCopy.addAll(TheQueue.Treated);
+		// turnedAwayCopy.addAll(TheQueue.SentElsewhere);
 
 	}
 
@@ -718,17 +778,17 @@ public class QueueTimerAlt implements Runnable {
 		// Call method which uses iterator to print list contents
 		printOnCall();
 
-		//System.out.println("Treated Patients");
-		//System.out.println("================");
+		// System.out.println("Treated Patients");
+		// System.out.println("================");
 
 		// Call method which uses iterator to print list contents
-		//printTreated();
+		// printTreated();
 
-		//System.out.println("Turned Away Patients");
-		//System.out.println("====================");
+		// System.out.println("Turned Away Patients");
+		// System.out.println("====================");
 
 		// Call method which uses iterator to print list contents
-		//printTurnedAway();
+		// printTurnedAway();
 
 	}
 
@@ -829,9 +889,9 @@ public class QueueTimerAlt implements Runnable {
 		// boolean value, if true contact the hospital manager
 		if (checkIfTwoPatientsMoreThan30()) {
 
-			// SendSMS sendSMS = new SendSMS();
-			// Thread sms = new Thread(sendSMS);
-			// sms.start();
+			// Send SMS to the On Call Team on new thread
+			Thread sms = new Thread(new SendSMS(SMS_TO_HOSP_MANAGER));
+			sms.start();
 
 			// Thread to send email to hospital manager
 			Thread email1 = new Thread(new Email(WAITING_TIME_EXCEEDED_EMAIL));
@@ -887,8 +947,8 @@ public class QueueTimerAlt implements Runnable {
 		treatmentCopy.clear();
 		waitingCopy.clear();
 		onCallCopy.clear();
-		//treatedCopy.clear();
-		//turnedAwayCopy.clear();
+		// treatedCopy.clear();
+		// turnedAwayCopy.clear();
 
 	}
 

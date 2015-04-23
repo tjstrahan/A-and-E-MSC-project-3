@@ -27,7 +27,7 @@ public class Email implements Runnable {
 	/**
 	 * Who you are sending the mail to.
 	 */
-	private static String RECIPIENT = "tothehospitalmanager@gmail.com";
+	private static String RECIPIENT = "kallsop01@gmail.com";
 
 	private int select;
 
@@ -35,11 +35,20 @@ public class Email implements Runnable {
 		this.select = select;
 	}
 
-	/**
-	 * Main method that sendsEmail to specified Recipient.
-	 * 
-	 * @return
-	 */
+	@Override
+	public void run() {
+		switch (select) {
+		case 1:
+			emailWaitingExceeded();
+			break;
+		case 2:
+			emailPatientTurnedAway();
+			break;
+		}
+
+	}
+	
+	
 	public static void emailWaitingExceeded() {
 		String from = USER_NAME;
 		String pass = PASSWORD;
@@ -108,20 +117,5 @@ public class Email implements Runnable {
 		} catch (MessagingException me) {
 			me.printStackTrace();
 		}
-
 	}
-
-	@Override
-	public void run() {
-		switch (select) {
-		case 1:
-			emailWaitingExceeded();
-			break;
-		case 2:
-			emailPatientTurnedAway();
-			break;
-		}
-
-	}
-
 }

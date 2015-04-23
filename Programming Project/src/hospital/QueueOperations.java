@@ -93,7 +93,7 @@ public class QueueOperations {
 	/**
 	 * Method to get the NHS number of a patient in a treatment room
 	 * 
-	 * @param treatmentRoom
+	 * 
 	 * @return
 	 * @throws Exception
 	 * @throws IllegalArgumentException
@@ -106,7 +106,7 @@ public class QueueOperations {
 		System.out.println("Enter Treatment Room");
 		treatmentRoom = scanner.nextInt();
 
-		if (treatmentRoom > 0 && treatmentRoom < 5) {
+		if (treatmentRoom > 0 && treatmentRoom < 6) {
 			int treatmentRoomElement = treatmentRoom - 1;
 
 			if (TheQueue.TreatmentRoom.get(treatmentRoomElement) == null) {
@@ -122,6 +122,36 @@ public class QueueOperations {
 		return NHSNumber;
 	}
 
+	/**
+	 * Method to get the NHS number of a patient in a treatment room
+	 * 
+	 * @param treatmentRoom
+	 * @return
+	 * @throws Exception
+	 * @throws IllegalArgumentException
+	 */
+	public int getNHSNumberOfTreatmentRoomPatient(int treatmentRoom)
+			throws IllegalArgumentException, Exception {
+
+		int NHSNumber = 0;
+		
+		if (treatmentRoom > 0 && treatmentRoom < 6) {
+			int treatmentRoomElement = treatmentRoom - 1;
+
+			if (TheQueue.TreatmentRoom.get(treatmentRoomElement) == null) {
+				throw new IllegalArgumentException("Treatment Room Empty");
+			} else {
+
+				NHSNumber = TheQueue.TreatmentRoom.get(treatmentRoomElement)
+						.getNhsNumber();
+			}
+		} else {
+			throw new Exception("Invalid Treatment Room");
+		}
+		return NHSNumber;
+	}
+
+	
 	/**
 	 * Method to get the NHS number of a patient being treated by on call team
 	 * 

@@ -1,6 +1,6 @@
 package hospital;
 
-public class Nurse extends Staff implements iOnCall {
+public class Nurse extends Staff {
 
 	/**
 	 * number of medical team doctor belongs to
@@ -91,27 +91,4 @@ public class Nurse extends Staff implements iOnCall {
 		QueueOperations qA = new QueueOperations();
 		qA.QueueCommmands();
 	}
-
-	/**
-	 * Overridden method from the isOnCall interface to set if the nurse is out
-	 * on call
-	 */
-	@Override
-	public void isOnCall() {
-
-		this.isOnCallToString();
-
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-
-	public String isOnCallToString() {
-		return "Nurse " + getTitle() + " " + getFirstName() + " "
-				+ getMiddleName() + " " + getLastName() + "is on call";
-	}
-
 }

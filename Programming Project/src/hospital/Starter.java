@@ -17,11 +17,16 @@ public class Starter {
 	 * Main method
 	 * 
 	 * @param args
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		// Instantiate new Receptionist object
 		Receptionist receptionist = new Receptionist();
+
+		HospitalManager hM = new HospitalManager();
+		hM.populateMedicalTeam();
+		hM.setOnCallTeam();
 
 		// Set boolean to true
 		makeQueueAlive();

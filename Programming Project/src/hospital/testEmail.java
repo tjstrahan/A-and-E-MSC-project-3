@@ -6,7 +6,8 @@ public class testEmail {
 		Thread t1 = new Thread(new Email(1));
 		t1.start();
 		
-
+		Thread t2 = new Thread(new Email(2));
+		t2.start();
 	}
 
 }

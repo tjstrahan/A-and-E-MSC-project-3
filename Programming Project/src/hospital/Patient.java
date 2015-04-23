@@ -51,7 +51,7 @@ public class Patient extends Person {
 	 * Instance var to store the GP code
 	 */
 	private String gpCode;
-	
+
 	/**
 	 * Notes that a doctor has added to patients record upon discharge from AnE
 	 */
@@ -137,6 +137,12 @@ public class Patient extends Person {
 	private boolean priorityPatient;
 
 	/**
+	 * Instance var to store the boolean verifying if a doctor has made a new
+	 * note on a patients record during their treatment
+	 */
+	private boolean madeNewNote;
+
+	/**
 	 * Constant for NHS number maximum value
 	 */
 	private static final int NHS_NUMBER_MAX = 999999999;
@@ -180,12 +186,12 @@ public class Patient extends Person {
 	 * @throws IllegalArgumentException
 	 */
 	public Patient(String title, String firstName, String middleName,
-			String lastName, String dateOfBirth,
-			String addressLineOne, String addressLineTwo,
-			String addressLineThree, String city, String postcode, long contactNumber,
-			int nhsNumber, String allergies, String knownConditions,
-			String bloodGroup, String sex, String nextOfKin, String gpName,
-			String gpCode, String notes) throws IllegalArgumentException, Exception {
+			String lastName, String dateOfBirth, String addressLineOne,
+			String addressLineTwo, String addressLineThree, String city,
+			String postcode, long contactNumber, int nhsNumber,
+			String allergies, String knownConditions, String bloodGroup,
+			String sex, String nextOfKin, String gpName, String gpCode,
+			String notes) throws IllegalArgumentException, Exception {
 
 		// call to the superclass constructor
 		super(title, firstName, middleName, lastName, dateOfBirth,
@@ -215,6 +221,7 @@ public class Patient extends Person {
 		this.timeOnWaitingList = 0;
 		this.treatedByOnCallTeam = false;
 		this.waitingMoreThan30 = false;
+		this.madeNewNote = false;
 
 	}
 
@@ -371,7 +378,6 @@ public class Patient extends Person {
 		}
 	}
 
-
 	/**
 	 * Get for next of kin
 	 * 
@@ -442,6 +448,7 @@ public class Patient extends Person {
 
 	/**
 	 * Get method for notes added to patient record by doctor
+	 * 
 	 * @return
 	 */
 	public String getNotes() {
@@ -450,6 +457,7 @@ public class Patient extends Person {
 
 	/**
 	 * Get method for notes made by a doctor
+	 * 
 	 * @param notes
 	 */
 	public void setNotes(String notes) {
@@ -693,6 +701,22 @@ public class Patient extends Person {
 		if (this.timeOnWaitingList > 29) {
 			this.setWaitingMoreThan30(true);
 		}
+	}
+
+	/**
+	 * Method to get the madeNewNote boolean
+	 * @return
+	 */
+	public boolean isMadeNewNote() {
+		return madeNewNote;
+	}
+
+	/**
+	 * Method to set the madeNewNote boolean
+	 * @param madeNewNote
+	 */
+	public void setMadeNewNote(boolean madeNewNote) {
+		this.madeNewNote = madeNewNote;
 	}
 
 	/**

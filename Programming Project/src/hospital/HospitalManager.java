@@ -6,6 +6,8 @@ package hospital;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Properties;
@@ -31,47 +33,85 @@ public class HospitalManager {
 	/**
 	 * LinkedList of doctors and nurses working in medical team on site
 	 */
-	public static LinkedList<Object> medicalTeam = new LinkedList<Object>();
+	public static LinkedList<Staff> medicalTeam = new LinkedList<Staff>();
 
 	/**
 	 * LinkedList of doctors and nurses part of the current on call team
 	 */
-	public static LinkedList<Object> onCallTeam = new LinkedList<Object>();
-
+	public static LinkedList<Staff> onCallTeam = new LinkedList<Staff>();
+	
+	public static ArrayList<Long> onCallContactNumbers = new ArrayList<Long>(5);
+	
 	static HospitalManagerAccess hMa = new HospitalManagerAccess();
 	static Scanner scanner = new Scanner(System.in);
+	static int medicalTeamFour = 4;
+	static int medicalTeamFive = 5;
 
 	public void populateMedicalTeam() throws Exception {
 
 		hMa.getMedicalTeamDocs();
 		hMa.getMedicalTeamNurses();
+		printMedicalTeam();
 
 	}
 
 	public void setOnCallTeam() throws Exception {
 
 		int team = 0;
-		System.out.println("Select medical team 4 or 5 for on call duties");
+		System.out.println("Select medical team 1 or 2 for on call duties");
 		team = scanner.nextInt();
-		if (team == 4) {
+		if (team == 1) {
 			hMa.getOnCallTeamDocs(team);
 			hMa.getOnCallTeamNurses(team);
+			hMa.setOnCall(true, medicalTeamFour);
+			hMa.setOnCall(false, medicalTeamFive);
+			onCallContactNumbers.clear();
+			getOnCallTeamMobileNumbers();
 			printOnCallTeam();
-		} else if (team == 5) {
+		} else if (team == 2) {
 			hMa.getOnCallTeamDocs(team);
 			hMa.getOnCallTeamNurses(team);
+			hMa.setOnCall(true, medicalTeamFive);
+			hMa.setOnCall(false, medicalTeamFour);
+			onCallContactNumbers.clear();
+			getOnCallTeamMobileNumbers();
 			printOnCallTeam();
 		} else {
 			throw new IllegalArgumentException("Invalid Team");
 		}
 	}
 	
+	public void getOnCallTeamMobileNumbers() {	
+		
+		for (int loop = 0 ; loop < onCallTeam.size() ; loop ++ ) {
+			onCallContactNumbers.add(onCallTeam.get(loop).getContactNumber());
+		}
+		
+	}
+	
+	public void setOnCallDB(int medicalTeam) throws SQLException {
+		hMa.setOnCall(true, medicalTeam);
+	}
+	
+	public void unSetOnCallDB(int medicalTeam) throws SQLException {
+		hMa.setOnCall(false, medicalTeam);
+	}
+	
 	public void printOnCallTeam() {
-		Iterator<Object> Object = onCallTeam.iterator();
+		Iterator<Staff> Staff = onCallTeam.iterator();
 		System.out.println("Current On Call Team");
 		System.out.println("====================");
-		while (Object.hasNext()) {
-			System.out.println(Object.next());
+		while (Staff.hasNext()) {
+			System.out.println(Staff.next());
+		}
+	}
+	
+	public void printMedicalTeam() {
+		Iterator<Staff> Staff = medicalTeam.iterator();
+		System.out.println("Current Medical Team");
+		System.out.println("====================");
+		while (Staff.hasNext()) {
+			System.out.println(Staff.next());
 		}
 	}
 
