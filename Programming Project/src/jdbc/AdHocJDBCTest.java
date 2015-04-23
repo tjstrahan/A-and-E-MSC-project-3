@@ -1,14 +1,17 @@
 package jdbc;
 
 import hospital.HospitalManager;
+import hospital.SendSMS;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 
 public class AdHocJDBCTest {
+	
 
 	public static void main(String[] args) {
 
+		
 		ReceptionistAccess ra = new ReceptionistAccess();
 		GeneralAccess gA = new GeneralAccess();
 		DoctorAccess doc = new DoctorAccess();
@@ -19,6 +22,17 @@ public class AdHocJDBCTest {
 		try {
 			hM.populateMedicalTeam();
 			hM.setOnCallTeam();
+			//SendSMS.checkSMSCredit();
+			//SendSMS.sendSMSOnCallTeam();
+			Thread sms1 = new Thread(new SendSMS(1));
+			sms1.start();
+			Thread sms2 = new Thread(new SendSMS(2));
+			sms2.start();
+
+			
+			//System.out.println(HospitalManager.onCallContactNumbers);
+			
+			
 			
 /*
 			NHSnumber = ReceptionistAccess.lookUpPatientNHSNumber("Alice",
