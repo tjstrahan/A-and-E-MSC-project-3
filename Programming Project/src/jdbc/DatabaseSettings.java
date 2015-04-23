@@ -5,27 +5,27 @@ public class DatabaseSettings {
 	/**
 	 * Username for access to Database
 	 */
-	//private static final String DB_USERNAME = "40142115";
-	private static final String DB_USERNAME = "javateers";
+	private static final String DB_USERNAME = "40142115";
+	//private static final String DB_USERNAME = "javateers";
 	
 	/**
 	 * Use if Username is part of the Databases URL, otherwise leave blank
 	 */
-	//private static final String URL_USERNAME = "40142115";
-	private static final String URL_USERNAME = "hospitaldb";
+	private static final String URL_USERNAME = "40142115";
+	//private static final String URL_USERNAME = "hospitaldb";
 	
 	/**
 	 * Password for access to Database
 	 */
-	//private static final String DB_PASSWORD = "YCR2335";
-	private static final String DB_PASSWORD = "123456";
+	private static final String DB_PASSWORD = "YCR2335";
+	//private static final String DB_PASSWORD = "123456";
 	
 	/**
 	 * Main body of URL of Database, eg //web2.eeecs.qub.ac.uk/ or
 	 * thin:@db.yale.edu:univdb
 	 */
-	//private static final String WEB_ADDRESS = "//web2.eeecs.qub.ac.uk/";
-	private static final String WEB_ADDRESS = "//127.0.0.1/";
+	private static final String WEB_ADDRESS = "//web2.eeecs.qub.ac.uk/";
+	//private static final String WEB_ADDRESS = "//127.0.0.1/";
 
 	/**
 	 * Type of database, eg mysql: or oracle: etc
