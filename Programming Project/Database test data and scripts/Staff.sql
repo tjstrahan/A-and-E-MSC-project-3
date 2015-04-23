@@ -89,19 +89,19 @@ Daisy Street", null, null, "Belfast", "BT14 9HY", "0447760646321", 1, 0, null);
 
 INSERT INTO Staff VALUES ("700313", "Nurse", "Ms", "Mavis", null, "Andrews", "1979-08-08", "F", 
 
-"87 Daisy Park", null, null, "Belfast", "BT15 1SD", "447886747538", 1, 1, null);
+"87 Daisy Park", null, null, "Belfast", "BT15 1SD", "447886747538", 1, 0, null);
 
 INSERT INTO Staff VALUES ("100314", "Doctor", "Dr", "Robert", null, "Ranson", "1966-04-13", "M", 
 
-"23 Weed Gardens", null, null, "Belfast", "BT16 8HV", "447886754321", 5, 1, null);
+"23 Weed Gardens", null, null, "Belfast", "BT16 8HV", "447557648697", 5, 0, null);
 
 INSERT INTO Staff VALUES ("700315", "Nurse", "Mrs", "Davina", null, "Healey", "1976-08-22", "F", 
 
 "37 Parry Park", null, null, "Belfast", "BT17 3ER", "447979775684", 2, 0, null);
 
-INSERT INTO Staff VALUES ("700316", "Nurse", "Mr", "Frank", null, "Jameson", "1963-05-14", "M", 
+INSERT INTO Staff VALUES ("700316", "Nurse", "Mrs", "Francesca", null, "Jameson", "1963-05-14", "M", 
 
-"24 Rose Avenue", null, null, "Belfast", "BT18 8KL", "447889980675", 4, 0, null);
+"24 Rose Avenue", null, null, "Belfast", "BT18 8KL", "447922673599", 4, 0, null);
 
 INSERT INTO Staff VALUES ("700317", "Nurse", "Ms", "Philipa", null, "Crane", "1971-01-01", "F", "99 
 
@@ -109,11 +109,11 @@ Brick Street", null, null, "Belfast", "BT19 5TY", "447977655441", 3, 0, null);
 
 INSERT INTO Staff VALUES ("700318", "Nurse", "Miss", "Sinead", null, "Fitzpatrick", "1964-03-29", "F", 
 
-"108 Brick Street", null, null, "Belfast", "BT20 9UD", "447766544321", 3, 0, null);
+"108 Brick Street", null, null, "Belfast", "BT20 9UD", "447557648697", 3, 0, null);
 
 INSERT INTO Staff VALUES ("500319", "Receptionist", "Mrs", "Denise", null, "Toner", "1980-07-05", "F", "44 
 
-Stone Road", null, null, "Belfast", "BT21 6YR", "447988123456", null, 0, null);
+Stone Road", null, null, "Belfast", "BT21 6YR", "447557648697", null, 0, null);
 
 INSERT INTO Staff VALUES ("700320", "Nurse", "Mr", "Frank", null, "Marlo", "1972-04-02", "M", "22 
 
@@ -127,21 +127,21 @@ INSERT INTO Staff VALUES ("700322", "Nurse", "Miss", "Fiona", null, "Bruce", "19
 
 Heather Road", null, null, "Belfast", "BT7 8PO", "447922673599", 5, 0, null);
 
-INSERT INTO Staff VALUES ("700323", "Nurse", "Mr", "Tomas", null, "Darnuk", "1975-08-01", "M", 
+INSERT INTO Staff VALUES ("700323", "Nurse", "Mrs", "Jana", null, "Darnuk", "1975-08-01", "M", 
 
 "28 Lavender Street", null, null, "Belfast", "BT8 5TY", "447594010105", 4, 0, null);
 
 INSERT INTO Staff VALUES ("700324", "Nurse", "Mr", "Peter", null, "Gibson", "1983-09-03", "M", 
 
-"16 Rose Park", null, null, "Belfast", "BT9 4ED", "0447845896938", 5, 1, null); 
+"16 Rose Park", null, null, "Belfast", "BT9 4ED", "447845896938", 5, 0, null); 
 
 INSERT INTO Staff VALUES ("700325", "Nurse", "Miss", "Valerie", null, "Walls", "1980-06-11", "F", "108 
 
-Daffodil Street", null, null, "Belfast", "BT10 7UY", "0447724927494", 2, 1, null); 
+Daffodil Street", null, null, "Belfast", "BT10 7UY", "447724927494", 2, 0, null); 
 
 INSERT INTO Staff VALUES ("700326", "Nurse", "Mr", "John", null, "Barnes", "1965-11-11", "M", 
 
-"119 Daffodil Gardens", null, null, "Belfast", "BT11 2UQ", "447914219569", 4, 1, null);
+"119 Daffodil Gardens", null, null, "Belfast", "BT11 2UQ", "447914219569", 4, 0, null);
 
 INSERT INTO Staff VALUES ("300327", "Hospital Manager", "Mr", "Aidan", null, "McGowan", "1975-11-11", "M", 
 
