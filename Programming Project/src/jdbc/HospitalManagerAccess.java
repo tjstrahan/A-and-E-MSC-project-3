@@ -118,7 +118,7 @@ public class HospitalManagerAccess {
 						rs.getString("Postcode"),
 						rs.getLong("Contact_Number"),
 						rs.getInt("StaffID"),
-						rs.getInt("StaffID"), 
+						rs.getInt("LoginID"), 
 						rs.getString("Password"),
 						rs.getInt("Medical_Team")));
 			}
@@ -159,7 +159,7 @@ public class HospitalManagerAccess {
 						rs.getString("Postcode"),
 						rs.getLong("Contact_Number"),
 						rs.getInt("StaffID"),
-						rs.getInt("StaffID"), 
+						rs.getInt("LoginID"), 
 						rs.getString("Password"),
 						rs.getInt("Medical_Team")));
 			}
@@ -200,7 +200,7 @@ public class HospitalManagerAccess {
 						rs.getString("Postcode"),
 						rs.getLong("Contact_Number"),
 						rs.getInt("StaffID"),
-						rs.getInt("StaffID"), 
+						rs.getInt("LoginID"), 
 						rs.getString("Password"),
 						rs.getInt("Medical_Team")));
 			}
@@ -241,7 +241,7 @@ public class HospitalManagerAccess {
 						rs.getString("Postcode"),
 						rs.getLong("Contact_Number"),
 						rs.getInt("StaffID"),
-						rs.getInt("StaffID"), 
+						rs.getInt("LoginID"), 
 						rs.getString("Password"),
 						rs.getInt("Medical_Team")));
 			}
