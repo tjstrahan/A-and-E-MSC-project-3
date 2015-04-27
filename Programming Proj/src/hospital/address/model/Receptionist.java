@@ -29,9 +29,7 @@ public class Receptionist extends Staff {
 	/**
 	 * default constructor for Receptionist
 	 */
-	public Receptionist() {
-
-	}
+	
 
 	/**
 	 * constructor with arguments
@@ -53,13 +51,17 @@ public class Receptionist extends Staff {
 	 * @throws IllegalArgumentException
 	 * @throws Exception
 	 */
-	public Receptionist(StringProperty title, String firstName, String middleName,
+	public Receptionist(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode, int staffID, long contactNumber, int loginID,
 			String password) throws IllegalArgumentException, Exception {
 		super();
 
+	}
+
+	public Receptionist() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**

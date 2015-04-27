@@ -9,9 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 
+import hospital.address.model.HospitalManager;
+import hospital.address.model.Nurse;
 import hospital.address.model.Patient;
 import hospital.address.model.Receptionist;
+import hospital.address.model.Staff;
+import hospital.address.view.LoginController;
 
 /**
  * Class that uses JDBC code to connect to the database table 'Patient'
@@ -119,6 +124,8 @@ public class ReceptionistAccess {
 	 * Static instantiation of the Patient class
 	 */
 	static Patient patient;
+	
+	public static LinkedList<Staff> Receptionist = new LinkedList<Staff>();
 
 	/**
 	 * Method to connect to the database
@@ -153,6 +160,47 @@ public class ReceptionistAccess {
 
 		return con;
 	}
+
+public void getReceptionists() throws Exception {
+		
+		try {
+
+			Connection con = con();
+
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+			String sql;
+
+			sql = "SELECT * FROM staff NATURAL JOIN staffaccess WHERE Role = \"Receptionist\";";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				Receptionist.add(new Receptionist(
+						rs.getString("Title"),
+						rs.getString("First_Name"), 
+						rs.getString("Middle_Name"),
+						rs.getString("Last_Name"),
+						GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
+						rs.getString("First_line_of_Address"),
+						rs.getString("Second_line_of_Address"), 
+						rs.getString("Third_line_of_Address"), 
+						rs.getString("City"),
+						rs.getString("Postcode"),
+						rs.getInt("StaffID"),
+						rs.getLong("Contact_Number"),
+						rs.getInt("LoginID"), 
+						rs.getString("Password")));
+			}
+
+			stmt.close();
+			con.close();
+
+		} catch (SQLException ex) {
+			System.err.println("SQLException: " + ex.getMessage());
+		}
+	}
+	
 
 	/**
 	 * Method for finding a patients NHS number in the database
