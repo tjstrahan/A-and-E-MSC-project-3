@@ -10,75 +10,88 @@ import hospital.address.model.TriageNurse;
  * @author Kieron
  *
  */
-public class Starter {
+public class Starter implements Runnable{
 
 	/**
 	 * Boolean to state if the queueing system is active
 	 */
 	public static boolean isAlive = false;
+	
+	static Receptionist rA = new Receptionist();
+	static HospitalManager hM = new HospitalManager();
 
 	/**
 	 * Main method
 	 * 
 	 * @param args
-	 * @throws Exception 
 	 */
-	public static void start () throws Exception {
-
-		// Instantiate new Receptionist object
-		Receptionist receptionist = new Receptionist();
-
-		HospitalManager hM = new HospitalManager();
-		hM.populateMedicalTeam();
-		hM.setOnCallTeam();
+	/*
+	public static void main(String[] args) {
 
 		// Set boolean to true
 		makeQueueAlive();
-
 		
-		try {
-
-			// Get receptionist to start adding patients
-			receptionist.admitAllPatients();
-
-		} catch (IllegalArgumentException e1) {
-			e1.printStackTrace();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+		// Get receptionist to start adding patients
+		rA.admitAllPatients();
 
 		// Start TriageNurse thread to assign triage categories and add patients
 		// into the queueing system
 		TriageNurse triNurse = new TriageNurse();
 		Thread t1 = new Thread(triNurse);
 		t1.start();
-		
-		// Start the QueueTimeAlt class (named Alt as it was an alternative
-		// approach to the original which had used a thread pool approach)
+
+		// Start the QueueTimeAlt class (only alt as it was an alternative
+		// approach to the original)
 		QueueTimerAlt qta = new QueueTimerAlt();
 		Thread t2 = new Thread(qta);
 		t2.start();
 
-
-		
-		// manually add patient
-		receptionist.admitPatient(111121111);
-		
-		
-		
 	}
-
+*/
 	/**
-	 * Set boolean isAlive to true - while true the queue timer class will run
+	 * Set boolean isAlive to true
 	 */
 	public static void makeQueueAlive() {
 		isAlive = true;
 	}
 
 	/**
-	 * Set boolean isAlive to false - when false the queue timer class will stop
+	 * Set boolean isAlive to false
 	 */
 	public static void makeQueueDead() {
 		isAlive = false;
+	}
+
+	@Override
+	public void run() {
+
+		try{
+			
+		hM.populateMedicalTeam();
+		hM.setOnCallTeam();
+
+		
+		// Set boolean to true
+		makeQueueAlive();
+		
+		// Get receptionist to start adding patients
+		rA.admitAllPatients();
+
+		// Start TriageNurse thread to assign triage categories and add patients
+		// into the queueing system
+		TriageNurse triNurse = new TriageNurse();
+		Thread t1 = new Thread(triNurse);
+		t1.start();
+
+		// Start the QueueTimeAlt class (only alt as it was an alternative
+		// approach to the original)
+		QueueTimerAlt qta = new QueueTimerAlt();
+		Thread t2 = new Thread(qta);
+		t2.start();
+
+		rA.admitPatient(111121111);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
