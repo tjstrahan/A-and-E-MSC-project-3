@@ -15,6 +15,7 @@ public class NurseController {
 	private Button Button;
 
 	
+	@SuppressWarnings("unused")
 	private MainApp mainApp;
 	
 	 @FXML

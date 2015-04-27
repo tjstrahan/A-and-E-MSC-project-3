@@ -15,6 +15,7 @@ public class DoctorController {
 	private Button Button;
 
 	
+	@SuppressWarnings("unused")
 	private MainApp mainApp;
 	
 	 @FXML
