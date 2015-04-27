@@ -8,6 +8,7 @@ import hospital.address.view.NurseController;
 import hospital.address.view.ReceptionistController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -17,7 +18,8 @@ public class MainApp extends Application {
 	
 	private Stage primaryStage;
     private BorderPane rootLayout;
-    private AnchorPane anchorpane;
+    @SuppressWarnings("unused")
+	private AnchorPane anchorpane;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -26,8 +28,10 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("PAS");
         initRootLayout();
         showLogin();
-		
+
 	}
+	
+	
 	
 	/**
      * Initializes the root layout.
@@ -47,7 +51,18 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-	
+/*	
+    public void secondWindow() {
+    	try {
+    		Parent root = FXMLLoader.load(test.fxml);
+    		Stage stage = new Stage();
+    		stage.setScene(new Scene(root, 1200, 800));
+    		stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+  */  
 	/**
      * Shows the person overview inside the root layout.
      */
@@ -137,9 +152,9 @@ public class MainApp extends Application {
 
 	public static void main(String[] args) throws InterruptedException {
 		
-		Starter start = new Starter();
-		Thread t1 = new Thread(start);
-		t1.start();
+	//	Starter start = new Starter();
+	//	Thread t1 = new Thread(start);
+	//	t1.start();
 
 		launch(args);
 	}

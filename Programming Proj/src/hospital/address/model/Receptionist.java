@@ -8,13 +8,12 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Scanner;
 
-import javafx.beans.property.StringProperty;
 import hospital.address.model.Patient;
 import hospital.address.jdbc.GeneralAccess;
 import hospital.address.jdbc.ReceptionistAccess;
 
 public class Receptionist extends Staff {
-
+	
 	public static LinkedList<Patient> patientsFromDB = new LinkedList<Patient>();
 	static Scanner scanner = new Scanner(System.in);
 	static ReceptionistAccess rA = new ReceptionistAccess();
@@ -54,7 +53,7 @@ public class Receptionist extends Staff {
 	public Receptionist(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
-			String postcode, int staffID, long contactNumber, int loginID,
+			String postcode, long contactNumber, int staffID, int loginID,
 			String password) throws IllegalArgumentException, Exception {
 		super();
 

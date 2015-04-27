@@ -1,6 +1,7 @@
 package hospital.address.jdbc;
 
 import hospital.address.model.HospitalManager;
+import hospital.address.model.Receptionist;
 import hospital.address.SendSMS;
 
 import java.sql.SQLException;
@@ -11,7 +12,7 @@ public class AdHocJDBCTest {
 
 	public static void main(String[] args) {
 
-		
+		Receptionist r = new Receptionist();
 		ReceptionistAccess ra = new ReceptionistAccess();
 		GeneralAccess gA = new GeneralAccess();
 		DoctorAccess doc = new DoctorAccess();
@@ -20,15 +21,19 @@ public class AdHocJDBCTest {
 		int staffID;
 
 		try {
+			hM.populateReceptionistList();
+			
 			hM.populateMedicalTeam();
-			hM.setOnCallTeam();
+			//hM.setOnCallTeam();
 			//SendSMS.checkSMSCredit();
 			//SendSMS.sendSMSOnCallTeam();
-			Thread sms1 = new Thread(new SendSMS(1));
-			sms1.start();
-			Thread sms2 = new Thread(new SendSMS(2));
-			sms2.start();
-
+			//Thread sms1 = new Thread(new SendSMS(1));
+			//sms1.start();
+			//Thread sms2 = new Thread(new SendSMS(2));
+			//sms2.start();
+			//ra.getReceptionists();
+			//System.out.println(Receptionist.receptionistList.size());
+			//System.out.println(Receptionist.receptionistList.get(0).getFirstName());
 			
 			//System.out.println(HospitalManager.onCallContactNumbers);
 			

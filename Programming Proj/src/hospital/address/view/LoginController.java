@@ -2,8 +2,6 @@ package hospital.address.view;
 
 import java.util.LinkedList;
 
-import javax.swing.event.EventListenerList;
-
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -12,10 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import hospital.address.MainApp;
-import hospital.address.jdbc.HospitalManagerAccess;
-import hospital.address.jdbc.ReceptionistAccess;
 import hospital.address.model.HospitalManager;
 import hospital.address.model.Staff;
 
@@ -24,7 +19,8 @@ public class LoginController {
 	/**
 	 * LinkedList of doctors and nurses working in medical team on site
 	 */
-	
+	static LinkedList<Staff> staffList = new LinkedList<Staff>();
+	static LinkedList<Staff> receptionists = new LinkedList<Staff>();
 
 	@FXML
 	private TextField username;
@@ -76,62 +72,49 @@ public class LoginController {
 
 		loginButton.setOnAction(new EventHandler<ActionEvent>() {
 
+			@SuppressWarnings("unused")
 			@Override
 			public void handle(ActionEvent arg0) {
+
+				HospitalManager hM = new HospitalManager();
+
+				try {
+					hM.populateMedicalTeam();
+					hM.populateReceptionistList();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
-				ReceptionistAccess rac = new ReceptionistAccess();
-
-				try {
-					rac.getReceptionists();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				HospitalManager hispo = new HospitalManager();
-
-				try {
-					hispo.populateMedicalTeam();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				Staff staff = new Staff();
 				String staffType;
 
-				LinkedList<Staff> staffs = new LinkedList<Staff>();
-				
-
-				staffs.addAll(HospitalManager.medicalTeam);
-				System.out.println(rac.Receptionist);
-				System.out.println("hi");
+				staffList.addAll(HospitalManager.medicalTeam);
+				staffList.addAll(HospitalManager.receptionistList);
 
 				int number = Integer.parseInt(user);
-				for (int loop = 0; loop < staffs.size(); loop++) {
-					if (number == (staffs.get(loop).getLoginID())
-							&& pass.equals(staffs.get(loop).getPassword())) {
+
+				for (int loop = 0; loop < staffList.size(); loop++) {
+					if (number == (staffList.get(loop).getLoginID())
+							&& pass.equals(staffList.get(loop).getPassword())) {
 						if (number >= 100000 && number < 200000) {
+							System.out.println("doctor");
 							staffType = "Doctor";
 							mainApp.showDoc();
 						} else if (number >= 300000 && number < 400000) {
 							staffType = "Hospital Manager";
+						} else if (number >= 500000 && number < 600000) {
+							System.out.println("receptionist");
+							staffType = "Receptionist";
+							mainApp.showRecep();						
 						} else if (number >= 700000 && number < 800000) {
+							System.out.println("nurse");
 							staffType = "Nurse";
 							mainApp.showNurse();
 						}
 					}
 				}
 
-				for (int loop = 0; loop < rac.Receptionist.size(); loop++) {
-					if (number == (rac.Receptionist.get(loop).getLoginID())
-							&& pass.equals(rac.Receptionist.get(loop).getPassword())) {
-						
-					if (number >= 500000 && number < 600000) {
-						staffType = "Receptionist";
-						mainApp.showRecep();
-					}
-
-				}
-			}
 			}
 
 		});
