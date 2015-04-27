@@ -5,6 +5,9 @@ import hospital.address.TheQueue;
 
 import java.time.Instant;
 import java.util.Random;
+import java.util.Scanner;
+
+
 
 /**
  * Triage Nurse class - this represents the triage nurse and is where patients
@@ -24,6 +27,8 @@ public class TriageNurse implements Runnable {
 	 * Instantiate the Random class
 	 */
 	static Random random = new Random();
+	
+	static Scanner scanner = new Scanner(System.in);
 
 	/**
 	 * Main run method of the class where patients are brought in from the
@@ -43,8 +48,7 @@ public class TriageNurse implements Runnable {
 
 			// Set triage rating
 			try {
-				Receptionist.patientsFromDB.get(0).setTriageNumber(
-						presetTriageNumber());
+				assignTriageNumber(randomTriageNumber());
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -81,29 +85,48 @@ public class TriageNurse implements Runnable {
 		} while (Receptionist.patientsFromDB.size() != 0);
 
 	}
+	
+	public int randomTriageNumber() {
+		return random.nextInt(4);
+	}
 
+	
+	public void manualTriageNumber() throws Exception {
+		int input = 0;
+		System.out.println("Enter triage number");
+		input = scanner.nextInt();
+		assignTriageNumber(input);
+	}
+	
 	/**
 	 * Method to randomly assign triage number
 	 * @return
+	 * @throws Exception 
 	 */
-	public int presetTriageNumber() {
+	public void assignTriageNumber(int selection) throws Exception {
 		int triageRating = 0;
-		int triageGenerator = random.nextInt(4);
-		switch (triageGenerator) {
+		String triageCat = "";
+		switch (selection) {
 		case 0:
 			triageRating = 1;
+			triageCat = "Emergency";
 			break;
 		case 1:
 			triageRating = 2;
+			triageCat = "Urgent";
 			break;
 		case 2:
 			triageRating = 3;
+			triageCat = "Semi-urgent";
 			break;
 		case 3:
 			triageRating = 4;
+			triageCat = "Non-urgent";
 			break;
 		}
 
-		return triageRating;
+		Receptionist.patientsFromDB.get(0).setTriageNumber(triageRating);
+		Receptionist.patientsFromDB.get(0).setTriageCategory(triageCat);
+
 	}
 }

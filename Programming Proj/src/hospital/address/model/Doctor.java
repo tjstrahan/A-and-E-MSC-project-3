@@ -4,7 +4,6 @@ import hospital.address.MedicalTeamOperations;
 import hospital.address.QueueOperations;
 import hospital.address.TheQueue;
 import hospital.address.jdbc.DoctorAccess;
-
 import java.util.Scanner;
 
 /**

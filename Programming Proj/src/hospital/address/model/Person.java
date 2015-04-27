@@ -1,3 +1,4 @@
+
 package hospital.address.model;
 
 /**
@@ -86,7 +87,7 @@ public abstract class Person {
 	/**
 	 * Constructor with arguments
 	 * 
-	 * @param title
+	 * @param string
 	 * @param firstName
 	 * @param middleName
 	 * @param lastName
@@ -137,11 +138,11 @@ public abstract class Person {
 				|| title.equals("Dr") || title.equals("Rev") || title.equals("Prof")
 				|| title.equals("Sir")) {
 			this.title = title;
-		} else
+		} else {
 			throw new Exception("Title is invalid.");
-
+		}
 	}
-
+	
 	/**
 	 * Get method for firstName
 	 * 

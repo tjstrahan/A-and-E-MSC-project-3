@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Scanner;
 
+import javafx.beans.property.StringProperty;
 import hospital.address.model.Patient;
 import hospital.address.jdbc.GeneralAccess;
 import hospital.address.jdbc.ReceptionistAccess;
@@ -52,7 +53,7 @@ public class Receptionist extends Staff {
 	 * @throws IllegalArgumentException
 	 * @throws Exception
 	 */
-	public Receptionist(String title, String firstName, String middleName,
+	public Receptionist(StringProperty title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode, int staffID, long contactNumber, int loginID,

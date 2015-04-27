@@ -1,5 +1,6 @@
 package hospital.address.model;
 
+import javafx.beans.property.*;
 import hospital.address.TheQueue;
 
 /**
@@ -64,6 +65,8 @@ public class Patient extends Person {
 	 */
 	private int triageNumber;
 
+	private StringProperty triageCategory;
+	
 	/**
 	 * Auto-incrementing number starting at zero used solely during sorting to
 	 * ensure patients of same triage category are treated in admission order
@@ -170,7 +173,7 @@ public class Patient extends Person {
 	/**
 	 * Constructor with arguments including those from the superclass
 	 * 
-	 * @param title
+	 * @param string
 	 * @param firstName
 	 * @param middleName
 	 * @param lastName
@@ -193,7 +196,7 @@ public class Patient extends Person {
 	 * @throws Exception
 	 * @throws IllegalArgumentException
 	 */
-	public Patient(String title, String firstName, String middleName,
+	public Patient(String string, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode, long contactNumber, int nhsNumber,
@@ -202,7 +205,7 @@ public class Patient extends Person {
 			String notes) throws IllegalArgumentException, Exception {
 
 		// call to the superclass constructor
-		super(title, firstName, middleName, lastName, dateOfBirth,
+		super(string, firstName, middleName, lastName, dateOfBirth,
 				addressLineOne, addressLineTwo, addressLineThree, city,
 				postcode, contactNumber);
 
@@ -219,6 +222,7 @@ public class Patient extends Person {
 		// following are variables which have preset values when a patient
 		// object if created, therefore are automatically set
 		this.triageNumber = 0;
+		this.triageCategory = new SimpleStringProperty();
 		this.priorityPatient = false;
 		this.admissionNumber = 0;
 		this.startTimeWait = 0;
@@ -522,7 +526,7 @@ public class Patient extends Person {
 	public String toString() {
 		return "[" + getTitle() + " " + getFirstName() + " " + getLastName()
 				+ ", Date of Birth: " + getDateOfBirth() + ", Triaged as: "
-				+ triageCategory() + ", NHS number: " + this.nhsNumber
+				+ getTriageCategory() + ", NHS number: " + this.nhsNumber
 				+ ", Waiting Time: " + getTimeOnWaitingList() + " Ad: "
 				+ getAdmissionNumber() + "]";
 	}
@@ -747,30 +751,16 @@ public class Patient extends Person {
 		this.extraTime = extraTime;
 	}
 
-	/**
-	 * Method to display the names of the triage categories
-	 * 
-	 * @return String
-	 */
-	public String triageCategory() {
-		String triage = "";
-		switch (this.triageNumber) {
-		case 1:
-			triage = "Emergency";
-			break;
-		case 2:
-			triage = "Urgent";
-			break;
-		case 3:
-			triage = "Semi-urgent";
-			break;
-		case 4:
-			triage = "Non-urgent";
-			break;
-		default:
-			triage = "";
-			break;
-		}
-		return triage;
+	public String getTriageCategory() {
+		return triageCategory.get();
 	}
+
+	public void setTriageCategory(String triageCategory) {
+		this.triageCategory.set(triageCategory);
+	}
+
+	public StringProperty triageCategoryProperty() {
+		return triageCategory;
+	}
+
 }
