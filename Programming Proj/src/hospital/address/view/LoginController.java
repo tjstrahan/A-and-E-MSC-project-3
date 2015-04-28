@@ -81,6 +81,7 @@ public class LoginController {
 				try {
 					hM.populateMedicalTeam();
 					hM.populateReceptionistList();
+					hM.populateHospitalManagerList();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -91,6 +92,7 @@ public class LoginController {
 
 				staffList.addAll(HospitalManager.medicalTeam);
 				staffList.addAll(HospitalManager.receptionistList);
+				staffList.addAll(HospitalManager.hospitalManagerList);
 
 				int number = Integer.parseInt(user);
 
