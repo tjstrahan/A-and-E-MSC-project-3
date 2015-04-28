@@ -5,9 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.DoctorController">
+<AnchorPane prefHeight="279.0" prefWidth="629.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.DoctorController">
    <children>
-      <Button fx:id="Button" layoutX="392.0" layoutY="217.0" mnemonicParsing="false" onAction="#initialize" text="Button" />
-      <Label fx:id="messages" layoutX="200.0" layoutY="142.0" text="Label" />
+      <Button fx:id="extendTreatmentButton" layoutX="181.0" layoutY="31.0" mnemonicParsing="false" onAction="#initialize" text="Extend Treatment" />
+      <Button fx:id="notes" layoutX="23.0" layoutY="234.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="73.0" text="Add Notes" />
+      <TextField fx:id="nhsNumberInput" layoutX="22.0" layoutY="68.0" />
+      <TextField fx:id="notesInput" layoutX="23.0" layoutY="112.0" prefHeight="113.0" prefWidth="446.0" />
+      <Button fx:id="search" layoutX="181.0" layoutY="68.0" mnemonicParsing="false" text="Search" />
+      <TextField fx:id="treatmentRoom" layoutX="23.0" layoutY="31.0" promptText="Enter treatroom number" />
    </children>
 </AnchorPane>
