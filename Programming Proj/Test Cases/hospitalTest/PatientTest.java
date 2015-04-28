@@ -27,7 +27,7 @@ public class PatientTest {
 			oNegative, incorrectBloodType, incorrectBloodTypeLong,
 			correctNextOfKin, correctGPName, incorrectGPName, correctGPCode,
 			incorrectGPCode, incorrectEmptyGPCode, incorrectGPCodeLong, female,
-			male, incorrectSex, notes, invalidNotes, validTriageCategory, invalidTriageCategory;
+			male, incorrectSex, notes, invalidTriageCategory;
 
 	int nhsNumberLowerBoundary, nhsNumberUpperBoundary, nhsNumberCorrect,
 			nhsNumberLowerBoundaryIncorrect, nhsNumberUpperBoundaryIncorrect,
@@ -36,8 +36,8 @@ public class PatientTest {
 			triageNumberIncorrect;
 			;
 			
-	boolean correctisPriorityPatient, incorrectEmptyisPriorityPatient, correctTreatedByOnCallTeam, incorrectTreatedByOnCallTeam,
-	correctWaitingMoreThan30, incorrectWaitingMoreThan30, correctmadeNewNote, incorrectmadeNewNote, correctExtraTime, incorrectExtraTime;
+	boolean correctisPriorityPatient, correctTreatedByOnCallTeam, incorrectTreatedByOnCallTeam,
+	correctWaitingMoreThan30, correctmadeNewNote, correctExtraTime;
 
 	long contactNoCorrect;
 
@@ -111,11 +111,9 @@ public class PatientTest {
 		// Test data for notes
 
 		notes = "";
-		invalidNotes=null;
 		
 		//Test data for triage category
 		
-		validTriageCategory="";
 		invalidTriageCategory=null;
 		
 		//test data for triage number
@@ -128,7 +126,7 @@ public class PatientTest {
 		
 		//test data for isPriortyPatient
 		correctisPriorityPatient=true;
-		incorrectEmptyisPriorityPatient=false;
+
 		
 		//test data for treated by on call team
 		correctTreatedByOnCallTeam=true;
@@ -136,15 +134,14 @@ public class PatientTest {
 		
 		//test data for waiting more then 30
 		correctWaitingMoreThan30=true;
-		incorrectWaitingMoreThan30=false;
+		
 		
 		//test data for made new note
 		correctmadeNewNote=true;
-		incorrectmadeNewNote=false;
 		
 		//test data for extra time
 		correctExtraTime=true;
-		incorrectExtraTime=false;
+		
 		
 
 	}
@@ -447,12 +444,7 @@ public class PatientTest {
 		assertEquals(notes, patient.getNotes());
 	}
 
-	@Test(expected = Exception.class)
-	public void testGetSetinvalidNotes(){
-		Patient patient = new Patient();
-		patient.setNotes(invalidNotes);
-		assertEquals(invalidNotes, patient.getNotes());
-}
+
 	@Test
 	public void testGetSetisPriorityPatient(){
 		Patient patient = new Patient();
@@ -460,13 +452,9 @@ public class PatientTest {
 		assertEquals(correctisPriorityPatient, patient.isPriorityPatient());
 		
 	}
-	@Test(expected = Exception.class)
-	public void testGetSetisincorrectEmptyPriorityPatient(){
-		Patient patient = new Patient();
-		patient.setPriorityPatient(incorrectEmptyisPriorityPatient);
-		assertEquals (incorrectEmptyisPriorityPatient, patient.isPriorityPatient());
 	
-}
+	
+
 	@Test
 	public void testGetSetAdmissionNumber(){
 		Patient patient = new Patient();
@@ -504,24 +492,16 @@ public class PatientTest {
 		patient.setTreatedByOnCallTeam(correctTreatedByOnCallTeam);
 		assertEquals(correctTreatedByOnCallTeam, patient.isTreatedByOnCallTeam());
 	}
-	@Test(expected = Exception.class)
-	public void testGetSetincorrecttreatedByOnCallTeam(){
-		Patient patient = new Patient();
-		patient.setTreatedByOnCallTeam(incorrectTreatedByOnCallTeam);
-		assertEquals(incorrectTreatedByOnCallTeam, patient.isTreatedByOnCallTeam());
-	}
+	
+	
 	@Test
 	public void testGetSetcorrectwaitingmorethan30(){
 		Patient patient = new Patient();
 		patient.setWaitingMoreThan30(correctWaitingMoreThan30);
 		assertEquals(correctTreatedByOnCallTeam, patient.isWaitingMoreThan30());
 	}
-	@Test(expected = Exception.class)
-	public void testGetSetincorrectwaitingmorethan30(){
-		Patient patient = new Patient();
-		patient.setTreatedByOnCallTeam(incorrectWaitingMoreThan30);
-		assertEquals(incorrectWaitingMoreThan30, patient.isWaitingMoreThan30());
-	}
+	
+	
 	@Test
 	public void testGetSettreatmentRoom(){
 		Patient patient = new Patient();
@@ -533,32 +513,17 @@ public class PatientTest {
 		patient.setMadeNewNote(correctmadeNewNote);
 		assertEquals(correctmadeNewNote, patient.isMadeNewNote());
 	}
-	@Test(expected = Exception.class)
-	public void testGetSetincorrectmadeNewNote(){
-		Patient patient = new Patient();
-		patient.setMadeNewNote(incorrectmadeNewNote);
-		assertEquals(incorrectmadeNewNote, patient.isMadeNewNote());
 	
-}
+	
+
 	@Test
 	public void testGetSetcorrectExtraTime(){
 		Patient patient = new Patient();
 		patient.setExtraTime(correctExtraTime);
 		assertEquals(correctExtraTime, patient.isExtraTime());
 	}
-	@Test(expected = Exception.class)
-	public void testGetSetincorrectExtraTime(){
-		Patient patient = new Patient();
-		patient.setExtraTime(incorrectExtraTime);
-		assertEquals(incorrectExtraTime, patient.isExtraTime());
-	}
-	@Test
-	public void testGetSettriageCategory(){
-		Patient patient = new Patient();
-		patient.setTriageCategory(validTriageCategory);
-		assertEquals(validTriageCategory, patient.getTriageCategory());
-		
-	}
+	
+	
 	@Test (expected = Exception.class)
 	public void testGetSetinvalidtriageCategory(){
 		Patient patient = new Patient();
