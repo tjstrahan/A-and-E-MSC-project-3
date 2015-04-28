@@ -1,5 +1,8 @@
 package hospital.address;
 
+import hospital.QueueOperations;
+import hospital.TheQueue;
+
 import java.util.Scanner;
 
 public class MedicalTeamOperations {
@@ -8,6 +11,16 @@ public class MedicalTeamOperations {
 	 * Static instantiation of the scanner class
 	 */
 	static Scanner scanner = new Scanner(System.in);
+	
+	/**
+	 * Constant for NHS number maximum value
+	 */
+	public static final int NHS_NUMBER_MAX = 999999999;
+
+	/**
+	 * Constant for NHS number minimum value
+	 */
+	public static final int NHS_NUMBER_MIN = 100000000;
 
 	/**
 	 * Method which takes input and passes it to the extraTreatmentTime method -
@@ -58,8 +71,40 @@ public class MedicalTeamOperations {
 		}
 	}
 	
-	public static void changeTriage(int NHSNumber) {
+	/**
+	 * Method to change the triage category of a patient of the Waiting List
+	 * @param NHSNumber
+	 * @throws Exception
+	 */
+	public void changeTriage() throws Exception {
+
+		int NHSNumber = 0;
+		int triageNumber = 0;
+		int waitingListIndex = 0;
 		
-		 
+		System.out.println("Enter patient's NHS Number");
+		NHSNumber = scanner.nextInt();
+		
+		if (NHSNumber < NHS_NUMBER_MIN || NHSNumber > NHS_NUMBER_MAX) {
+			throw new IllegalArgumentException(
+					"Sorry. NHS number must be 9 digits long.");
+		}
+		
+		System.out.println("Please enter new Triage Category");
+		triageNumber = scanner.nextInt();
+
+		if (triageNumber > 0 || triageNumber < 5) {
+
+			// Get index of waiting list that the patient of the entered
+			// NHSNumber occupies at that precise time
+			waitingListIndex = TheQueue.WaitingList.indexOf(QueueOperations
+					.searchByNHSNumber(TheQueue.WaitingList, NHSNumber));
+			
+			TheQueue.WaitingList.get(waitingListIndex).setTriageNumber(
+					triageNumber);
+
+		} else {
+			throw new IllegalArgumentException("Invalid Triage Category");
+		}
 	}
 }
