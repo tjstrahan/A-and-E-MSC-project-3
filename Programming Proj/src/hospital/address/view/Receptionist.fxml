@@ -5,9 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="hospital.address.view.ReceptionistController">
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.ReceptionistController">
    <children>
-      <Button fx:id="Button" layoutX="411.0" layoutY="168.0" mnemonicParsing="false" onAction="#initialize" text="Button" />
+      <Button fx:id="Button" layoutX="411.0" layoutY="168.0" mnemonicParsing="false" onAction="#initialize" text="Search For Patient" />
    </children>
 </AnchorPane>
