@@ -1,6 +1,5 @@
 package hospital.address.model;
 
-import javafx.beans.property.*;
 import hospital.address.TheQueue;
 
 /**
@@ -65,7 +64,7 @@ public class Patient extends Person {
 	 */
 	private int triageNumber;
 
-	private StringProperty triageCategory;
+	private String triageCategory;
 	
 	/**
 	 * Auto-incrementing number starting at zero used solely during sorting to
@@ -222,7 +221,7 @@ public class Patient extends Person {
 		// following are variables which have preset values when a patient
 		// object if created, therefore are automatically set
 		this.triageNumber = 0;
-		this.triageCategory = new SimpleStringProperty();
+		this.triageCategory = "";
 		this.priorityPatient = false;
 		this.admissionNumber = 0;
 		this.startTimeWait = 0;
@@ -752,15 +751,13 @@ public class Patient extends Person {
 	}
 
 	public String getTriageCategory() {
-		return triageCategory.get();
+		return triageCategory;
 	}
 
 	public void setTriageCategory(String triageCategory) {
-		this.triageCategory.set(triageCategory);
+		this.triageCategory = triageCategory;
 	}
 
-	public StringProperty triageCategoryProperty() {
-		return triageCategory;
-	}
+	
 
 }
