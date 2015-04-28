@@ -35,7 +35,11 @@ public class HospitalManager {
 	 */
 	public static LinkedList<Staff> medicalTeam = new LinkedList<Staff>();
 
+	
 	public static LinkedList<Staff> receptionistList = new LinkedList<Staff>();
+	
+	
+	public static LinkedList<Staff> hospitalManagerList = new LinkedList<Staff>();
 
 	/**
 	 * LinkedList of doctors and nurses part of the current on call team
@@ -49,6 +53,11 @@ public class HospitalManager {
 	static int medicalTeamFour = 4;
 	static int medicalTeamFive = 5;
 
+	public void populateHospitalManagerList() throws Exception {
+		hMa.getHospitalManager();
+		printHospitalManager();
+	}
+	
 	public void populateReceptionistList() throws Exception {
 		
 		hMa.getReceptionStaff();
@@ -131,6 +140,16 @@ public class HospitalManager {
 			System.out.println(Receptionist.next());
 		}
 	}
+	
+	public void printHospitalManager() {
+		Iterator<Staff> HospitalManager = hospitalManagerList.iterator();
+		System.out.println("Current Hospital Manager");
+		System.out.println("========================");
+		while (HospitalManager.hasNext()) {
+			System.out.println(HospitalManager.next());
+		}
+	}
+	
 	public static void main(String[] args) {
 
 		String host = "pop.gmail.com";

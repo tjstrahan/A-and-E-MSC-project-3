@@ -294,4 +294,44 @@ public class HospitalManagerAccess {
 			System.err.println("SQLException: " + ex.getMessage());
 		}
 	}
+	
+	public void getHospitalManager() throws Exception {
+		
+		try {
+
+			Connection con = getConnection();
+
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+			String sql;
+
+			sql = "SELECT * FROM staff NATURAL JOIN staffaccess WHERE Role = \"Hospital Manager\"";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				HospitalManager.hospitalManagerList.add(new Staff(
+						rs.getString("Title"),
+						rs.getString("First_Name"), 
+						rs.getString("Middle_Name"),
+						rs.getString("Last_Name"),
+						GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
+						rs.getString("First_line_of_Address"),
+						rs.getString("Second_line_of_Address"), 
+						rs.getString("Third_line_of_Address"), 
+						rs.getString("City"),
+						rs.getString("Postcode"),
+						rs.getLong("Contact_Number"),
+						rs.getInt("StaffID"),
+						rs.getInt("LoginID"), 
+						rs.getString("Password")));
+			}
+
+			stmt.close();
+			con.close();
+
+		} catch (SQLException ex) {
+			System.err.println("SQLException: " + ex.getMessage());
+		}
+	}
 }
