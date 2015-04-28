@@ -1,5 +1,6 @@
 package hospital.address.model;
 
+import javafx.beans.property.*;
 import hospital.address.TheQueue;
 
 /**
@@ -64,7 +65,7 @@ public class Patient extends Person {
 	 */
 	private int triageNumber;
 
-	private String triageCategory;
+	private StringProperty triageCategory;
 	
 	/**
 	 * Auto-incrementing number starting at zero used solely during sorting to
@@ -196,11 +197,11 @@ public class Patient extends Person {
 	 * @throws IllegalArgumentException
 	 */
 	public Patient(String string, String firstName, String middleName,
-			String lastName, String dateOfBirth, String addressLineOne,
+			String lastName, String dateOfBirth,String sex, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode, long contactNumber, int nhsNumber,
 			String allergies, String knownConditions, String bloodGroup,
-			String sex, String nextOfKin, String gpName, String gpCode,
+			String nextOfKin, String gpName, String gpCode,
 			String notes) throws IllegalArgumentException, Exception {
 
 		// call to the superclass constructor
@@ -221,7 +222,7 @@ public class Patient extends Person {
 		// following are variables which have preset values when a patient
 		// object if created, therefore are automatically set
 		this.triageNumber = 0;
-		this.triageCategory = "";
+		this.triageCategory = new SimpleStringProperty();
 		this.priorityPatient = false;
 		this.admissionNumber = 0;
 		this.startTimeWait = 0;
@@ -751,13 +752,15 @@ public class Patient extends Person {
 	}
 
 	public String getTriageCategory() {
-		return triageCategory;
+		return triageCategory.get();
 	}
 
 	public void setTriageCategory(String triageCategory) {
-		this.triageCategory = triageCategory;
+		this.triageCategory.set(triageCategory);
 	}
 
-	
+	public StringProperty triageCategoryProperty() {
+		return triageCategory;
+	}
 
 }

@@ -12,9 +12,11 @@ import java.sql.Statement;
 import java.util.LinkedList;
 
 
+
 import hospital.address.model.Patient;
 import hospital.address.model.Receptionist;
 import hospital.address.model.Staff;
+import hospital.address.view.ReceptonistSearchController;
 
 
 /**
@@ -188,8 +190,64 @@ public class ReceptionistAccess {
 		// close connection
 		con.close();
 
+		
 		// Return NHS number of the patient
 		return NHS_number;
+	}
+	
+	/**
+	 * Method for finding a patients NHS number in the database
+	 * 
+	 * @throws SQLException
+	 */
+	public static void lookUpPatient(String PATIENT_NAME,
+			String PATIENT_LAST_NAME, String DOB) throws SQLException {
+
+		Connection con = con();
+		stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		String sql;
+		sql = "SELECT * FROM PATIENT WHERE First_Name = \""
+				+ PATIENT_NAME + "\" and Last_Name = \"" + PATIENT_LAST_NAME
+				+ "\" and DOB = \"" + DOB + "\";";
+		ResultSet rs = stmt.executeQuery(sql);
+
+		// Move cursor to the last row.
+				rs.next();
+
+				// Retrieve by column name
+				ReceptonistSearchController recep = new ReceptonistSearchController();
+				try {
+					ReceptonistSearchController.PatientSearched.add(new Patient (
+					rs.getString("Title"),
+					rs.getString("First_Name"),
+					rs.getString("Middle_Name"),
+					rs.getString("Last_Name"),
+					GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
+					rs.getString("Sex"),
+					rs.getString("First_line_of_Address"),
+					rs.getString("Second_line_of_Address"),
+					rs.getString("Third_line_of_Address"),
+					rs.getString("City"),
+					rs.getString("Postcode"),
+					rs.getLong("Contact_Number"),
+					rs.getInt("NHS_number"),
+					rs.getString("Allergies"),
+					rs.getString("Known_Conditions"),
+					rs.getString("Blood_Group"),
+					rs.getString("Next_of_Kin"),
+					rs.getString("Gp_Name"),
+					rs.getString("Gp_Code"),
+					rs.getString("Notes")));
+				
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		// close statement object
+		stmt.close();
+		// close connection
+		con.close();
 	}
 
 	/**

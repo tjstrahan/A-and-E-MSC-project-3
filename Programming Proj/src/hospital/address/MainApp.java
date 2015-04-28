@@ -5,7 +5,9 @@ import java.io.IOException;
 import hospital.address.view.DoctorController;
 import hospital.address.view.LoginController;
 import hospital.address.view.NurseController;
+import hospital.address.view.PatientViewController;
 import hospital.address.view.ReceptionistController;
+import hospital.address.view.ReceptonistSearchController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -97,6 +99,44 @@ public class MainApp extends Application {
             
             // Give the controller access to the main app.
             ReceptionistController controller = loader.getController();
+            controller.setMainApp(this);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showPatientView() {
+        try {
+            // Load person overview.
+            FXMLLoader load = new FXMLLoader();
+            load.setLocation(MainApp.class.getResource("view/PatientView.fxml"));
+            AnchorPane PatientView = load.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(PatientView);
+            
+            PatientViewController controller = load.getController();
+            controller.setMainApp(this);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void showReceptionistSearch() {
+        try {
+            // Load person overview.
+            FXMLLoader load = new FXMLLoader();
+            load.setLocation(MainApp.class.getResource("view/ReceptionistSearch.fxml"));
+            AnchorPane searchRecep = load.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(searchRecep);
+            
+            // Give the controller access to the main app.
+            ReceptonistSearchController controller = load.getController();
             controller.setMainApp(this);
             
         } catch (IOException e) {
