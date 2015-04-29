@@ -563,20 +563,26 @@ public class ReceptionistAccess {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				Receptionist.patientsFromDB.addFirst(new Patient(rs
-						.getString("Title"), rs.getString("First_Name"), rs
-						.getString("Middle_Name"), rs.getString("Last_Name"),
+				Receptionist.patientsFromDB.addFirst(new Patient(rs.getString("Title"),
+						rs.getString("First_Name"),
+						rs.getString("Middle_Name"),
+						rs.getString("Last_Name"),
 						GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
-						rs.getString("First_line_of_Address"), rs
-								.getString("Second_line_of_Address"), rs
-								.getString("Third_line_of_Address"), rs
-								.getString("City"), rs.getString("Postcode"),
-						rs.getLong("Contact_Number"), rs.getInt("NHS_number"),
-						rs.getString("Allergies"), rs
-								.getString("Known_Conditions"), rs
-								.getString("Blood_Group"), rs.getString("Sex"),
-						rs.getString("Next_of_Kin"), rs.getString("Gp_Name"),
-						rs.getString("Gp_Code"), rs.getString("Notes")));
+						rs.getString("Sex"),
+						rs.getString("First_line_of_Address"),
+						rs.getString("Second_line_of_Address"),
+						rs.getString("Third_line_of_Address"),
+						rs.getString("City"),
+						rs.getString("Postcode"),
+						rs.getLong("Contact_Number"),
+						rs.getInt("NHS_number"),
+						rs.getString("Allergies"),
+						rs.getString("Known_Conditions"),
+						rs.getString("Blood_Group"),
+						rs.getString("Next_of_Kin"),
+						rs.getString("Gp_Name"),
+						rs.getString("Gp_Code"),
+						rs.getString("Notes")));;
 			}
 
 			// close statement object
@@ -611,20 +617,26 @@ public class ReceptionistAccess {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				Receptionist.patientsFromDB.add(new Patient(rs
-						.getString("Title"), rs.getString("First_Name"), rs
-						.getString("Middle_Name"), rs.getString("Last_Name"),
+				Receptionist.patientsFromDB.add(new Patient(rs.getString("Title"),
+						rs.getString("First_Name"),
+						rs.getString("Middle_Name"),
+						rs.getString("Last_Name"),
 						GeneralAccess.correctUKDateFormat(rs.getString("DOB")),
-						rs.getString("First_line_of_Address"), rs
-								.getString("Second_line_of_Address"), rs
-								.getString("Third_line_of_Address"), rs
-								.getString("City"), rs.getString("Postcode"),
-						rs.getLong("Contact_Number"), rs.getInt("NHS_number"),
-						rs.getString("Allergies"), rs
-								.getString("Known_Conditions"), rs
-								.getString("Blood_Group"), rs.getString("Sex"),
-						rs.getString("Next_of_Kin"), rs.getString("Gp_Name"),
-						rs.getString("Gp_Code"), rs.getString("Notes")));
+						rs.getString("Sex"),
+						rs.getString("First_line_of_Address"),
+						rs.getString("Second_line_of_Address"),
+						rs.getString("Third_line_of_Address"),
+						rs.getString("City"),
+						rs.getString("Postcode"),
+						rs.getLong("Contact_Number"),
+						rs.getInt("NHS_number"),
+						rs.getString("Allergies"),
+						rs.getString("Known_Conditions"),
+						rs.getString("Blood_Group"),
+						rs.getString("Next_of_Kin"),
+						rs.getString("Gp_Name"),
+						rs.getString("Gp_Code"),
+						rs.getString("Notes")));
 			}
 
 			// close statement object
