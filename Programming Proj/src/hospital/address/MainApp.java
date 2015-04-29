@@ -11,6 +11,7 @@ import hospital.address.view.NurseController;
 import hospital.address.view.PatientViewController;
 import hospital.address.view.ReceptionistController;
 import hospital.address.view.ReceptonistSearchController;
+import hospital.address.view.QueueController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.application.Application;
