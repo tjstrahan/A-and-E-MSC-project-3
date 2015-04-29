@@ -52,10 +52,10 @@ public class MainApp extends Application {
 		this.primaryStage.setTitle("PAS");
 		initRootLayout();
 		queueWindow();
-		showNurse();
+		showLogin();
 
 	}
-
+ 
 	public void queueWindow() {
 		try {
 			FXMLLoader loader = new FXMLLoader();

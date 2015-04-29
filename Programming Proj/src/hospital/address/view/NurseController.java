@@ -124,7 +124,7 @@ public class NurseController {
 
 			@Override
 			public void handle(ActionEvent event) {
-			//mainApp.showTriage();
+			mainApp.showTriage();
 				
 			}
 		});
