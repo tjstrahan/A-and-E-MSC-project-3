@@ -286,9 +286,9 @@ public class MainApp extends Application {
 
 	public static void main(String[] args) throws InterruptedException {
 		
-	//	Starter start = new Starter();
-	//	Thread t1 = new Thread(start);
-	//	t1.start();
+	Starter start = new Starter();
+	Thread t1 = new Thread(start);
+	t1.start();
 
 		launch(args);
 	}
