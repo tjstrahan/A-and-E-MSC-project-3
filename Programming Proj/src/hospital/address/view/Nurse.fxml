@@ -5,9 +5,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.NurseController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.NurseController">
    <children>
-      <Button fx:id="Button" layoutX="322.0" layoutY="202.0" mnemonicParsing="false" onAction="#initialize" text="Button" />
-      <Label fx:id="message" layoutX="147.0" layoutY="142.0" text="Label" />
+      <TextField fx:id="treatmentRoomField" layoutX="28.0" layoutY="42.0" prefHeight="26.0" prefWidth="256.0" promptText="Search Treatment Room:" AnchorPane.leftAnchor="25.0" />
+      <TextField fx:id="searchNHSField" layoutX="25.0" layoutY="89.0" prefHeight="26.0" prefWidth="256.0" promptText="Search NHS:" AnchorPane.bottomAnchor="185.0" AnchorPane.leftAnchor="25.0" />
+      <Button fx:id="extendTreatment" layoutX="438.0" layoutY="42.0" mnemonicParsing="false" onAction="#initialize" text="Extend Treatment Time" AnchorPane.rightAnchor="25.0" />
+      <Button fx:id="searchNHS" layoutX="438.0" layoutY="102.0" mnemonicParsing="false" onAction="#initialize" text="Search" AnchorPane.bottomAnchor="185.0" AnchorPane.rightAnchor="25.0" />
+      <TextArea fx:id="patientDetails" layoutX="25.0" layoutY="139.0" prefHeight="99.0" prefWidth="525.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <Button fx:id="triagePatient" alignment="CENTER" layoutX="259.0" layoutY="253.0" mnemonicParsing="false" onAction="#initialize" text="Triage Patient" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="300.0" />
+      <Label fx:id="message" layoutX="475.0" layoutY="264.0" opacity="0.55" prefHeight="16.0" prefWidth="98.0" text="Label" textAlignment="RIGHT" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="477.0" AnchorPane.rightAnchor="25.0" />
    </children>
 </AnchorPane>
