@@ -2,8 +2,6 @@ package hospitalTest;
 
 import static org.junit.Assert.*;
 import hospital.address.model.Receptionist;
-import hospital.address.model.Staff;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -65,11 +63,11 @@ public class ReceptionistTest {
 
 	@Test
 	public void testConstructorWithArgsCorrect() throws Exception {
-		Receptionist receptionist = new Receptionist(TitleCorrect,
-				firstNameCorrect, middleNameCorrect, lastNameCorrect,
+		Receptionist receptionist = new Receptionist(TitleCorrect, firstNameCorrect, 
+				middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, contactNumberCorrect,
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect);
 		assertNotNull(receptionist);
 	}
@@ -81,7 +79,7 @@ public class ReceptionistTest {
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDWrong, contactNumberCorrect,
+				postcodeCorrect, contactNumberWrong, StaffIDWrong,
 				loginIDCorrect, passwordCorrect);
 		assertEquals(StaffIDCorrect, receptionist.getStaffID());
 	}
@@ -92,7 +90,7 @@ public class ReceptionistTest {
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, contactNumberCorrect,
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordWrong);
 		assertEquals(passwordCorrect, receptionist.getPassword());
 
@@ -104,7 +102,7 @@ public class ReceptionistTest {
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, contactNumberCorrect,
+				postcodeCorrect,contactNumberCorrect, StaffIDCorrect, 
 				loginIDWrong, passwordCorrect);
 
 		assertEquals(loginIDCorrect, receptionist.getLoginID());
@@ -117,7 +115,7 @@ public class ReceptionistTest {
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, contactNumberWrong,
+				postcodeCorrect,contactNumberWrong, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(contactNumberCorrect, receptionist.getContactNumber());
 
@@ -129,7 +127,7 @@ public class ReceptionistTest {
 				firstNameWrong, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, contactNumberCorrect,
+				postcodeCorrect,contactNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(TitleCorrect, receptionist.getTitle());
 	}
@@ -139,8 +137,8 @@ public class ReceptionistTest {
 		Receptionist receptionist = new Receptionist("Mr", firstNameWrong,
 				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
-				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, contactNumberCorrect, loginIDCorrect,
+				addressLineThreeCorrect, cityCorrect,postcodeCorrect,
+				contactNumberCorrect, StaffIDCorrect,  loginIDCorrect,
 				passwordCorrect);
 		assertEquals(firstNameCorrect, receptionist.getFirstName());
 	}
@@ -151,7 +149,7 @@ public class ReceptionistTest {
 				middleNameWrong, lastNameCorrect, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, contactNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect,  loginIDCorrect,
 				passwordCorrect);
 		assertEquals(middleNameCorrect, receptionist.getMiddleName());
 
@@ -163,7 +161,7 @@ public class ReceptionistTest {
 				middleNameCorrect, lastNameWrong, dateOfBirthCorrect,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, contactNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect,  loginIDCorrect,
 				passwordCorrect);
 		assertEquals(lastNameCorrect, receptionist.getLastName());
 
@@ -175,7 +173,7 @@ public class ReceptionistTest {
 				middleNameCorrect, lastNameCorrect, dateOfBirthWrong,
 				addressLineOneCorrect, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, contactNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect,  loginIDCorrect,
 				passwordCorrect);
 		assertEquals(dateOfBirthCorrect, receptionist.getDateOfBirth());
 	}
@@ -186,7 +184,7 @@ public class ReceptionistTest {
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneWrong, addressLineTwoCorrect,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, contactNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect);
 		assertEquals(addressLineOneCorrect, receptionist.getAddressLineOne());
 	}
@@ -197,7 +195,7 @@ public class ReceptionistTest {
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect, addressLineTwoWrong,
 				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
-				StaffIDCorrect, contactNumberCorrect, loginIDCorrect,
+				contactNumberCorrect, StaffIDCorrect,  loginIDCorrect,
 				passwordCorrect);
 		assertEquals(addressLineTwoCorrect, receptionist.getAddressLineTwo());
 
@@ -209,7 +207,7 @@ public class ReceptionistTest {
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeWrong, cityCorrect,
-				postcodeCorrect, StaffIDCorrect, contactNumberCorrect,
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(addressLineThreeCorrect,
 				receptionist.getAddressLineThree());
@@ -222,7 +220,7 @@ public class ReceptionistTest {
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityWrong,
-				postcodeCorrect, StaffIDCorrect, contactNumberCorrect,
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(cityCorrect,
 				receptionist.getCity());
@@ -234,22 +232,9 @@ public class ReceptionistTest {
 				firstNameCorrect, middleNameCorrect, lastNameCorrect,
 				dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postCodeWrong, StaffIDCorrect, contactNumberCorrect,
+				postCodeWrong, contactNumberCorrect, StaffIDCorrect, 
 				loginIDCorrect, passwordCorrect);
 		assertEquals(postcodeCorrect,
 				receptionist.getPostcode());
 	}
-
-	// @Test
-	// public void testLookUpPatient() {
-	// Receptionist recep = new Receptionist();
-	// recep.lookUpPatient();
-	// }
-
-	// @Test
-	// public void testAdmitPatient() {
-	// Receptionist recep = new Receptionist();
-	// recep.admitPatient();
-	// }
-
 }
