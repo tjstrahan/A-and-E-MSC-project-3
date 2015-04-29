@@ -27,19 +27,18 @@ public class PatientTest {
 			oNegative, incorrectBloodType, incorrectBloodTypeLong,
 			correctNextOfKin, correctGPName, incorrectGPName, correctGPCode,
 			incorrectGPCode, incorrectEmptyGPCode, incorrectGPCodeLong, female,
-			male, incorrectSex, notes, invalidTriageCategory;
+			male, incorrectSex, notes, correcttriageCategory;
 
 	int nhsNumberLowerBoundary, nhsNumberUpperBoundary, nhsNumberCorrect,
 			nhsNumberLowerBoundaryIncorrect, nhsNumberUpperBoundaryIncorrect,
-			nhsNumberIncorrect, incorrectGPCodeNumber, triageNumberBoundary, triageNumberLowerBoundary,
-			triageNumberUpperBoundary, triageNumberCorrect, triageNumberLowerBoundaryIncorrect, triageNumberUpperBoundaryIncorrect,
-			triageNumberIncorrect;
-			;
+			nhsNumberIncorrect, incorrectGPCodeNumber, correcttriageNumber, correctadmissionNumber, correcttimeOnWaitingList,
+			correcttreatmentRoomArrayElement, correctactualTreatmentRoom;
 			
-	boolean correctisPriorityPatient, correctTreatedByOnCallTeam, incorrectTreatedByOnCallTeam,
+			
+	boolean correctisPriorityPatient, correctTreatedByOnCallTeam,
 	correctWaitingMoreThan30, correctmadeNewNote, correctExtraTime;
 
-	long contactNoCorrect;
+	long contactNoCorrect, correctstartTimeWait,correctendTimeWait, correctstartTimeTreat, correctendTimeTreat;
 
 	@Before
 	public void setUp() throws Exception {
@@ -112,17 +111,37 @@ public class PatientTest {
 
 		notes = "";
 		
-		//Test data for triage category
+		//test data for triage category
+		correcttriageCategory="";
 		
-		invalidTriageCategory=null;
+		// test data for admission number
+		correctadmissionNumber=678;
+		
+		//test data for start time wait
+		correctstartTimeWait=1430314975298L;
+		
+		//test data for end time wait
+		correctendTimeWait=1430314975358L;
+		
+		//test data for start time treat
+		correctstartTimeTreat=1430314975298L;
+		
+		//test data for end time treat
+		correctendTimeTreat=1430314975858L;
+		
 		
 		//test data for triage number
-		triageNumberCorrect=3;
-		triageNumberIncorrect=5;
-		triageNumberLowerBoundary=1;
-		triageNumberUpperBoundary=4;
-		triageNumberLowerBoundaryIncorrect=0;
-		triageNumberUpperBoundaryIncorrect=5;
+		correcttriageNumber=3;
+		
+		//test data for time on waiting list
+		correcttimeOnWaitingList=13;
+		
+		//test data for treatment room array element
+		correcttreatmentRoomArrayElement=13;
+		
+		//test data for actual treatment room
+		correctactualTreatmentRoom=13;
+		
 		
 		//test data for isPriortyPatient
 		correctisPriorityPatient=true;
@@ -130,7 +149,6 @@ public class PatientTest {
 		
 		//test data for treated by on call team
 		correctTreatedByOnCallTeam=true;
-		incorrectTreatedByOnCallTeam=false;
 		
 		//test data for waiting more then 30
 		correctWaitingMoreThan30=true;
@@ -405,43 +423,21 @@ public class PatientTest {
 	@Test
 	public void testGetSetTriageNumberCorrect() throws Exception {
 		Patient patient = new Patient();
-		patient.setTriageNumber(triageNumberCorrect);
+		patient.setTriageNumber(correcttriageNumber);
 
-}
-	@Test(expected = Exception.class)
-	public void testGetSetTriageNumberInCorrect() throws Exception {
-		Patient patient = new Patient();
-		patient.setTriageNumber(triageNumberIncorrect);
-		
-		
-		
-	}
-	@Test
-	public void testGetSetTriageNumberLowerBoundary() throws Exception {
-		Patient patient = new Patient();
-		patient.setTriageNumber(triageNumberLowerBoundary);
-		
-}
-	@Test
-	public void testGetSetTriageNumberUpperBoundary() throws Exception {
-		Patient patient = new Patient();
-		patient.setTriageNumber(triageNumberUpperBoundary);
-	}
-	@Test(expected = Exception.class)
-	public void testGetSetTriageNumberLowerBoundaryInCorrect() throws Exception {
-		Patient patient = new Patient();
-		patient.setTriageNumber(triageNumberLowerBoundaryIncorrect);
-	}
-	@Test(expected = Exception.class)
-	public void testGetSetTriageNumberUpperBoundaryInCorrect() throws Exception {
-		Patient patient = new Patient();
-		patient.setTriageNumber(triageNumberUpperBoundaryIncorrect);
+
 	}
 	@Test
 	public void testGetSetNotes(){
 		Patient patient = new Patient();
 		patient.setNotes(notes);
 		assertEquals(notes, patient.getNotes());
+	}
+	@Test
+	public void testGetSettriageCategory(){
+		Patient patient = new Patient();
+		patient.setTriageCategory(correcttriageCategory);
+		assertEquals(correcttriageCategory, patient.getTriageCategory());
 	}
 
 
@@ -472,11 +468,6 @@ public class PatientTest {
 		patient.setEndTimeWait(100);
 	}
 	@Test
-	public void testGetSetTreatmentRoom(){
-		Patient patient = new Patient();
-		patient.setTreatmentRoom(100);
-	}
-	@Test
 	public void testGetSetstartTimeTreat(){
 		Patient patient = new Patient();
 		patient.setStartTimeTreat(100);
@@ -505,7 +496,7 @@ public class PatientTest {
 	@Test
 	public void testGetSettreatmentRoom(){
 		Patient patient = new Patient();
-		patient.setTreatmentRoom(100);
+		patient.setActualTreatmentRoom(100);
 	}
 	@Test
 	public void testGetSetcorrectmadeNewNote(){
@@ -522,14 +513,17 @@ public class PatientTest {
 		patient.setExtraTime(correctExtraTime);
 		assertEquals(correctExtraTime, patient.isExtraTime());
 	}
-	
-	
-	@Test (expected = Exception.class)
-	public void testGetSetinvalidtriageCategory(){
+	@Test
+	public void testGetSettimeonWaitingList(){
 		Patient patient = new Patient();
-		patient.setTriageCategory(invalidTriageCategory);
-		assertEquals(invalidTriageCategory, patient.getTriageCategory());
+		patient.setTimeOnWaitingList(13);
+	}@Test
+	public void testGetSettreatmentRoomArrayElement(){
+		Patient patient = new Patient();
+		patient.setTreatmentRoomArrayElement(13);
 	}
+	
+	
 		
 }
 	
