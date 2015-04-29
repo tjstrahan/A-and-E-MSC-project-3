@@ -1,6 +1,5 @@
 package hospital.address.model;
 
-import javafx.beans.property.*;
 import hospital.address.TheQueue;
 
 /**
@@ -65,8 +64,8 @@ public class Patient extends Person {
 	 */
 	private int triageNumber;
 
-	private StringProperty triageCategory;
-	
+	private String triageCategory;
+
 	/**
 	 * Auto-incrementing number starting at zero used solely during sorting to
 	 * ensure patients of same triage category are treated in admission order
@@ -110,13 +109,19 @@ public class Patient extends Person {
 	private int timeOnWaitingList;
 
 	/**
-	 * Instance var to store the Treatment Room number that a particular patient
-	 * has been put into. To avoid confusion between ArrayList elements (which
-	 * start at zero) this is defaulted to -1. Therefore if a patient is not in
-	 * a Treatment Room this var is -1.
+	 * Instance var to store the Treatment Room array element that a patient has
+	 * been put into. To avoid confusion between ArrayList elements (which start
+	 * at zero) this is defaulted to -1. Therefore if a patient is not in a
+	 * Treatment Room this var is -1.
 	 */
-	private int treatmentRoom;
+	private int treatmentRoomArrayElement;
 
+	/**
+	 * Instance var to store the actual room number the patient is in - used for
+	 * display purposes in javaFX classes
+	 */
+	private int actualTreatmentRoom;
+	
 	/**
 	 * Instance var boolean to show that a patient was treate by the on call
 	 * team, as this would not necessarily be obvious from treatment time alone
@@ -173,7 +178,7 @@ public class Patient extends Person {
 	/**
 	 * Constructor with arguments including those from the superclass
 	 * 
-	 * @param string
+	 * @param title
 	 * @param firstName
 	 * @param middleName
 	 * @param lastName
@@ -196,16 +201,16 @@ public class Patient extends Person {
 	 * @throws Exception
 	 * @throws IllegalArgumentException
 	 */
-	public Patient(String string, String firstName, String middleName,
-			String lastName, String dateOfBirth,String sex, String addressLineOne,
+	public Patient(String title, String firstName, String middleName,
+			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
 			String postcode, long contactNumber, int nhsNumber,
 			String allergies, String knownConditions, String bloodGroup,
-			String nextOfKin, String gpName, String gpCode,
+			String sex, String nextOfKin, String gpName, String gpCode,
 			String notes) throws IllegalArgumentException, Exception {
 
 		// call to the superclass constructor
-		super(string, firstName, middleName, lastName, dateOfBirth,
+		super(title, firstName, middleName, lastName, dateOfBirth,
 				addressLineOne, addressLineTwo, addressLineThree, city,
 				postcode, contactNumber);
 
@@ -222,14 +227,15 @@ public class Patient extends Person {
 		// following are variables which have preset values when a patient
 		// object if created, therefore are automatically set
 		this.triageNumber = 0;
-		this.triageCategory = new SimpleStringProperty();
+		this.triageCategory = "";
 		this.priorityPatient = false;
 		this.admissionNumber = 0;
 		this.startTimeWait = 0;
 		this.startTimeTreat = 0;
 		this.endTimeWait = 0;
 		this.endTimeTreat = 0;
-		this.treatmentRoom = -1;
+		this.treatmentRoomArrayElement = -1;
+		this.actualTreatmentRoom = -1;
 		this.timeOnWaitingList = 0;
 		this.treatedByOnCallTeam = false;
 		this.waitingMoreThan30 = false;
@@ -586,21 +592,23 @@ public class Patient extends Person {
 	}
 
 	/**
-	 * Method to get the treatment room number that a patient is currently in
+	 * Method to get the element of the treatment room array that the patient is
+	 * associated with
 	 * 
-	 * @return treatmentRoom
+	 * @return treatmentRoomArrayElement
 	 */
-	public int getTreatmentRoom() {
-		return treatmentRoom;
+	public int getTreatmentRoomArrayElement() {
+		return treatmentRoomArrayElement;
 	}
 
 	/**
-	 * Method to set the treatment room a patient is currently being treated in.
+	 * Method to set the element of the treatment room array that the patient is
+	 * associated with
 	 * 
 	 * @param treatmentRoom
 	 */
-	public void setTreatmentRoom(int treatmentRoom) {
-		this.treatmentRoom = treatmentRoom;
+	public void setTreatmentRoomArrayElement(int treatmentRoomArrayElement) {
+		this.treatmentRoomArrayElement = treatmentRoomArrayElement;
 	}
 
 	/**
@@ -737,6 +745,7 @@ public class Patient extends Person {
 
 	/**
 	 * Method to get the extraTime boolean
+	 * 
 	 * @return
 	 */
 	public boolean isExtraTime() {
@@ -745,6 +754,7 @@ public class Patient extends Person {
 
 	/**
 	 * Method to set the extraTime boolean
+	 * 
 	 * @param extraTime
 	 */
 	public void setExtraTime(boolean extraTime) {
@@ -752,15 +762,19 @@ public class Patient extends Person {
 	}
 
 	public String getTriageCategory() {
-		return triageCategory.get();
+		return triageCategory;
 	}
 
 	public void setTriageCategory(String triageCategory) {
-		this.triageCategory.set(triageCategory);
+		this.triageCategory = triageCategory;
 	}
 
-	public StringProperty triageCategoryProperty() {
-		return triageCategory;
+	public int getActualTreatmentRoom() {
+		return actualTreatmentRoom;
+	}
+
+	public void setActualTreatmentRoom(int actualTreatmentRoom) {
+		this.actualTreatmentRoom = actualTreatmentRoom;
 	}
 
 }
