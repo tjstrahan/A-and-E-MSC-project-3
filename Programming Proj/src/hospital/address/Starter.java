@@ -67,7 +67,7 @@ public class Starter implements Runnable{
 
 		try{
 			
-		hM.populateMedicalTeam();
+		//hM.populateMedicalTeam();
 		hM.setOnCallTeam();
 
 		
@@ -89,7 +89,7 @@ public class Starter implements Runnable{
 		Thread t2 = new Thread(qta);
 		t2.start();
 
-		rA.admitPatient(111121111);
+		//rA.admitPatient(111121111);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

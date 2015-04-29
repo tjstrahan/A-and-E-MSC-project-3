@@ -24,7 +24,7 @@ public class TheQueue {
 	 * If set to 40 it runs forty times faster than real time. To set to real
 	 * time set this variable to 1.
 	 */
-	public static final int TIME_FACTOR = 20;
+	public static final int TIME_FACTOR = 40;
 
 	/**
 	 * Maximum length of Waiting List as described in specifications
@@ -73,6 +73,8 @@ public class TheQueue {
 	 * Variable to be passed to sms method to select particular message.
 	 */
 	static final int SMS_TO_ON_CALL_TEAM = 2;
+	
+	public static String message = "---";
 
 	/**
 	 * LinkedList of patients to represent the Waiting List in the hospital it
@@ -108,6 +110,8 @@ public class TheQueue {
 	 */
 	public static LinkedList<Patient> SentElsewhere = new LinkedList<Patient>();
 
+	public static LinkedList<Patient> callNextPatient = new LinkedList<Patient>();
+	
 	/**
 	 * Main Queue class
 	 * 
@@ -129,6 +133,8 @@ public class TheQueue {
 		}
 
 		System.out.println("New Patient arrives " + patient);
+		
+		callNextPatient.clear();
 
 		// If waiting list size is less than the defined size
 		if (WaitingList.size() < MAX_WAITING_LIST_LENGTH) {
@@ -338,16 +344,25 @@ public class TheQueue {
 				TreatmentRoom.add(loop, temp.get(0));
 
 				// Calling patient to treatment room
+				
+				message = "Can "
+						+ TreatmentRoom.get(loop).getFirstName() + " "
+						+ TreatmentRoom.get(loop).getLastName()
+						+ " go to Treatment Room " + (loop + 1) + "";
 				System.out.println("Can "
 						+ TreatmentRoom.get(loop).getFirstName() + " "
 						+ TreatmentRoom.get(loop).getLastName()
 						+ " go to Treatment Room " + (loop + 1) + "");
+				
 
-				// Assign set he Treatment Room number in the patient object,
-				// this is required when bubblesorting the treatment room to
-				// find the patient of lowest priority
-				TreatmentRoom.get(loop).setTreatmentRoom(loop);
+				// Assign set the Treatment Room array element in the patient
+				// object,this is required when bubblesorting the treatment room
+				// to find the patient of lowest priority
+				TreatmentRoom.get(loop).setTreatmentRoomArrayElement(loop);
+				TreatmentRoom.get(loop).setActualTreatmentRoom(loop+1);
 
+				callNextPatient.add(TreatmentRoom.get(loop));
+				
 				// Get a new instance of time
 				Instant startTreat = Instant.now();
 
@@ -499,7 +514,7 @@ public class TheQueue {
 		int lastIndex = NUMBER_OF_TREATMENT_ROOMS - 1;
 
 		// Get treatment room number of last element
-		indexOfElement = tempList.get(lastIndex).getTreatmentRoom();
+		indexOfElement = tempList.get(lastIndex).getTreatmentRoomArrayElement();
 
 		// Clear the temporary ArrayList for next use
 		tempList.clear();
@@ -593,9 +608,13 @@ public class TheQueue {
 							+ TreatmentRoom.get(index).getLastName()
 							+ " go to Treatment Room " + (index + 1) + "");
 
-					// Set Treatment Room in patient
-					TreatmentRoom.get(index).setTreatmentRoom(index);
+					// Set Treatment Room Array Element in patient
+					TreatmentRoom.get(index)
+							.setTreatmentRoomArrayElement(index);
 
+					// Set actual treatment room
+					TreatmentRoom.get(index).setActualTreatmentRoom(index+1);
+					
 				}
 
 			}
@@ -605,7 +624,9 @@ public class TheQueue {
 
 			// Reset treatment room of patient removed from treatment room to
 			// the default value
-			tempListFromTreatment.get(0).setTreatmentRoom(-1);
+			tempListFromTreatment.get(0).setTreatmentRoomArrayElement(-1);
+			tempListFromTreatment.get(0).setActualTreatmentRoom(-1);
+			
 
 			// Copy patient from temporary ArrayList to first element of waiting
 			// list; this is a LinkedList and all the other elements will

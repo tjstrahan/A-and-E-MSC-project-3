@@ -2,6 +2,7 @@ package hospital.address;
 
 // imports
 import hospital.address.model.Patient;
+import hospital.address.model.Status;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -12,6 +13,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Locale;
 
+import hospital.address.TheQueue;
+import hospital.address.MainApp;
 import hospital.address.jdbc.QueueAccessAddDischargeTime;
 import hospital.address.jdbc.QueueAccessClearDischargeNotes;
 
@@ -44,6 +47,15 @@ public class QueueTimerAlt implements Runnable {
 	 * LinkedList to hold a temporary copy of Waiting list.
 	 */
 	static LinkedList<Patient> waitingCopy = new LinkedList<Patient>();
+
+	/**
+	 * LinkedList copy of the temporary copy of Treatment Room list used for
+	 * display purposes in JavaFX
+	 */
+	public static LinkedList<Patient> forDisplay = new LinkedList<Patient>();
+	
+	
+	public static LinkedList<Status> statusCodeList = new LinkedList<Status>();
 
 	/**
 	 * LinkedList to hold a temporary copy of who the On Call Team is treating.
@@ -118,10 +130,18 @@ public class QueueTimerAlt implements Runnable {
 			checkOnCallTeam();
 			setWaitingTimes();
 			checkPatientsWaitingLongTime();
+			MainApp.clearFxTreatmentList();
+			MainApp.clearFxWaitingList();
+			MainApp.clearFxOnCallList();
+			MainApp.clearFxStatus();
 			copyLists();
-			printLists();
+			makeForDisplay();
 			getStatusCode();
-			clearLists();
+			MainApp.copyFxTreatmentListAgain();
+			MainApp.copyFxWaitingListAgain();
+			MainApp.copyFxOnCallListAgain();
+			MainApp.copyFxStatusAgain();
+			printLists();
 			orderPatients();
 
 			// Pause loop for 1 minute
@@ -132,8 +152,23 @@ public class QueueTimerAlt implements Runnable {
 			}
 
 			checkIfAlive();
+			clearLists();
 		}
 
+	}
+
+	/**
+	 * Method to remove null values from the treatmentroom arraylist and to a
+	 * linkedlist for display purposes
+	 */
+	public void makeForDisplay() {
+
+		for (int loop = 0; loop < treatmentCopy.size(); loop++) {
+
+			if (treatmentCopy.get(loop) != null) {
+				forDisplay.add(treatmentCopy.get(loop));
+			}
+		}
 	}
 
 	/**
@@ -424,11 +459,15 @@ public class QueueTimerAlt implements Runnable {
 	 * Method to print out the status code of the Accident and Emergency
 	 * department
 	 */
-	public void getStatusCode() {
+	public static void getStatusCode() {
 
 		// Call the status method which determines the status code based
 		// on queue length and average waiting times
 		System.out.println("STATUS CODE: " + status());
+	
+		Status status;
+		statusCodeList.add(new Status(status()));
+		
 		System.out
 				.println("-----------------------------------------------------------------");
 
@@ -441,7 +480,7 @@ public class QueueTimerAlt implements Runnable {
 	 * @return an <code>int</code> in the range 1 to 4 which is the Status code
 	 *         for the Accident and Emergency department
 	 */
-	public int status() {
+	public static int status() {
 
 		// Declare and initialise variable
 		int sumOfWaitTime = 0;
@@ -460,7 +499,7 @@ public class QueueTimerAlt implements Runnable {
 		}
 
 		// For testing purposes
-		System.out.println("Patients waiting to be treated = " + count);
+		// System.out.println("Patients waiting to be treated = " + count);
 
 		// If the WaitingList is longer than 1 patient
 		if (waitingCopy.size() > 0) {
@@ -487,7 +526,7 @@ public class QueueTimerAlt implements Runnable {
 			}
 
 			// For testing purposes
-			System.out.println("Average wait time is " + averageWaitTime);
+			//System.out.println("Average wait time is " + averageWaitTime);
 
 			// Follow business rules to set aNEStatus
 			if (averageWaitTime > 9 && averageWaitTime < 20) {
@@ -573,8 +612,10 @@ public class QueueTimerAlt implements Runnable {
 		// Once lists have been printed out, they are all cleared in
 		// preparation for the next time
 		treatmentCopy.clear();
+		forDisplay.clear();
 		waitingCopy.clear();
 		onCallCopy.clear();
+		statusCodeList.clear();
 		// treatedCopy.clear();
 		// turnedAwayCopy.clear();
 
