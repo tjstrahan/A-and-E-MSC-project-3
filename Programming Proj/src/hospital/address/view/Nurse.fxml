@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.NurseController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.NurseController">
    <children>
-      <TextField fx:id="treatmentRoomField" layoutX="28.0" layoutY="42.0" prefHeight="26.0" prefWidth="256.0" promptText="Search Treatment Room:" AnchorPane.leftAnchor="25.0" />
-      <TextField fx:id="searchNHSField" layoutX="25.0" layoutY="89.0" prefHeight="26.0" prefWidth="256.0" promptText="Search NHS:" AnchorPane.bottomAnchor="185.0" AnchorPane.leftAnchor="25.0" />
-      <Button fx:id="extendTreatment" layoutX="438.0" layoutY="42.0" mnemonicParsing="false" onAction="#initialize" text="Extend Treatment Time" AnchorPane.rightAnchor="25.0" />
-      <Button fx:id="searchNHS" layoutX="438.0" layoutY="102.0" mnemonicParsing="false" onAction="#initialize" text="Search" AnchorPane.bottomAnchor="185.0" AnchorPane.rightAnchor="25.0" />
-      <TextArea fx:id="patientDetails" layoutX="25.0" layoutY="139.0" prefHeight="99.0" prefWidth="525.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-      <Button fx:id="triagePatient" alignment="CENTER" layoutX="259.0" layoutY="253.0" mnemonicParsing="false" onAction="#initialize" text="Triage Patient" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="300.0" />
-      <Label fx:id="message" layoutX="475.0" layoutY="264.0" opacity="0.55" prefHeight="16.0" prefWidth="98.0" text="Label" textAlignment="RIGHT" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="477.0" AnchorPane.rightAnchor="25.0" />
+      <TextField fx:id="treatmentRoomField" layoutX="25.0" layoutY="28.0" prefHeight="26.0" prefWidth="256.0" promptText="Enter Treatment Room:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      <Button fx:id="extendTreatment" layoutX="410.0" layoutY="35.0" mnemonicParsing="false" onAction="#initialize" text="Extend Treatment Time" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      <Button fx:id="triagePatient" alignment="CENTER" layoutX="25.0" layoutY="536.0" mnemonicParsing="false" onAction="#initialize" text="Triage Patient" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="300.0" />
+      <Label fx:id="message" layoutX="480.0" layoutY="541.0" opacity="0.55" prefHeight="16.0" prefWidth="98.0" text="Label" textAlignment="RIGHT" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="25.0" />
+      <TableView fx:id="treatmentTable" focusTraversable="false" layoutX="4.0" layoutY="24.0" mouseTransparent="true" prefHeight="201.0" prefWidth="996.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="65.0">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <columns>
+            <TableColumn fx:id="treatmentColumn" editable="false" maxWidth="2000.0" prefWidth="132.0" sortable="false" text="Room" />
+            <TableColumn fx:id="titleColumn" editable="false" maxWidth="2000.0" prefWidth="75.0" sortable="false" text="Title" />
+            <TableColumn fx:id="forenameColumn" editable="false" maxWidth="3500.0" prefWidth="165.0" sortable="false" text="Forename" />
+            <TableColumn fx:id="surnameColumn" editable="false" maxWidth="3500.0" prefWidth="165.0" sortable="false" text="Surname" />
+            <TableColumn fx:id="dobColumn" editable="false" maxWidth="3000.0" prefWidth="100.0" sortable="false" text="D.O.B." />
+            <TableColumn fx:id="triageColumn" editable="false" maxWidth="4500.0" minWidth="4.0" prefWidth="165.0" sortable="false" text="Triage Cat.." />
+            <TableColumn fx:id="nhsColumn" editable="false" maxWidth="3000.0" prefWidth="165.0" sortable="false" text="NHS #" />
+         </columns>
+         <cursor>
+            <Cursor fx:constant="NONE" />
+         </cursor>
+      </TableView>
    </children>
 </AnchorPane>
