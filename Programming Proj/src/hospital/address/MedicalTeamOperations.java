@@ -1,7 +1,7 @@
 package hospital.address;
 
-import hospital.QueueOperations;
-import hospital.TheQueue;
+import hospital.address.QueueOperations;
+import hospital.address.TheQueue;
 
 import java.util.Scanner;
 
