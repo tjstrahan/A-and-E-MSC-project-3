@@ -147,7 +147,7 @@ public class QueueController {
 				.setCellValueFactory(new PropertyValueFactory<Status, Integer>(
 						"code"));
 		statusCodeShow.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		codeColumn.setStyle( "-fx-alignment: CENTER; -fx-font-weight: bold; -fx-stroke: green;");
+		codeColumn.setStyle( "-fx-alignment: CENTER; -fx-font-weight: bold;");
 		
 	}
 
