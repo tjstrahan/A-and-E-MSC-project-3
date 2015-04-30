@@ -1,22 +1,20 @@
 package hospital.address.view;
 
-import java.sql.SQLException;
-import java.text.ParseException;
+import java.io.IOException;
 
 import hospital.address.MainApp;
 import hospital.address.MedicalTeamOperations;
 import hospital.address.jdbc.GeneralAccess;
 import hospital.address.model.Patient;
 import hospital.address.model.Status;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialogs;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,8 +22,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -48,7 +46,7 @@ public class NurseController {
 	private TableColumn<Patient, String> triageColumn;
 	@FXML
 	private TableColumn<Patient, Integer> nhsColumn;
-	
+
 
 	@FXML
 	private TableView<Status> statusCodeShow;
@@ -78,24 +76,27 @@ public class NurseController {
 	private Object selectedItem; 
 	
 	private GeneralAccess ga;
-
-	@SuppressWarnings("unused")
-	private MainApp mainApp;
-
+	
+	public static MainApp mainApp;
+	
 	@FXML
 	private void initialize() {
+		
+		prepareWindow();
+		
 		// Initialize the person table with the two columns.
-
 		treatmentRoomField.setOnKeyReleased(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
+				
 				treatRoomNoString = treatmentRoomField.getText();
 				treatRoomNoInt = Integer.parseInt(treatRoomNoString);
 
 			}
 		});
-
+	
+	
 		extendTreatment.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -116,22 +117,45 @@ public class NurseController {
 				dialog.show();
 
 				MedicalTeamOperations.extraTreatmentTime(treatRoomNoInt);
+				
+				
 			}
 		});
 		
-		
+
 		triagePatient.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-			mainApp.showTriage();
-				
-			}
-		});
+			
+				Platform.runLater(new Runnable() {
+					  @Override public void run() {
+						  try {
+								
+								FXMLLoader load = new FXMLLoader();
+								load.setLocation(MainApp.class.getResource("view/Triage.fxml"));
+								AnchorPane triage = load.load();
 
-		prepareWindow();
+								// Set person overview into the center of root layout.
+								MainApp.rootLayout.setCenter(triage);
+
+								// Give the controller access to the main app.
+								TriageController controller = load.getController();
+								controller.setMainApp(mainApp);
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+					  }
+			
+				
+				});
 		
+		}
+			
+		});
 	}
+		
 
 	private void prepareWindow() {
 		
@@ -162,7 +186,7 @@ public class NurseController {
 						"nhsNumber"));
 
 	}
-
+	
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
@@ -171,5 +195,7 @@ public class NurseController {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 		treatmentTable.setItems(mainApp.getFxTreatmentList());
+	
+		
 	}
-}
+	}
