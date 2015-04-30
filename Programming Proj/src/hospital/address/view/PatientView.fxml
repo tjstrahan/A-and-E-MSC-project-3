@@ -25,45 +25,29 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Search" />
             <Label fx:id="AddressLineOne" text="Address Line One" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="AddressLineTwo" text="Address Line Two" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="AddressLineThree" text="Address Line Three" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="city" text="City" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="Street" text="Street" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label fx:id="Postcode" text="Postcode" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label fx:id="allergies" text="Allergies" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Label fx:id="Conditions" text="Condtions" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Label fx:id="nextOFKin" text="Next OF Kin" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <Button mnemonicParsing="false" text="Button" GridPane.rowIndex="11" />
-            <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-            <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="11" />
-            <Button fx:id="EditnextOFKinData" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-            <Button fx:id="EditConditionsData" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-            <Button fx:id="EditallergiesData" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <Button fx:id="EditPostcodeData" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <Button fx:id="EditStreetData" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Button fx:id="EditcityData" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Button fx:id="EditAddressLineThreeData" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Button fx:id="EditAddressLineTwoData" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Button fx:id="EditAddressLineOneData" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="SearchInput" mnemonicParsing="false" text="Search" GridPane.columnIndex="2" />
+            <Label fx:id="Postcode" text="Postcode" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="allergies" text="Allergies" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="Conditions" text="Condtions" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="nextOFKin" text="Next OF Kin" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Button mnemonicParsing="false" text="Cancel" GridPane.rowIndex="10" />
+            <Button fx:id="Edit" mnemonicParsing="false" onAction="#initialize" text="Edit" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Button mnemonicParsing="false" text="Logout" GridPane.columnIndex="2" GridPane.rowIndex="10" />
             <Label text="Adrress Line One" GridPane.rowIndex="1" />
             <Label text="Address Line Two" GridPane.rowIndex="2" />
             <Label text="Address Line Three" GridPane.rowIndex="3" />
             <Label text="City" GridPane.rowIndex="4" />
-            <Label text="Street : " GridPane.rowIndex="5" />
-            <Label text="Postcode : " GridPane.rowIndex="6" />
-            <Label text="Allergies : " GridPane.rowIndex="7" />
-            <Label text="Conditions : " GridPane.rowIndex="8" />
-            <TextField fx:id="SearchData" GridPane.columnIndex="1" />
-            <Label text="Next Of Kin : " GridPane.rowIndex="9" />
-            <Label text="Contact Number" GridPane.rowIndex="10" />
-            <Label fx:id="ContactNumber" text="Contact Number" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <Button fx:id="EditContactNumberData" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+            <Label text="Postcode : " GridPane.rowIndex="5" />
+            <Label text="Allergies : " GridPane.rowIndex="6" />
+            <Label text="Conditions : " GridPane.rowIndex="7" />
+            <Label text="Next Of Kin : " GridPane.rowIndex="8" />
+            <Label text="Contact Number" GridPane.rowIndex="9" />
+            <Label fx:id="ContactNumber" text="Contact Number" GridPane.columnIndex="1" GridPane.rowIndex="9" />
          </children>
       </GridPane>
    </children>

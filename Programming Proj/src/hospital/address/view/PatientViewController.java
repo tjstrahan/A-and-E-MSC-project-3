@@ -1,13 +1,18 @@
 package hospital.address.view;
 
+import java.io.IOException;
+
 import hospital.address.MainApp;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 public class PatientViewController {
 
@@ -38,27 +43,7 @@ public class PatientViewController {
 	private TextField SearchData;
 
 	@FXML
-	private Button EditAddressLineOneData;
-	@FXML
-	private Button EditAddressLineThreeData;
-	@FXML
-	private Button EditcityData;
-	@FXML
-	private Button EditAddressLineTwoData;
-	@FXML
-	private Button EditPostcodeData;
-	@FXML
-	private Button EditContactNumberData;
-	@FXML
-	private Button EditallergiesData;
-	@FXML
-	private Button EditStreetData;
-	@FXML
-	private Button EditConditionsData;
-	@FXML
-	private Button EditnextOFKinData;
-	@FXML
-	private Button SearchInput;
+	private Button Edit;
 
 	private String AddressLineOneNew;
 
@@ -86,31 +71,54 @@ public class PatientViewController {
 	private MainApp mainApp;
 
 	@FXML
-	private void initialize() {
+	public void initialize() {
 		ReceptonistSearchController recs = new ReceptonistSearchController();
-		
-		String contactnum = String.valueOf(recs.PatientSearched.get(0).getContactNumber());
-		
+
+		String contactnum = String.valueOf(recs.PatientSearched.get(0)
+				.getContactNumber());
+
 		AddressLineOne.setText(recs.PatientSearched.get(0).getAddressLineOne());
-		AddressLineThree.setText(recs.PatientSearched.get(0).getAddressLineThree());;
+		AddressLineThree.setText(recs.PatientSearched.get(0)
+				.getAddressLineThree());
+		;
 		city.setText(recs.PatientSearched.get(0).getCity());
 		AddressLineTwo.setText(recs.PatientSearched.get(0).getAddressLineTwo());
-		Postcode.setText(recs.PatientSearched.get(0).getPostcode());;
+		Postcode.setText(recs.PatientSearched.get(0).getPostcode());
+		;
 		ContactNumber.setText(contactnum);
-		allergies.setText(recs.PatientSearched.get(0).getAllergies());;
+		allergies.setText(recs.PatientSearched.get(0).getAllergies());
+		;
 		Conditions.setText(recs.PatientSearched.get(0).getKnownConditions());
 		nextOFKin.setText(recs.PatientSearched.get(0).getNextOfKin());
-		
-		EditConditionsData.setOnAction(new EventHandler<ActionEvent>() {
+
+		Edit.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println( "here");
 				
+				Platform.runLater(new Runnable() {
+					  @Override public void run() {
+						  try {
+								// Load person overview.
+								FXMLLoader loader = new FXMLLoader();
+								loader.setLocation(MainApp.class
+										.getResource("view/EditPatient.fxml"));
+								AnchorPane edit = loader.load();
+
+								// Set person overview into the center of root layout.
+								MainApp.rootLayout.setCenter(edit);
+
+								// Give the controller access to the main app.
+								ReceptionistController controller = loader.getController();
+								controller.setMainApp(mainApp);
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+					  }
+					});
 			}
-			
 		});
-		
 	}
 
 	/**

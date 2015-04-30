@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.RecepSearchReturnController">
+   <children>
+      <Label layoutX="106.0" layoutY="114.0" text="First Nane : " />
+      <Label layoutX="106.0" layoutY="161.0" text="Last Name : " />
+      <TextField fx:id="FNameInput" layoutX="179.0" layoutY="110.0" onAction="#initialize" />
+      <TextField fx:id="LNameInput" layoutX="179.0" layoutY="157.0" onAction="#initialize" />
+      <TextField fx:id="DOBInput" layoutX="179.0" layoutY="202.0" onAction="#initialize" />
+      <Label layoutX="125.0" layoutY="206.0" text="DOB : " />
+      <Button fx:id="Search" layoutX="274.0" layoutY="241.0" mnemonicParsing="false" onAction="#initialize" text="Search" />
+   </children>
+</AnchorPane>

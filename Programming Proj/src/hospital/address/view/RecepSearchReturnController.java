@@ -1,6 +1,5 @@
 package hospital.address.view;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.LinkedList;
@@ -9,20 +8,15 @@ import hospital.address.MainApp;
 import hospital.address.jdbc.GeneralAccess;
 import hospital.address.jdbc.ReceptionistAccess;
 import hospital.address.model.Patient;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 
-import java.util.concurrent.*;
-
-public class ReceptonistSearchController {
+public class RecepSearchReturnController {
 	
 	@FXML
 	private Label FirstName;
@@ -105,33 +99,10 @@ public class ReceptonistSearchController {
 					e.printStackTrace();
 				}
 				System.out.println(PatientSearched);
-				
-				Platform.runLater(new Runnable() {
-					  @Override public void run() {
-						  try {
-								
-								// Load person overview.
-								FXMLLoader load = new FXMLLoader();
-								load.setLocation(MainApp.class.getResource("view/PatientView.fxml"));
-								AnchorPane PatientView = load.load();
-
-								// Set person overview into the center of root layout.
-								MainApp.rootLayout.setCenter(PatientView);
-
-								PatientViewController controller = load.getController();
-								controller.setMainApp(mainApp);
-
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-					  }
-					});
+				mainApp.showPatientView();
 			}
 		});
 	}
-	
-	
-	
 	
 	/**
 	 * Is called by the main application to give a reference back to itself.

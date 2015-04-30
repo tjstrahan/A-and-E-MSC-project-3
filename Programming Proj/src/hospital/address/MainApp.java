@@ -41,7 +41,7 @@ public class MainApp extends Application {
 	static Patient patient;
 
 	private Stage primaryStage;
-	private BorderPane rootLayout;
+	public static BorderPane rootLayout;
 	@SuppressWarnings("unused")
 	private AnchorPane anchorpane;
 
@@ -141,9 +141,30 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	public void showEdit() {
+		try {
+			// Load person overview.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class
+					.getResource("view/EditPatient.fxml"));
+			AnchorPane edit = loader.load();
+
+			// Set person overview into the center of root layout.
+			rootLayout.setCenter(edit);
+
+			// Give the controller access to the main app.
+			ReceptionistController controller = loader.getController();
+			controller.setMainApp(this);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void showPatientView() {
 		try {
+		
 			// Load person overview.
 			FXMLLoader load = new FXMLLoader();
 			load.setLocation(MainApp.class.getResource("view/PatientView.fxml"));
@@ -302,7 +323,7 @@ public class MainApp extends Application {
 		return primaryStage;
 	}
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args){
 
 		Starter start = new Starter();
 		Thread t1 = new Thread(start);
