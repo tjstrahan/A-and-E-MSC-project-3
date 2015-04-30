@@ -33,6 +33,18 @@ public class ReceptonistSearchController {
 	@FXML
 	private Label DOB;
 	
+	@FXML
+	private Label incorrectFName;
+	
+	@FXML
+	private Label incorrectLname;
+	
+	@FXML
+	private Label incorrectDOB;
+	
+	@FXML
+	private Label noRecord;
+	
 	@FXML 
 	private TextField FNameInput;
 	
@@ -98,13 +110,26 @@ public class ReceptonistSearchController {
 			public void handle(ActionEvent event) {
 				
 			PatientSearched.clear();
+			
+			if (fname.isEmpty()){
+				incorrectFName.setText("Field Required");
+			}
+			
+			if (lname.isEmpty()){
+				incorrectLname.setText("Field Required");
+			}
+			
+			if (dob.isEmpty()){
+				incorrectDOB.setText("Field Required");
+			}
 			ReceptionistAccess ra = new ReceptionistAccess();
+			
+			
 				try {
 					ra.lookUpPatient(fname, lname, dob);
 
 					// if this fails catch the SQLException and print the stack trace
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				System.out.println(PatientSearched);
@@ -129,8 +154,15 @@ public class ReceptonistSearchController {
 							}
 					  }
 					});
+				
+				if (PatientSearched.isEmpty()){
+					noRecord.setText("No Existing Record");
+				}
 			}
+			
 		});
+		
+	
 		
 		Cancel.setOnAction(new EventHandler<ActionEvent>() {
 
