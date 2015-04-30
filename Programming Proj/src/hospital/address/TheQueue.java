@@ -1,8 +1,6 @@
 package hospital.address;
 
-// imports
 import hospital.address.model.Patient;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +10,9 @@ import java.util.LinkedList;
 
 /**
  * Class to represent the queueing system of both the treatment rooms and
- * waiting list in a hospital accident and emergency department
+ * waiting list in a hospital accident and emergency department. There is heavy
+ * use of one line comments in this class so that others can follow what exactly
+ * is happening.
  * 
  * @author Kieron
  * 
@@ -22,17 +22,20 @@ public class TheQueue {
 	/**
 	 * This allows the system to be run faster than real time by the factor set.
 	 * If set to 40 it runs forty times faster than real time. To set to real
-	 * time set this variable to 1.
+	 * time set this variable to 1. Main purpose is testing and demonstrating.
 	 */
-	public static final int TIME_FACTOR = 40;
+	public static final int TIME_FACTOR = 16;
 
 	/**
-	 * Maximum length of Waiting List as described in specifications
+	 * Maximum length of Waiting List as described in specifications - Should
+	 * this need to be increased at a later time the queueing system will still
+	 * function
 	 */
 	public static final int MAX_WAITING_LIST_LENGTH = 10;
 
 	/**
-	 * Number of treatment rooms in Accident and Emergency
+	 * Number of treatment rooms in Accident and Emergency - Should this need to
+	 * be increased at a later time the queueing system will still function
 	 */
 	public static final int NUMBER_OF_TREATMENT_ROOMS = 5;
 
@@ -45,7 +48,8 @@ public class TheQueue {
 	 * To ensure that patients moved from Treatment Room to the Waiting List
 	 * remain in the correct order. It has a default value of zero and is
 	 * decremented each time a patient is moved from a treatment room onto the
-	 * waiting list.
+	 * waiting list. It is only limited by the lowest possible number of the int
+	 * primitive type
 	 */
 	static int newPatNum = 0;
 
@@ -56,7 +60,7 @@ public class TheQueue {
 	public static boolean onCallTeamContacted = false;
 
 	/**
-	 * Boolean to indicate if the On Call Team is on the site an treating
+	 * Boolean to indicate if the On Call Team is on the site and treating
 	 * patients. Default value is false.
 	 */
 	public static boolean onCallInSitu = false;
@@ -70,25 +74,22 @@ public class TheQueue {
 	static boolean firstRun = true;
 
 	/**
-	 * Variable to be passed to sms method to select particular message.
+	 * Variable to be passed to sms class to select particular message.
 	 */
 	static final int SMS_TO_ON_CALL_TEAM = 2;
-	
-	public static String message = "---";
 
 	/**
-	 * LinkedList of patients to represent the Waiting List in the hospital it
-	 * is limited to 10 patients at any given time
+	 * LinkedList of patients to represent the Waiting List in the hospital
 	 */
 	public static LinkedList<Patient> WaitingList = new LinkedList<Patient>();
 
 	/**
 	 * ArrayList of patients to represent the five Treatment Rooms in the
-	 * Accident and Emergency Department at the hospital. There are 5 treatment
-	 * rooms so the ArrayList is allocated an initial size of 5 so that the
-	 * memory space is allocated. It will never change in size
+	 * Accident and Emergency Department at the hospital. The memory space is
+	 * allocated when created
 	 */
-	public static ArrayList<Patient> TreatmentRoom = new ArrayList<Patient>(5);
+	public static ArrayList<Patient> TreatmentRoom = new ArrayList<Patient>(
+			NUMBER_OF_TREATMENT_ROOMS);
 
 	/**
 	 * LinkedList that will hold a patient when they are being treated by the on
@@ -97,25 +98,27 @@ public class TheQueue {
 	public static LinkedList<Patient> OnCallTeam = new LinkedList<Patient>();
 
 	/**
-	 * LinkedList that patients will move into once they have been treated. It
-	 * will be used as an exit point for patient objects from which pertinent
-	 * details will be written back to the database
+	 * LinkedList that patients will move into once they have been treated. In
+	 * future it could be used for both patient records and statistical
+	 * purposes. Used in testing of the Queue, to ensure that through running
+	 * the queue system all patients could be accounted for.
 	 */
 	public static LinkedList<Patient> Treated = new LinkedList<Patient>();
 
 	/**
 	 * LinkedList of patients that are turned away from the Accident and
-	 * Emergency Department. Created for statistical reasons. Also to prove
-	 * everything is working during testing
+	 * Emergency Department. Could be used in future for statistical and
+	 * performance purposes. It was also to prove everything was working during
+	 * testing
 	 */
 	public static LinkedList<Patient> SentElsewhere = new LinkedList<Patient>();
 
-	public static LinkedList<Patient> callNextPatient = new LinkedList<Patient>();
-	
 	/**
-	 * Main Queue class
+	 * Main Queue class - takes a Patient object and places them on the
+	 * appropriate List dependant on Triage Category.
 	 * 
 	 * @param patient
+	 *            object
 	 */
 	public void addToQueue(Patient patient) {
 
@@ -132,9 +135,8 @@ public class TheQueue {
 			firstRun = false;
 		}
 
-		System.out.println("New Patient arrives " + patient);
-		
-		callNextPatient.clear();
+		// Used during testing
+		// System.out.println("New Patient arrives " + patient);
 
 		// If waiting list size is less than the defined size
 		if (WaitingList.size() < MAX_WAITING_LIST_LENGTH) {
@@ -172,12 +174,16 @@ public class TheQueue {
 
 			}
 
+			// If waiting list of full
 		} else if (WaitingList.size() == MAX_WAITING_LIST_LENGTH) {
 
 			// If the On Call team has not be contacted
 			if (!onCallTeamContacted) {
 
-				// Send SMS to the On Call Team on new thread
+				// Send SMS to the On Call Team on new thread - this is done to
+				// ensure that if there is any network delays it does not impact
+				// on the running of the queueing system. Once sent the thread
+				// terminates.
 				Thread sms1 = new Thread(new SendSMS(SMS_TO_ON_CALL_TEAM));
 				sms1.start();
 
@@ -188,19 +194,29 @@ public class TheQueue {
 			if (patient.getTriageNumber() == 1) {
 
 				// If the patient of least priority in the Treatment Rooms does
-				// not have a triage rating of 1; achieved by using a bubble
+				// not have a triage rating of 1; achieved by using a bubble-
 				// sort sorting technique on the treatment room ArrayList to
 				// obtain the element of least priority
 				if (TreatmentRoom.get(bubbleSortTreatmentRoom())
 						.getTriageNumber() != 1) {
 
+					// Used in testing
 					// Message that a patient has been asked to leave
-					System.out.println("New Emergency patient arrives");
-					System.out.println("Patient "
-							+ WaitingList.getLast().getAdmissionNumber()
-							+ " has been asked to go elsewhere.");
+					// System.out.println("New Emergency patient arrives");
+					// System.out.println("Patient "
+					// + WaitingList.getLast().getAdmissionNumber()
+					// + " has been asked to go elsewhere.");
 
-					// Add last patient on waiting list to send elsewhere list
+					// Thread to send a message to the GUI so that the patient
+					// being taken off the queue and sent elsewhere knows to
+					// leave the department
+					Thread else1 = new Thread(new CallPatientMessageGoHome(
+							WaitingList.getLast()));
+					else1.start();
+
+					// Add last patient on waiting list to send elsewhere list -
+					// this was used during testing and may be of use going
+					// forward as a performance / statistical measure
 					SentElsewhere.add(WaitingList.getLast());
 
 					// Remove last patient from the waiting list
@@ -225,24 +241,26 @@ public class TheQueue {
 					// order they joined the waiting list
 					keepPatientsOfSameTriageInOrder();
 
+					// If the lowest priority patient in the Treatment rooms has
+					// a triage rating of 1, ie is an Emergency Patient
 				} else {
 
 					// For testing
-					System.out.println("Emergency Patient sent elsewhere: "
-							+ patient);
+					// System.out.println("Emergency Patient sent elsewhere: "
+					// + patient);
 
 					// Add patient to send elsewhere list
 					SentElsewhere.add(patient);
 
 					// Thread to send email to hospital manager because an
-					// Emergency
-					// patient has been turned away
+					// Emergency patient has been turned away
 					Thread email2 = new Thread(new Email(
 							PATIENT_TURNED_AWAY_EMAIL));
 					email2.start();
 
 				}
 
+				// If On Call Team not treating a patient
 			} else if (!onCallInSitu) {
 
 				// Set On Call boolean to true
@@ -251,10 +269,16 @@ public class TheQueue {
 				// Add patient to On Call LinkedList
 				OnCallTeam.add(0, patient);
 
-				// Call patient
-				System.out.println("The On Call Team will attend to "
-						+ OnCallTeam.get(0).getFirstName() + " "
-						+ OnCallTeam.get(0).getLastName() + " now");
+				// Used for testing - call patient
+				// System.out.println("The On Call Team will attend to "
+				// + OnCallTeam.get(0).getFirstName() + " "
+				// + OnCallTeam.get(0).getLastName() + " now");
+
+				// Thread to send a message to the GUI so that the patient
+				// to be treated by the On Call Team is made aware
+				Thread cOc1 = new Thread(new CallPatientMessageOnCallTeam(
+						OnCallTeam.get(0)));
+				cOc1.start();
 
 				// Set flag in patient that they have been treated by the On
 				// Call Team
@@ -289,7 +313,8 @@ public class TheQueue {
 				// order they joined the waiting list
 				keepPatientsOfSameTriageInOrder();
 
-				// Add last patient to send elsewhere list
+				// Add last patient to send elsewhere list - used for testing
+				// and possible future uses (see previous)
 				SentElsewhere.add(patient);
 
 			}
@@ -297,7 +322,7 @@ public class TheQueue {
 	}
 
 	/**
-	 * Method to fill each treatment room if treatment room contains null
+	 * Method to fill each treatment room if treatment room is empty.
 	 */
 	public synchronized void fillTreatmentRoom() {
 
@@ -307,23 +332,21 @@ public class TheQueue {
 		// For loop to iterate through each of the treatment rooms
 		for (int loop = 0; loop < NUMBER_OF_TREATMENT_ROOMS; loop++) {
 
-			// If treatment is set to null, in otherwords the room is empty, and
-			// the waiting list is not empty, that is patients have been through
-			// triage
+			// If treatment is set empty and there is one or more patients on
+			// the Waiting list
 			if (TreatmentRoom.get(loop) == null && !WaitingList.isEmpty()) {
 
-				// Remove element the null element from the Treatment Room
+				// Remove null element from the Treatment Room
 				TreatmentRoom.remove(loop);
 
 				// Copy first patient in Waiting List into the temporary
 				// ArrayList
 				temp.add(WaitingList.get(0));
 
-				// Reset this boolean as patient is no longer on the Waiting
-				// List
+				// Reset this boolean as patient is no longer waiting
 				temp.get(0).setWaitingMoreThan30(false);
 
-				// This is so that patient who have already been on the waiting
+				// This is so that patients who have already been on the waiting
 				// list do not get their waiting end time changed upon re-entry
 				// to the waiting list
 				if (temp.get(0).getAdmissionNumber() > 0) {
@@ -332,7 +355,7 @@ public class TheQueue {
 					Instant endWait = Instant.now();
 
 					// Set end waiting time for patient using new instance of
-					// date
+					// time
 					temp.get(0).setEndTimeWait(endWait.toEpochMilli());
 				}
 
@@ -343,26 +366,27 @@ public class TheQueue {
 				// treatment room as defined by the loop iteration
 				TreatmentRoom.add(loop, temp.get(0));
 
-				// Calling patient to treatment room
-				
-				message = "Can "
-						+ TreatmentRoom.get(loop).getFirstName() + " "
-						+ TreatmentRoom.get(loop).getLastName()
-						+ " go to Treatment Room " + (loop + 1) + "";
-				System.out.println("Can "
-						+ TreatmentRoom.get(loop).getFirstName() + " "
-						+ TreatmentRoom.get(loop).getLastName()
-						+ " go to Treatment Room " + (loop + 1) + "");
-				
+				// Calling patient to treatment room - Testing purposes
+				// System.out.println("Can "
+				// + TreatmentRoom.get(loop).getFirstName() + " "
+				// + TreatmentRoom.get(loop).getLastName()
+				// + " go to Treatment Room " + (loop + 1) + "");
 
 				// Assign set the Treatment Room array element in the patient
 				// object,this is required when bubblesorting the treatment room
 				// to find the patient of lowest priority
 				TreatmentRoom.get(loop).setTreatmentRoomArrayElement(loop);
-				TreatmentRoom.get(loop).setActualTreatmentRoom(loop+1);
 
-				callNextPatient.add(TreatmentRoom.get(loop));
-				
+				// Assign the actual treatment room number of the patient - used
+				// for display purposes in JavaFX
+				TreatmentRoom.get(loop).setActualTreatmentRoom(loop + 1);
+
+				// Thread to send a message to the GUI so that the patient knows
+				// which treatment room to go to
+				Thread cM1 = new Thread(new CallPatientMessageTreatmentRoom(
+						TreatmentRoom.get(loop), loop));
+				cM1.start();
+
 				// Get a new instance of time
 				Instant startTreat = Instant.now();
 
@@ -454,12 +478,12 @@ public class TheQueue {
 
 	/**
 	 * Method to bubblesort a copy of the treatment room in order to obtain the
-	 * room number of the patient with the lowest priority, that is the patient
-	 * with the highest triage number and in the case of two patients with this
-	 * triage number the patient who has been in the treatment room for the
-	 * shortest period. The treatment room list itself is not bubblesorted as
-	 * that would destroy the order of the list and 'move' patients around the
-	 * different treatment rooms
+	 * array element of the patient with the lowest priority, that is the
+	 * patient with the highest triage number and in the case of two patients
+	 * with this triage number the patient who has been in the treatment room
+	 * for the shortest period. The treatment room list itself is not
+	 * bubblesorted as that would destroy the order of the list and 'move'
+	 * patients around the different treatment rooms
 	 * 
 	 * @return an <code>int</code> which is the element number of the treatment
 	 *         room ArrayList which contains the patient of the lowest priority
@@ -485,7 +509,7 @@ public class TheQueue {
 
 		// For loop to iterate through each of the treatment rooms - because you
 		// are comparing elements you need it to loop one less time than normal,
-		// otherwise the last compare throws and IndexOutOfBounds exception
+		// otherwise the last compare throws an IndexOutOfBounds exception
 		for (int loop = 0; loop < NUMBER_OF_TREATMENT_ROOMS - 1; loop++) {
 
 			// If triage number of elements 0 and 1 are the same
@@ -499,8 +523,10 @@ public class TheQueue {
 					Collections.swap(tempList, loop, loop + 1);
 
 					// This will ensure that if two patients have negative
-					// admission
-					// numbers they will be ordered correctly
+					// admission numbers (that is a patient has been taken out
+					// of the treatment room they are reassigned a new negative
+					// admission number for testing purposes) they will be
+					// ordered correctly
 					if (tempList.get(loop).getAdmissionNumber() < 0
 							&& tempList.get(loop + 1).getAdmissionNumber() < 0) {
 						Collections.swap(tempList, loop, loop + 1);
@@ -509,8 +535,8 @@ public class TheQueue {
 			}
 		}
 
-		// The index of the last element of the list is the size of the list
-		// minus 1
+		// The index of the last element of the ArrayList is the size of the
+		// list  minus 1
 		int lastIndex = NUMBER_OF_TREATMENT_ROOMS - 1;
 
 		// Get treatment room number of last element
@@ -599,34 +625,39 @@ public class TheQueue {
 
 				if (loop == index) {
 
-					// Add patient to treatment room 1
+					// Add patient to treatment room
 					TreatmentRoom.add(index, tempListFromWaiting.get(0));
 
-					// Call patient
-					System.out.println("Can "
-							+ TreatmentRoom.get(index).getFirstName() + " "
-							+ TreatmentRoom.get(index).getLastName()
-							+ " go to Treatment Room " + (index + 1) + "");
+					// Call patient - used for testing purposes
+					// System.out.println("Can "
+					//		+ TreatmentRoom.get(index).getFirstName() + " "
+					//		+ TreatmentRoom.get(index).getLastName()
+					//		+ " go to Treatment Room " + (index + 1) + "");
 
 					// Set Treatment Room Array Element in patient
 					TreatmentRoom.get(index)
 							.setTreatmentRoomArrayElement(index);
 
 					// Set actual treatment room
-					TreatmentRoom.get(index).setActualTreatmentRoom(index+1);
-					
-				}
+					TreatmentRoom.get(index).setActualTreatmentRoom(index + 1);
 
+					// Thread to send a message to the GUI so that the patient
+					// is made aware which treatment room to attend
+					Thread cM1 = new Thread(
+							new CallPatientMessageTreatmentRoom(
+									TreatmentRoom.get(index), index));
+					cM1.start();
+
+				}
 			}
 
 			// for testing purposes
-			System.out.println("Swapping patients");
+			// System.out.println("Swapping patients");
 
 			// Reset treatment room of patient removed from treatment room to
-			// the default value
+			// the default value of -1
 			tempListFromTreatment.get(0).setTreatmentRoomArrayElement(-1);
 			tempListFromTreatment.get(0).setActualTreatmentRoom(-1);
-			
 
 			// Copy patient from temporary ArrayList to first element of waiting
 			// list; this is a LinkedList and all the other elements will
@@ -664,9 +695,15 @@ public class TheQueue {
 			OnCallTeam.add(0, tempListFromTreatment.get(0));
 
 			// Call patient
-			System.out.println("The On Call Team will attend to "
-					+ OnCallTeam.get(0).getFirstName() + " "
-					+ OnCallTeam.get(0).getLastName() + " now");
+			// System.out.println("The On Call Team will attend to "
+			//		+ OnCallTeam.get(0).getFirstName() + " "
+			//		+ OnCallTeam.get(0).getLastName() + " now");
+
+			// Thread to send a message to the GUI so that the patient
+			// to be treated by the On Call Team is made aware
+			Thread cOc2 = new Thread(new CallPatientMessageOnCallTeam(
+					OnCallTeam.get(0)));
+			cOc2.start();
 
 			// Set boolean for patient records
 			OnCallTeam.get(0).isTreatedByOnCallTeam();
@@ -682,7 +719,6 @@ public class TheQueue {
 			OnCallTeam.get(0).setStartTimeTreat(onCallStart.toEpochMilli());
 
 		}
-
 	}
 
 	/**
@@ -757,8 +793,7 @@ public class TheQueue {
 			while (Patient.hasNext()) {
 
 				// If patient has been previously moved from the treatment room,
-				// or
-				// has been waiting for more than 25 without treatment.
+				// or has been waiting for more than 25 without treatment.
 				if (Patient.next().isPriorityPatient()) {
 
 					// Add patient to to 'priority' ArrayList
