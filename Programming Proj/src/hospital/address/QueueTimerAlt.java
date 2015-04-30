@@ -20,8 +20,9 @@ import hospital.address.jdbc.QueueAccessClearDischargeNotes;
 
 /**
  * The class which allows several methods such as printing lists, checking
- * treatment times etc to be carried out at one minute intervals. Stops when
- * there are no more patients to treat.
+ * treatment times etc to be carried out at one minute intervals. The list
+ * printing facility is for testing purposes as the lists are displayed
+ * graphically using a JavaFX GUI
  * 
  * @author Kieron
  *
@@ -39,9 +40,12 @@ public class QueueTimerAlt implements Runnable {
 	static final int SMS_TO_HOSP_MANAGER = 1;
 
 	/**
-	 * ArrayList to hold a temporary copy of Treatment Room list.
+	 * ArrayList to hold a temporary copy of Treatment Room list. Set to same
+	 * size as is equal to the number of treatment rooms for memory allocation
+	 * reasons
 	 */
-	static ArrayList<Patient> treatmentCopy = new ArrayList<Patient>(5);
+	static ArrayList<Patient> treatmentCopy = new ArrayList<Patient>(
+			TheQueue.NUMBER_OF_TREATMENT_ROOMS);
 
 	/**
 	 * LinkedList to hold a temporary copy of Waiting list.
@@ -53,8 +57,11 @@ public class QueueTimerAlt implements Runnable {
 	 * display purposes in JavaFX
 	 */
 	public static LinkedList<Patient> forDisplay = new LinkedList<Patient>();
-	
-	
+
+	/**
+	 * LinkedList to hold a status object which stores the status code for
+	 * Accident and Emergency, use for display purposes by Java FX
+	 */
 	public static LinkedList<Status> statusCodeList = new LinkedList<Status>();
 
 	/**
@@ -125,7 +132,7 @@ public class QueueTimerAlt implements Runnable {
 		// While alive
 		while (Starter.isAlive) {
 
-			printTime();
+			// printTime(); was used for testing purposes
 			checkTreatmentRooms();
 			checkOnCallTeam();
 			setWaitingTimes();
@@ -141,7 +148,7 @@ public class QueueTimerAlt implements Runnable {
 			MainApp.copyFxWaitingListAgain();
 			MainApp.copyFxOnCallListAgain();
 			MainApp.copyFxStatusAgain();
-			printLists();
+			// printLists(); was used for testing purposes
 			orderPatients();
 
 			// Pause loop for 1 minute
@@ -158,8 +165,8 @@ public class QueueTimerAlt implements Runnable {
 	}
 
 	/**
-	 * Method to remove null values from the treatmentroom arraylist and to a
-	 * linkedlist for display purposes
+	 * Method to remove null values from the treatment room ArrayList and add to
+	 * a linkedlist for display purposes
 	 */
 	public void makeForDisplay() {
 
@@ -211,7 +218,7 @@ public class QueueTimerAlt implements Runnable {
 		long treatmentTime = 0L;
 
 		// Declare and initialise extraTime variable
-		long extraTime = 0;
+		long extraTime = 0L;
 
 		// Declare and initialise NHS number variable
 		int NHSNumber = 0;
@@ -238,15 +245,14 @@ public class QueueTimerAlt implements Runnable {
 			NHSNumber = TheQueue.TreatmentRoom.get(loop).getNhsNumber();
 
 			// Timestamp patients database record - run on separate thread
-			// in
-			// case network traffic slows down queue timer execution - will
+			// in case network traffic slows down queue timer execution - will
 			// overwrite any previous entry
 			Thread tR1 = new Thread(new QueueAccessAddDischargeTime(NHSNumber));
 			tR1.start();
 
-			// Clear Notes if doctor has not made any new notes - ie clear
-			// notes
-			// from previous visit
+			// Clear Notes if doctor has not made any new notes - i.e. clear
+			// notes from previous visit - run on a separate thread in case
+			// network traffic would caue a delay in queue timer operation
 			if (!TheQueue.TreatmentRoom.get(loop).isMadeNewNote()) {
 				Thread tR1NotesClear = new Thread(
 						new QueueAccessClearDischargeNotes(NHSNumber));
@@ -256,9 +262,10 @@ public class QueueTimerAlt implements Runnable {
 			// Add patient to the Treated LinkedList
 			TheQueue.Treated.add(TheQueue.TreatmentRoom.get(loop));
 
+			// Used for testing purposes
 			// Let everyone know the room is now empty
-			System.out.println("Treatment Room " + (loop + 1)
-					+ " ready for next patient");
+			// System.out.println("Treatment Room " + (loop + 1)
+			// + " ready for next patient");
 
 			// Remove patient from the Treatment Room ArrayList
 			TheQueue.TreatmentRoom.remove(loop);
@@ -318,8 +325,8 @@ public class QueueTimerAlt implements Runnable {
 		// If treatmentTime is greater than the allowed time
 		if (treatmentTime > ON_CALL_TREATMENT_TIME) {
 
-			// Let everyone one the On Call team has finished
-			System.out.println("On Call Team finished treating patient.");
+			// Let everyone one the On Call team has finished - testing
+			// System.out.println("On Call Team finished treating patient.");
 
 			// Set the patients end treatment time
 			TheQueue.OnCallTeam.get(0).setEndTimeTreat(currentTime);
@@ -380,8 +387,8 @@ public class QueueTimerAlt implements Runnable {
 	/**
 	 * Method which prints the patients from all lists held within the queue,
 	 * that is the Treatment Rooms, Waiting List, On Call Team, Treated Patients
-	 * and Turned Away Patients. In the final application the later two will no
-	 * longer be required.
+	 * and Turned Away Patients. In the final application this method will be
+	 * redundant. Used for testing purposes
 	 */
 	public void printTime() {
 
@@ -409,17 +416,20 @@ public class QueueTimerAlt implements Runnable {
 		// - this is done as it reduces the likelihood of
 		// ConCurrentModificationException errors which can occur if a
 		// list is being Iterated at the same time as its contents are
-		// being sorted/reordered. It just does not like it!
+		// being sorted/reordered.
 		treatmentCopy.addAll(TheQueue.TreatmentRoom);
 		waitingCopy.addAll(TheQueue.WaitingList);
 		onCallCopy.addAll(TheQueue.OnCallTeam);
+
+		// These used for testing purposes
 		// treatedCopy.addAll(TheQueue.Treated);
 		// turnedAwayCopy.addAll(TheQueue.SentElsewhere);
 
 	}
 
 	/**
-	 * Method to print out the content of the lists
+	 * Method to print out the content of the lists - this is not used in the
+	 * final application and is here for testing/debugging purposes
 	 */
 	public void printLists() {
 
@@ -441,6 +451,7 @@ public class QueueTimerAlt implements Runnable {
 		// Call method which uses iterator to print list contents
 		printOnCall();
 
+		// Below wee used during testing
 		// System.out.println("Treated Patients");
 		// System.out.println("================");
 
@@ -456,21 +467,18 @@ public class QueueTimerAlt implements Runnable {
 	}
 
 	/**
-	 * Method to print out the status code of the Accident and Emergency
-	 * department
+	 * Method to add status code to linked list which is displayed in GUI of the
+	 * Accident and Emergency department
 	 */
 	public static void getStatusCode() {
 
-		// Call the status method which determines the status code based
-		// on queue length and average waiting times
-		System.out.println("STATUS CODE: " + status());
-	
-		Status status;
-		statusCodeList.add(new Status(status()));
-		
-		System.out
-				.println("-----------------------------------------------------------------");
+		// used for testing
+		// System.out.println("STATUS CODE: " + status());
 
+		// Call the status method which determines the status code based
+		// on queue length and average waiting times and create new Status
+		// object
+		statusCodeList.add(new Status(status()));
 	}
 
 	/**
@@ -526,7 +534,7 @@ public class QueueTimerAlt implements Runnable {
 			}
 
 			// For testing purposes
-			//System.out.println("Average wait time is " + averageWaitTime);
+			// System.out.println("Average wait time is " + averageWaitTime);
 
 			// Follow business rules to set aNEStatus
 			if (averageWaitTime > 9 && averageWaitTime < 20) {
@@ -563,7 +571,6 @@ public class QueueTimerAlt implements Runnable {
 			// Thread to send email to hospital manager
 			Thread email1 = new Thread(new Email(WAITING_TIME_EXCEEDED_EMAIL));
 			email1.start();
-
 		}
 	}
 
@@ -637,7 +644,7 @@ public class QueueTimerAlt implements Runnable {
 
 	/**
 	 * Method which uses the iterator to iterate through a copy of the
-	 * TreatmentRoom ArrayList.
+	 * TreatmentRoom ArrayList. - testing purposes
 	 */
 	public static void printTreatment() {
 		Iterator<Patient> Patient = treatmentCopy.iterator();
@@ -648,7 +655,7 @@ public class QueueTimerAlt implements Runnable {
 
 	/**
 	 * Method which uses the iterator to iterate through a copy of the
-	 * WaitingList LinkedList.
+	 * WaitingList LinkedList. - testing purposes
 	 */
 	public static void printWaiting() {
 		Iterator<Patient> Patient = waitingCopy.iterator();
@@ -659,7 +666,7 @@ public class QueueTimerAlt implements Runnable {
 
 	/**
 	 * Method which uses the iterator to iterate through a copy of the
-	 * OnCallTeam LinkedList.
+	 * OnCallTeam LinkedList. - testing purposes
 	 */
 	public static void printOnCall() {
 		Iterator<Patient> Patient = onCallCopy.iterator();
@@ -670,7 +677,7 @@ public class QueueTimerAlt implements Runnable {
 
 	/**
 	 * Method which uses the iterator to iterate through a copy of the Treated
-	 * LinkedList.
+	 * LinkedList. - testing purposes
 	 */
 	public static void printTreated() {
 		Iterator<Patient> Patient = treatedCopy.iterator();
