@@ -1,4 +1,3 @@
-
 package hospital.address.model;
 
 /**
@@ -60,12 +59,12 @@ public abstract class Person {
 	 * Instance var to store the postcode. Expected Format. e.g - AA1 1AA
 	 */
 	private String postcode;
-	
+
 	/**
 	 * Contact telephone number fror the patient
 	 */
 	private long contactNumber;
-	
+
 	/**
 	 * Constant for the minimum value of the mobile number
 	 */
@@ -75,7 +74,6 @@ public abstract class Person {
 	 * Constant for the maximum value of the mobile number
 	 */
 	static final long MOBILE_NUMBER_MAX_LENGTH = 999999999999L;
-
 
 	/**
 	 * Default Constructor
@@ -98,13 +96,14 @@ public abstract class Person {
 	 * @param city
 	 * @param postcode
 	 * @param contactNumber
-	 * @throws Exception 
+	 * @throws Exception
 	 * @throws IllegalArgumentException
 	 */
 	public Person(String title, String firstName, String middleName,
 			String lastName, String dateOfBirth, String addressLineOne,
 			String addressLineTwo, String addressLineThree, String city,
-			String postcode, long contactNumber) throws IllegalArgumentException,Exception  {
+			String postcode, long contactNumber)
+			throws IllegalArgumentException, Exception {
 
 		setTitle(title);
 		setFirstName(firstName);
@@ -129,20 +128,22 @@ public abstract class Person {
 	}
 
 	/**
-	 * Set method for title
+	 * Set method for title. Title must be one of: Mr, Mrs, Miss, Ms, Dr, Rev,
+	 * Prof or Sir
 	 * 
 	 * @param title
 	 */
 	public void setTitle(String title) throws Exception {
-		if (title.equals("Mr") || title.equals("Mrs") || title.equals("Miss") || title.equals("Ms")
-				|| title.equals("Dr") || title.equals("Rev") || title.equals("Prof")
+		if (title.equals("Mr") || title.equals("Mrs") || title.equals("Miss")
+				|| title.equals("Ms") || title.equals("Dr")
+				|| title.equals("Rev") || title.equals("Prof")
 				|| title.equals("Sir")) {
 			this.title = title;
 		} else {
 			throw new Exception("Title is invalid.");
 		}
 	}
-	
+
 	/**
 	 * Get method for firstName
 	 * 
@@ -154,7 +155,7 @@ public abstract class Person {
 	}
 
 	/**
-	 * Set method for firstName
+	 * Set method for firstName - cannot be null
 	 * 
 	 * @param firstName
 	 */
@@ -196,7 +197,7 @@ public abstract class Person {
 	}
 
 	/**
-	 * Set method for lastName
+	 * Set method for lastName - cannot be null
 	 * 
 	 * @param lastName
 	 */
@@ -218,7 +219,7 @@ public abstract class Person {
 	}
 
 	/**
-	 * Set method for dateOfBirth
+	 * Set method for dateOfBirth - cannot be null
 	 * 
 	 * @param dateOfBirth
 	 */
@@ -240,7 +241,7 @@ public abstract class Person {
 	}
 
 	/**
-	 * Set method for addressLineOne
+	 * Set method for addressLineOne - cannot be null
 	 * 
 	 * @param addressLineOne
 	 */
@@ -298,7 +299,7 @@ public abstract class Person {
 	}
 
 	/**
-	 * Set method for city
+	 * Set method for city - cannot be null
 	 * 
 	 * @param city
 	 */
@@ -319,7 +320,7 @@ public abstract class Person {
 	}
 
 	/**
-	 * Set method for postcode
+	 * Set method for postcode - cannot be null
 	 * 
 	 * @param postcode
 	 */
