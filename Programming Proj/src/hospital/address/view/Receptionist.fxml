@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -7,6 +9,24 @@
 
 <AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.ReceptionistController">
    <children>
-      <Button fx:id="Button" layoutX="411.0" layoutY="168.0" mnemonicParsing="false" onAction="#initialize" text="Search For Patient" />
+      <Button fx:id="Button" layoutX="375.0" layoutY="190.0" mnemonicParsing="false" onAction="#initialize" prefHeight="84.0" prefWidth="161.0" text="Search For Patient">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font></Button>
+      <Text layoutX="53.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome">
+         <font>
+            <Font name="Comic Sans MS" size="38.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="260.0" fitWidth="222.0" layoutX="220.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../receptionist.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="69.0" layoutY="190.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="129.0" text="Logout">
+         <font>
+            <Font name="Comic Sans MS" size="23.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

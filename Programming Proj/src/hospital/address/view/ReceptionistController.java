@@ -4,6 +4,7 @@ import hospital.address.MainApp;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class ReceptionistController {
 
@@ -13,7 +14,11 @@ public class ReceptionistController {
 	private javafx.scene.control.Button Button;
 	
 	@FXML
+	private Label name;
+	
+	@FXML
 	private void initialize() {
+		
 		Button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override

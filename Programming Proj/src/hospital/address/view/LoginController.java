@@ -36,6 +36,9 @@ public class LoginController {
 
 	@FXML
 	private Label message;
+	
+	@FXML
+	private Label wrong;
 
 	@FXML
 	private Button loginButton;
@@ -51,6 +54,8 @@ public class LoginController {
 
 	@FXML
 	private void initialize() {
+		
+		wrong.setText(" ");
 		// Initialize the person table with the two columns.
 		username.setOnKeyReleased(new EventHandler<Event>() {
 
@@ -75,6 +80,8 @@ public class LoginController {
 			@SuppressWarnings("unused")
 			@Override
 			public void handle(ActionEvent arg0) {
+				
+				receptionists.clear();
 
 				HospitalManager hM = new HospitalManager();
 
@@ -114,11 +121,12 @@ public class LoginController {
 							staffType = "Nurse";
 							mainApp.showNurse();
 						}
-					}
-				}
+					}else {
+						wrong.setText("Username/Password incorrect");
+				} 
 
 			}
-
+			}
 		});
 
 	}

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -7,12 +10,30 @@
 
 <AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.ReceptonistSearchController">
    <children>
-      <Label layoutX="106.0" layoutY="114.0" text="First Nane : " />
-      <Label layoutX="106.0" layoutY="161.0" text="Last Name : " />
-      <TextField fx:id="FNameInput" layoutX="179.0" layoutY="110.0" onAction="#initialize" />
-      <TextField fx:id="LNameInput" layoutX="179.0" layoutY="157.0" onAction="#initialize" />
-      <TextField fx:id="DOBInput" layoutX="179.0" layoutY="202.0" onAction="#initialize" />
-      <Label layoutX="125.0" layoutY="206.0" text="DOB : " />
-      <Button fx:id="Search" layoutX="274.0" layoutY="241.0" mnemonicParsing="false" onAction="#initialize" text="Search" />
+      <Label layoutX="51.0" layoutY="87.0" prefHeight="49.0" prefWidth="111.0" text="First Name : " />
+      <Label layoutX="51.0" layoutY="133.0" prefHeight="49.0" prefWidth="88.0" text="Last Name : " />
+      <TextField fx:id="FNameInput" layoutX="139.0" layoutY="99.0" onAction="#initialize" />
+      <TextField fx:id="LNameInput" layoutX="139.0" layoutY="145.0" onAction="#initialize" />
+      <TextField fx:id="DOBInput" layoutX="139.0" layoutY="190.0" onAction="#initialize" promptText="YYYY-MM-DD" />
+      <Label layoutX="51.0" layoutY="178.0" prefHeight="49.0" prefWidth="70.0" text="DOB : " />
+      <Button fx:id="Search" layoutX="475.0" layoutY="253.0" mnemonicParsing="false" onAction="#initialize" prefHeight="52.0" prefWidth="111.0" text="Search">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+      <Text fontSmoothingType="LCD" layoutX="153.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Search" wrappingWidth="270.13671875">
+         <font>
+            <Font name="Gill Sans MT" size="45.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="355.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Search-Magnifying-Glass.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="Cancel" layoutX="14.0" layoutY="253.0" mnemonicParsing="false" onAction="#initialize" prefHeight="52.0" prefWidth="111.0" text="Cancel">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

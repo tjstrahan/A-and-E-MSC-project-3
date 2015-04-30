@@ -3,6 +3,7 @@ package hospital.address.view;
 import java.io.IOException;
 
 import hospital.address.MainApp;
+import hospital.address.jdbc.ReceptionistAccess;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -44,6 +45,15 @@ public class PatientViewController {
 
 	@FXML
 	private Button Edit;
+
+	@FXML
+	private Button Admit;
+
+	@FXML
+	private Button Cancel;
+
+	@FXML
+	private Button Logout;
 
 	private String AddressLineOneNew;
 
@@ -95,30 +105,118 @@ public class PatientViewController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				
+
 				Platform.runLater(new Runnable() {
-					  @Override public void run() {
-						  try {
-								// Load person overview.
-								FXMLLoader loader = new FXMLLoader();
-								loader.setLocation(MainApp.class
-										.getResource("view/EditPatient.fxml"));
-								AnchorPane edit = loader.load();
+					@Override
+					public void run() {
+						try {
+							// Load person overview.
+							FXMLLoader loader = new FXMLLoader();
+							loader.setLocation(MainApp.class
+									.getResource("view/EditPatient.fxml"));
+							AnchorPane edit = loader.load();
 
-								// Set person overview into the center of root layout.
-								MainApp.rootLayout.setCenter(edit);
+							// Set person overview into the center of root
+							// layout.
+							MainApp.rootLayout.setCenter(edit);
 
-								// Give the controller access to the main app.
-								ReceptionistController controller = loader.getController();
-								controller.setMainApp(mainApp);
+							// Give the controller access to the main app.
+							ReceptionistController controller = loader
+									.getController();
+							controller.setMainApp(mainApp);
 
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-					  }
-					});
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
+
+		Admit.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				int NHS;
+				NHS = ReceptonistSearchController.PatientSearched.get(0)
+						.getNhsNumber();
+
+				ReceptionistAccess reca = new ReceptionistAccess();
+				try {
+					reca.admitPatient(NHS);
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		});
+
+		Cancel.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							// Load person overview.
+							FXMLLoader loader = new FXMLLoader();
+							loader.setLocation(MainApp.class
+									.getResource("view/Receptionist.fxml"));
+							AnchorPane edit = loader.load();
+
+							// Set person overview into the center of root
+							// layout.
+							MainApp.rootLayout.setCenter(edit);
+
+							// Give the controller access to the main app.
+							ReceptionistController controller = loader
+									.getController();
+							controller.setMainApp(mainApp);
+
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+
+		Logout.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							// Load person overview.
+							FXMLLoader loader = new FXMLLoader();
+							loader.setLocation(MainApp.class
+									.getResource("view/Login.fxml"));
+							AnchorPane edit = loader.load();
+
+							// Set person overview into the center of root
+							// layout.
+							MainApp.rootLayout.setCenter(edit);
+
+							// Give the controller access to the main app.
+							ReceptionistController controller = loader
+									.getController();
+							controller.setMainApp(mainApp);
+
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+
 	}
 
 	/**

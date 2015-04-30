@@ -45,6 +45,9 @@ public class ReceptonistSearchController {
 	@FXML
 	private Button Search;
 	
+	@FXML
+	private Button Cancel;
+	
 	@SuppressWarnings("unused")
 	private MainApp mainApp;
 	
@@ -126,6 +129,37 @@ public class ReceptonistSearchController {
 							}
 					  }
 					});
+			}
+		});
+		
+		Cancel.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							// Load person overview.
+							FXMLLoader loader = new FXMLLoader();
+							loader.setLocation(MainApp.class
+									.getResource("view/Receptionist.fxml"));
+							AnchorPane edit = loader.load();
+
+							// Set person overview into the center of root
+							// layout.
+							MainApp.rootLayout.setCenter(edit);
+
+							// Give the controller access to the main app.
+							ReceptionistController controller = loader
+									.getController();
+							controller.setMainApp(mainApp);
+
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 	}
