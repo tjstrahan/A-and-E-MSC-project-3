@@ -1,9 +1,11 @@
 package hospital.address.view;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 import hospital.address.MainApp;
 import hospital.address.jdbc.ReceptionistAccess;
+import hospital.address.model.Patient;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -79,6 +81,8 @@ public class PatientViewController {
 
 	@SuppressWarnings("unused")
 	private MainApp mainApp;
+	
+	public static LinkedList <Patient> Admittedpatients = new LinkedList<Patient>();
 
 	@FXML
 	public void initialize() {
@@ -137,20 +141,14 @@ public class PatientViewController {
 
 			@Override
 			public void handle(ActionEvent event) {
+				Admittedpatients.clear();
+				System.out.println(Admittedpatients);
 				int NHS;
 				NHS = ReceptonistSearchController.PatientSearched.get(0)
 						.getNhsNumber();
 
-				ReceptionistAccess reca = new ReceptionistAccess();
-				try {
-					reca.admitPatient(NHS);
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				Admittedpatients.addAll(ReceptonistSearchController.PatientSearched);
+				System.out.println(Admittedpatients);
 			}
 
 		});
