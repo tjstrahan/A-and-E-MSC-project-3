@@ -68,7 +68,7 @@ public class Starter implements Runnable{
 		try{
 			
 		//hM.populateMedicalTeam();
-		hM.setOnCallTeam();
+		hM.setOnCallTeam(2);
 
 		
 		// Set boolean to true
