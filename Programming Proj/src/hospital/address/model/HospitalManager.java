@@ -5,25 +5,11 @@ package hospital.address.model;
 
 import hospital.address.jdbc.HospitalManagerAccess;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Properties;
 import java.util.Scanner;
-
-import javax.mail.Address;
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
-import javax.mail.Part;
-import javax.mail.Session;
-import javax.mail.Store;
-
 /**
  * Class to simulate what a hospital manager can do in the system
  *
