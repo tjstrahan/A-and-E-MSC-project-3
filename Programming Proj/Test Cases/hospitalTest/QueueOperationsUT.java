@@ -27,11 +27,11 @@ public class QueueOperationsUT {
 		triageEmergency = 1;
 		triageInvalidHigh = 5;
 		triageInvalidLow = 0;
-		
+
 		TRoom1 = 1;
 		TRoom2 = 2;
 		TRoom3 = 3;
-		TRoom4 = 4; 
+		TRoom4 = 4;
 		TRoom5 = 5;
 		TRoomHigh = TheQueue.NUMBER_OF_TREATMENT_ROOMS + 1;
 		TRoomInvalid = 0;
@@ -41,178 +41,20 @@ public class QueueOperationsUT {
 
 		testPatients.add(new Patient("Mr", "FirstName1", "MiddleName1",
 				"LastName1", "01012001", "1 Test House", "Area", "Town",
-				"City", "BT1 1BT", 100000000000L, 111111111, "Allergy", "Condition", "O-",
-				"M", "Mother", "Dr Doctor", "E0999", ""));
+				"City", "BT1 1BT", 100000000000L, 111111111, "Allergy",
+				"Condition", "O-", "M", "Mother", "Dr Doctor", "E0999", ""));
 		testPatients.add(new Patient("Mr", "FirstName2", "MiddleName2",
 				"LastName2", "01012001", "1 Test House", "Area", "Town",
-				"City", "BT1 1BT", 100000000000L, 222222222, "Allergy", "Condition", "O-",
-				"M", "Mother", "Dr Doctor", "E0999", ""));
+				"City", "BT1 1BT", 100000000000L, 222222222, "Allergy",
+				"Condition", "O-", "M", "Mother", "Dr Doctor", "E0999", ""));
 		testPatients.add(new Patient("Mr", "FirstName3", "MiddleName3",
 				"LastName3", "01012001", "1 Test House", "Area", "Town",
-				"City", "BT1 1BT", 100000000000L, 333333333, "Allergy", "Condition", "O-",
-				"M", "Mother", "Dr Doctor", "E0999", ""));
+				"City", "BT1 1BT", 100000000000L, 333333333, "Allergy",
+				"Condition", "O-", "M", "Mother", "Dr Doctor", "E0999", ""));
 		testPatients.add(new Patient("Mr", "FirstName4", "MiddleName4",
 				"LastName4", "01012001", "1 Test House", "Area", "Town",
-				"City", "BT1 1BT", 100000000000L, 444444444, "Allergy", "Condition", "O-",
-				"M", "Mother", "Dr Doctor", "E0999", ""));
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 1 where extra time is set
-	 */
-	@Test
-	public void testExtraTreatmentTimeValidTreatRoom1() {
-		QueueOperations.extraTreatmentTime(true, TRoom1);
-		assertEquals(extraTime, QueueOperations.extraTime1);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 1 where NO extra time is set
-	 */
-	@Test
-	public void testExtraTreatmentTimeNoExtraTimeTreatRoom1() {
-		QueueOperations.treatmentRoom1extended = false;
-		QueueOperations.extraTreatmentTime(false, TRoom1);
-		assertEquals(noExtraTime, QueueOperations.extraTime1);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 1 where extra time is set
-	 */
-	@Test (expected = IllegalArgumentException.class)
-	public void testExtraTreatmentTimeTreatRoom1Prev() {
-		QueueOperations.treatmentRoom1extended = true;
-		QueueOperations.extraTreatmentTime(true, TRoom1);
-	}
-	
-	/**
-	 * Test extra time method for Treatment Room 2 where extra time is set
-	 */
-	@Test
-	public void testExtraTreatmentTimeValidTreatRoom2() {
-		QueueOperations.extraTreatmentTime(true, TRoom2);
-		assertEquals(extraTime, QueueOperations.extraTime2);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 2 where NO extra time is set
-	 */
-	@Test
-	public void testExtraTreatmentTimeNoExtraTimeTreatRoom2() {
-		QueueOperations.treatmentRoom2extended = false;
-		QueueOperations.extraTreatmentTime(false, TRoom2);
-		assertEquals(noExtraTime, QueueOperations.extraTime2);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 2 where extra time is set
-	 */
-	@Test (expected = IllegalArgumentException.class)
-	public void testExtraTreatmentTimeTreatRoom2Prev() {
-		QueueOperations.treatmentRoom2extended = true;
-		QueueOperations.extraTreatmentTime(true, TRoom2);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 3 where extra time is set
-	 */
-	@Test
-	public void testExtraTreatmentTimeValidTreatRoom3() {
-		QueueOperations.extraTreatmentTime(true, TRoom3);
-		assertEquals(extraTime, QueueOperations.extraTime3);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 3 where NO extra time is set
-	 */
-	@Test
-	public void testExtraTreatmentTimeNoExtraTimeTreatRoom3() {
-		QueueOperations.treatmentRoom3extended = false;
-		QueueOperations.extraTreatmentTime(false, TRoom3);
-		assertEquals(noExtraTime, QueueOperations.extraTime3);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 3 where extra time is set
-	 */
-	@Test (expected = IllegalArgumentException.class)
-	public void testExtraTreatmentTimeTreatRoom3Prev() {
-		QueueOperations.treatmentRoom3extended = true;
-		QueueOperations.extraTreatmentTime(true, TRoom3);
-	}
-	
-	/**
-	 * Test extra time method for Treatment Room 4 where extra time is set
-	 */
-	@Test
-	public void testExtraTreatmentTimeValidTreatRoom4() {
-		QueueOperations.extraTreatmentTime(true, TRoom4);
-		assertEquals(extraTime, QueueOperations.extraTime4);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 4 where NO extra time is set
-	 */
-	@Test
-	public void testExtraTreatmentTimeNoExtraTimeTreatRoom4() {
-		QueueOperations.treatmentRoom4extended = false;
-		QueueOperations.extraTreatmentTime(false, TRoom4);
-		assertEquals(noExtraTime, QueueOperations.extraTime4);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 4 where extra time is set
-	 */
-	@Test (expected = IllegalArgumentException.class)
-	public void testExtraTreatmentTimeTreatRoom4Prev() {
-		QueueOperations.treatmentRoom4extended = true;
-		QueueOperations.extraTreatmentTime(true, TRoom4);
-	}
-	
-	/**
-	 * Test extra time method for Treatment Room 5 where extra time is set
-	 */
-	@Test
-	public void testExtraTreatmentTimeValidTreatRoom5() {
-		QueueOperations.extraTreatmentTime(true, TRoom5);
-		assertEquals(extraTime, QueueOperations.extraTime5);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 5 where NO extra time is set
-	 */
-	@Test
-	public void testExtraTreatmentTimeNoExtraTimeTreatRoom5() {
-		QueueOperations.treatmentRoom5extended = false;
-		QueueOperations.extraTreatmentTime(false, TRoom5);
-		assertEquals(noExtraTime, QueueOperations.extraTime5);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room 5 where extra time is set
-	 */
-	@Test (expected = IllegalArgumentException.class)
-	public void testExtraTreatmentTimeTreatRoom5Prev() {
-		QueueOperations.treatmentRoom5extended = true;
-		QueueOperations.extraTreatmentTime(true, TRoom5);
-	}
-
-	/**
-	 * Test extra time method for Treatment Room where invalid treatment room
-	 * number is passed
-	 */
-	@Test (expected = IllegalArgumentException.class)
-	public void testExtraTreatmentTimeInvalidTreatRoomLow() {
-		QueueOperations.extraTreatmentTime(false, TRoomInvalid);
-	}
-	
-	/**
-	 * Test extra time method for Treatment Room where invalid treatment room
-	 * number is passed
-	 */
-	@Test (expected = IllegalArgumentException.class)
-	public void testExtraTreatmentTimeInvalidTreatRoomHigh() {
-		QueueOperations.extraTreatmentTime(false, TRoomHigh);
+				"City", "BT1 1BT", 100000000000L, 444444444, "Allergy",
+				"Condition", "O-", "M", "Mother", "Dr Doctor", "E0999", ""));
 	}
 
 	/**
@@ -524,7 +366,7 @@ public class QueueOperationsUT {
 	 * Test to ensure that the search by NHSNumber method works when no match is
 	 * found in the data
 	 */
-	@Test 
+	@Test
 	public void testSearchByNHSNumberNoMatch() {
 
 		// Temp LinkedList
