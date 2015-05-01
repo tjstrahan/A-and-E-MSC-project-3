@@ -6,16 +6,49 @@ import java.text.ParseException;
 import hospital.address.MainApp;
 import hospital.address.MedicalTeamOperations;
 import hospital.address.jdbc.DoctorAccess;
+import hospital.address.model.Patient;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class DoctorController {
+
+	@FXML
+	private TableView<Patient> treatmentTable;
+	@FXML
+	private TableColumn<Patient, Integer> treatmentColumn;
+	@FXML
+	private TableColumn<Patient, String> titleColumn;
+	@FXML
+	private TableColumn<Patient, String> forenameColumn;
+	@FXML
+	private TableColumn<Patient, String> surnameColumn;
+	@FXML
+	private TableColumn<Patient, String> dobColumn;
+	@FXML
+	private TableColumn<Patient, String> triageColumn;
+	@FXML
+	private TableColumn<Patient, Integer> nhsColumn;
+
+	@FXML
+	private Button extendTreatment;
+
+	@FXML
+	private TextField treatmentRoomField;
+
 	@FXML
 	private Label messages;
 
@@ -29,13 +62,8 @@ public class DoctorController {
 	private TextField nhsNumberInput;
 
 	@FXML
-	private TextField treatmentRoom;
-
-	@FXML
 	private Button search;
 
-	@FXML
-	private Button extendTreatmentButton;
 
 	public static String NHSNumber;
 
@@ -44,6 +72,8 @@ public class DoctorController {
 	public static String treatRoomNoString;
 
 	public static int treatRoomNoInt;
+	
+	private Stage primaryStage;
 
 	DoctorAccess da = new DoctorAccess();
 
@@ -55,25 +85,46 @@ public class DoctorController {
 	@FXML
 	private void initialize() {
 
+		prepareWindow();
+
+		treatmentRoomField.setOnKeyReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				treatRoomNoString = treatmentRoomField.getText().toString();
+			}
+		});
+
+		extendTreatment.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				
+
+				final Stage dialog = new Stage();
+				dialog.initModality(Modality.APPLICATION_MODAL);
+				dialog.initOwner(primaryStage);
+				VBox dialogVbox = new VBox(20);
+				dialogVbox.getChildren().add(new Text("Treatment Extended!"));
+				Scene dialogScene = new Scene(dialogVbox, 150, 150);
+				dialog.setScene(dialogScene);
+				dialog.show();
+				
+				
+				treatRoomNoInt = Integer.parseInt(treatRoomNoString);
+				MedicalTeamOperations.extraTreatmentTime(treatRoomNoInt);
+			}
+		});
+
 		nhsNumberInput.setOnKeyReleased(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
-
 				NHSNumber = nhsNumberInput.getText();
 
 			}
 		});
 
-		extendTreatmentButton.setOnKeyReleased(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-
-				treatRoomNoString = treatmentRoom.getText();
-			}
-
-		});
 
 		search.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -82,12 +133,6 @@ public class DoctorController {
 			}
 		});
 
-		treatmentRoom.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				treatRoomNoInt = Integer.parseInt(treatRoomNoString);
-			}
-		});
 
 		notes.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -106,19 +151,34 @@ public class DoctorController {
 			}
 		});
 
-		extendTreatmentButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
+	}
 
-				try {
-					mTo.extraTreatmentTime(treatRoomNoInt);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+	private void prepareWindow() {
 
-		});
+		treatmentTable.setEditable(false);
+		treatmentTable.setOnMouseClicked(null);
+
+		treatmentColumn
+				.setCellValueFactory(new PropertyValueFactory<Patient, Integer>(
+						"actualTreatmentRoom"));
+		titleColumn
+				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
+						"title"));
+		forenameColumn
+				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
+						"firstName"));
+		surnameColumn
+				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
+						"lastName"));
+		dobColumn
+				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
+						"dateOfBirth"));
+		triageColumn
+				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
+						"triageCategory"));
+		nhsColumn
+				.setCellValueFactory(new PropertyValueFactory<Patient, Integer>(
+						"nhsNumber"));
 
 	}
 
@@ -129,5 +189,6 @@ public class DoctorController {
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
+		treatmentTable.setItems(mainApp.getFxTreatmentList());
 	}
 }

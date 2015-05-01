@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="279.0" prefWidth="629.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.DoctorController">
+<AnchorPane minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.DoctorController">
    <children>
-      <Button fx:id="extendTreatmentButton" layoutX="181.0" layoutY="31.0" mnemonicParsing="false" onAction="#initialize" text="Extend Treatment" />
-      <Button fx:id="notes" layoutX="23.0" layoutY="234.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="73.0" text="Add Notes" />
-      <TextField fx:id="nhsNumberInput" layoutX="22.0" layoutY="68.0" />
-      <TextField fx:id="notesInput" layoutX="23.0" layoutY="112.0" prefHeight="113.0" prefWidth="446.0" />
-      <Button fx:id="search" layoutX="181.0" layoutY="68.0" mnemonicParsing="false" text="Search" />
-      <TextField fx:id="treatmentRoom" layoutX="23.0" layoutY="31.0" promptText="Enter treatroom number" />
+      <Button fx:id="notes" layoutX="25.0" layoutY="159.0" maxHeight="26.0" maxWidth="156.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="156.0" text="Add Notes" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" />
+      <TextField fx:id="nhsNumberInput" layoutX="25.0" layoutY="14.0" promptText="Enter NHS#:" AnchorPane.leftAnchor="25.0" />
+      <TextField fx:id="notesInput" alignment="TOP_LEFT" layoutX="25.0" layoutY="51.0" prefHeight="94.0" prefWidth="550.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <Button fx:id="search" layoutX="515.0" layoutY="14.0" mnemonicParsing="false" text="Search" AnchorPane.rightAnchor="25.0" />
+      <TableView fx:id="treatmentTable" focusTraversable="false" layoutX="14.0" layoutY="287.0" mouseTransparent="true" prefHeight="286.0" prefWidth="750.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="200.0">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <columns>
+            <TableColumn fx:id="treatmentColumn" editable="false" maxWidth="2000.0" prefWidth="132.0" sortable="false" text="Room" />
+            <TableColumn fx:id="titleColumn" editable="false" maxWidth="2000.0" prefWidth="75.0" sortable="false" text="Title" />
+            <TableColumn fx:id="forenameColumn" editable="false" maxWidth="3500.0" prefWidth="165.0" sortable="false" text="Forename" />
+            <TableColumn fx:id="surnameColumn" editable="false" maxWidth="3500.0" prefWidth="165.0" sortable="false" text="Surname" />
+            <TableColumn fx:id="dobColumn" editable="false" maxWidth="3000.0" prefWidth="100.0" sortable="false" text="D.O.B." />
+            <TableColumn fx:id="triageColumn" editable="false" maxWidth="4500.0" minWidth="4.0" prefWidth="165.0" sortable="false" text="Triage Cat.." />
+            <TableColumn fx:id="nhsColumn" editable="false" maxWidth="3000.0" prefWidth="165.0" sortable="false" text="NHS #" />
+         </columns>
+         <cursor>
+            <Cursor fx:constant="NONE" />
+         </cursor>
+      </TableView>
+      <Button fx:id="extendTreatment" layoutX="429.0" layoutY="158.0" maxHeight="26.0" maxWidth="156.0" mnemonicParsing="false" onAction="#initialize" prefHeight="26.0" prefWidth="156.0" text="Extend Treatment Time" AnchorPane.leftAnchor="429.0" AnchorPane.rightAnchor="25.0" />
+      <TextField fx:id="treatmentRoomField" layoutX="210.0" layoutY="160.0" maxHeight="26.0" maxWidth="156.0" onAction="#initialize" prefHeight="26.0" prefWidth="156.0" promptText="Enter Treatment Room:" />
    </children>
 </AnchorPane>
