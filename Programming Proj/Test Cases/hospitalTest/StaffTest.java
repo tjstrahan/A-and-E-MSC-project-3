@@ -1,13 +1,21 @@
 package hospitalTest;
-
+/**
+ * StaffTest.java as part of the Team Internet Java Program. 
+ */
 import static org.junit.Assert.*;
 import hospital.address.model.Staff;
-
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Class to test the Staff.java class in the hospital.address.model package.
+ * 
+ * @author Team Internet
+ */
 public class StaffTest {
-
+	/**
+	 * Initialising Variables for Method tests. String, int long
+	 */
 	String TitleCorrect, TitleWrong, firstNameCorrect, firstNameWrong,
 			middleNameCorrect, middleNameWrong, lastNameCorrect, lastNameWrong,
 			dateOfBirthCorrect, dateOfBirthWrong, addressLineOneCorrect,
@@ -25,6 +33,11 @@ public class StaffTest {
 			mobileNumberUpperBoundary, mobileNumberShort, mobileNumberLong,
 			mobileNumberWrong, mobileNumberBlank;
 
+	/**
+	 * Variables Declared for SetUp.
+	 * 
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 
@@ -51,19 +64,16 @@ public class StaffTest {
 		passwordCorrect = "password";
 		passwordBlank = null;
 		passwordShort = "pass";
-
 		loginIDCorrect = 666666;
 		loginIDBoundaryLower = 100000;
 		LoginIDBoundaryUpper = 999999;
 		loginIDShort = 6666;
 		loginIDLong = 666666666;
-
 		StaffIDCorrect = 666666;
 		StaffIDShort = 6666;
 		StaffIDLong = 6666666;
 		StaffIDLowerBoundary = 100000;
 		StaffIDUpperBoundary = 999999;
-
 		mobileNumberCorrect = 447592010304L;
 		mobileNumberLowerBoundary = 100000000000L;
 		mobileNumberUpperBoundary = 999999999999L;
@@ -72,12 +82,20 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test Staff() is NotNull
+	 */
 	@Test
 	public void testStaff() {
 		Staff staff = new Staff();
 		assertNotNull(staff);
 	}
 
+	/**
+	 * Test Constructor with Args - Clarification it is NotNull.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testConstructorWithArgsCorrect() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
@@ -89,6 +107,12 @@ public class StaffTest {
 		assertNotNull(staff);
 	}
 
+	/**
+	 * Test Constructor with Args - Wrong StaffID implemented
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongStaffID()
 			throws IllegalArgumentException, Exception {
@@ -101,6 +125,11 @@ public class StaffTest {
 		assertEquals(StaffIDCorrect, staff.getStaffID());
 	}
 
+	/**
+	 * Test Constructor with Args -Wrong Password Implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongPassword() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
@@ -113,6 +142,11 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test Constructor with Args - Wrong Log In implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongLogIn() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
@@ -126,6 +160,11 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test Constructor with Args - Wrong Mobile Number implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongMobileNumber() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
@@ -138,61 +177,89 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test Constructor with Args - No title implemented
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoTitle() throws Exception {
 		Staff staff = new Staff(TitleWrong, firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect);
 		assertEquals(TitleCorrect, staff.getTitle());
 
 	}
 
+	/**
+	 * Test Constructor with Args - No firstName implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoFirstName() throws Exception {
 		Staff staff = new Staff("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect);
 		assertEquals(firstNameCorrect, staff.getFirstName());
 
 	}
 
+	/**
+	 * Test Constructor with Args - No middle name implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoMiddleName() throws Exception {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameWrong,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect);
 		assertEquals(middleNameCorrect, staff.getMiddleName());
 
 	}
 
+	/**
+	 * Test Constructor with Args - No last name implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoLastName() throws Exception {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect);
 		assertEquals(lastNameCorrect, staff.getLastName());
 
 	}
 
+	/**
+	 * Test Constructor with Args - No DOB implemented.
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoDOB() throws Exception {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect);
 		assertEquals(dateOfBirthCorrect, staff.getDateOfBirth());
 
 	}
 
+	/**
+	 * Test Constructor with Args - No addressLineOne implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineOne() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
@@ -205,6 +272,11 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test Constructor with Args -No addressLineTwo implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineTwo() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
@@ -217,6 +289,11 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test Constructor with Args - No addressLineThree implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineThree() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
@@ -229,6 +306,11 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test Constructor with Args - No city implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoCity() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
@@ -241,6 +323,11 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test Constructor with Args - No PostCode implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoPostCode() throws Exception {
 		Staff staff = new Staff(TitleCorrect, firstNameCorrect,
@@ -253,6 +340,12 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test StaffIDCorrect throws an IllegalArgumentException.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test
 	public void testSetStaffID() throws IllegalArgumentException, Exception {
 		Staff staff = new Staff();
@@ -260,6 +353,12 @@ public class StaffTest {
 		assertEquals(StaffIDCorrect, staff.getStaffID());
 	}
 
+	/**
+	 * Test the staff Id Lower Boundary.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test
 	public void testSetStaffIDLowerBoundary() throws IllegalArgumentException,
 			Exception {
@@ -268,6 +367,12 @@ public class StaffTest {
 		assertEquals(StaffIDLowerBoundary, staff.getStaffID());
 	}
 
+	/**
+	 * Test the StaffID upper Boundary.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test
 	public void testSetStaffIDUpperBoundary() throws IllegalArgumentException,
 			Exception {
@@ -276,6 +381,12 @@ public class StaffTest {
 		assertEquals(StaffIDUpperBoundary, staff.getStaffID());
 	}
 
+	/**
+	 * Test the setting of Short Staff Id
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testSetStaffIDShort() throws IllegalArgumentException,
 			Exception {
@@ -284,6 +395,12 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test the exception of a Long Staff ID.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testSetStaffIDLong() throws IllegalArgumentException, Exception {
 		Staff staff = new Staff();
@@ -291,6 +408,12 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Throw Exception if mobile number is incorrect.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test
 	public void testSetMobileNumber() throws IllegalArgumentException,
 			Exception {
@@ -299,6 +422,12 @@ public class StaffTest {
 		assertEquals(mobileNumberCorrect, staff.getContactNumber());
 	}
 
+	/**
+	 * Throw exception if mobile number is less than the lower Boundary.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test
 	public void testSetMobileNumberLowerBoundary()
 			throws IllegalArgumentException, Exception {
@@ -307,6 +436,12 @@ public class StaffTest {
 		assertEquals(mobileNumberLowerBoundary, staff.getContactNumber());
 	}
 
+	/**
+	 * Throw exception if mobile number us high than the upper Boundary.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test
 	public void testSetMobileNumberUpperBoundary()
 			throws IllegalArgumentException, Exception {
@@ -315,6 +450,12 @@ public class StaffTest {
 		assertEquals(mobileNumberUpperBoundary, staff.getContactNumber());
 	}
 
+	/**
+	 * Throw Exception if mobile number is short.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testSetMobileNumberShort() throws IllegalArgumentException,
 			Exception {
@@ -322,6 +463,12 @@ public class StaffTest {
 		staff.setContactNumber(mobileNumberShort);
 	}
 
+	/**
+	 * Throw Exception if mobile number is too long.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testSetMobileNumberLong() throws IllegalArgumentException,
 			Exception {
@@ -329,6 +476,11 @@ public class StaffTest {
 		staff.setContactNumber(mobileNumberLong);
 	}
 
+	/**
+	 * Test the LogIn Id.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testSetLoginID() throws Exception {
 		Staff staff = new Staff();
@@ -336,6 +488,11 @@ public class StaffTest {
 		assertEquals(loginIDCorrect, staff.getLoginID());
 	}
 
+	/**
+	 * Throw Exception if the LoginID is lower than the Boundary.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testSetLoginIDLowerBoundary() throws Exception {
 		Staff staff = new Staff();
@@ -343,6 +500,11 @@ public class StaffTest {
 		assertEquals(loginIDBoundaryLower, staff.getLoginID());
 	}
 
+	/**
+	 * Throw Exception if the LoginID is greater than the Boundary.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testSetLoginIDUpperBoundary() throws Exception {
 		Staff staff = new Staff();
@@ -350,18 +512,33 @@ public class StaffTest {
 		assertEquals(LoginIDBoundaryUpper, staff.getLoginID());
 	}
 
+	/**
+	 * Throw exception of the LoginID is too short.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testSetLoginIDShort() throws Exception {
 		Staff staff = new Staff();
 		staff.setLoginID(loginIDShort);
 	}
 
+	/**
+	 * Throw exception if the Login ID is too long.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testSetLoginIDLong() throws Exception {
 		Staff staff = new Staff();
 		staff.setLoginID(loginIDLong);
 	}
 
+	/**
+	 * Test password = correct.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testSetPassword() throws Exception {
 		Staff staff = new Staff();
@@ -369,6 +546,11 @@ public class StaffTest {
 		assertEquals(passwordCorrect, staff.getPassword());
 	}
 
+	/**
+	 * Throw exception if password is shorter than the set limit.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testSetPasswordShort() throws Exception {
 		Staff staff = new Staff();
@@ -376,6 +558,11 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Throw Exception if the password is not entered.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testSetPasswordBlank() throws Exception {
 		Staff staff = new Staff();
@@ -383,13 +570,18 @@ public class StaffTest {
 
 	}
 
+	/**
+	 * Test the implementation of the data to String for display
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testToString() throws Exception {
 		Staff staff = new Staff("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect, 
+				postcodeCorrect, mobileNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect);
 		staff.toString();
 	}
-}
+} // Class close
