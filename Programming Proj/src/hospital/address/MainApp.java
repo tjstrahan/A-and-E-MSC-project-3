@@ -2,13 +2,9 @@ package hospital.address;
 
 import java.io.IOException;
 import java.util.LinkedList;
-
 import hospital.address.QueueTimerAlt;
-import hospital.address.model.Doctor;
 import hospital.address.model.HospitalManager;
-import hospital.address.model.Nurse;
 import hospital.address.model.Patient;
-import hospital.address.model.Receptionist;
 import hospital.address.model.Staff;
 import hospital.address.model.Status;
 import hospital.address.view.DoctorController;
@@ -86,9 +82,10 @@ public class MainApp extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("PAS");
 		initRootLayout();
+		showLogin();
 		queueWindow();
 		patientViewWaitingList();
-		showLogin();
+		
 
 	}
 
@@ -163,32 +160,19 @@ public class MainApp extends Application {
 	
 	public static void populateStaff (){
 		HospitalManager hM = new HospitalManager();
-		Staff staff = new Staff();
 		
 		try {
-		//	hM.populateMedicalTeam();
-		//	hM.populateReceptionistList();
-		//	hM.populateHospitalManagerList();
+			hM.populateMedicalTeam();
+			hM.populateReceptionistList();
+			hM.populateHospitalManagerList();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
-		//staffList.addAll(HospitalManager.medicalTeam);
-		//staffList.addAll(HospitalManager.receptionistList);
-		//staffList.addAll(HospitalManager.hospitalManagerList);
-		
-		try {
-			staffList.add(0, new Doctor("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 100300, 199300, "Password0", 1));
-			staffList.add(1, new Nurse("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 700301, 799301, "Password1", 1));
-			staffList.add(2, new Staff("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 500311, 599311, "Password11"));
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		staffList.addAll(HospitalManager.medicalTeam);
+		staffList.addAll(HospitalManager.receptionistList);
+		staffList.addAll(HospitalManager.hospitalManagerList);
 		 
 	}
 
