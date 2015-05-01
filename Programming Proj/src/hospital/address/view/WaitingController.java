@@ -1,25 +1,11 @@
 package hospital.address.view;
 
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.util.Calendar;
-
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import hospital.address.MainApp;
-import hospital.address.QueueTimerAlt;
-import hospital.address.TheQueue;
 import hospital.address.model.Patient;
-import hospital.address.model.Status;
 
 public class WaitingController {
 
