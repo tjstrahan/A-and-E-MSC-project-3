@@ -42,7 +42,6 @@ public class StatusTest {
 	 */
 	@Test
 	public void testStatusInteger() {
-		Status status = new Status(codeCorrect);
 		assertNotNull(codeCorrect);
 	}
 
@@ -51,7 +50,6 @@ public class StatusTest {
 	 */
 	@Test
 	public void testGetCode() {
-		Status status = new Status(codeCorrect);
 		assertNotNull(codeCorrect);
 	}
 
@@ -61,7 +59,6 @@ public class StatusTest {
 	 */
 	@Test
 	public void testSetCode() {
-		Status status = new Status(codeCorrect);
 		assertNotNull(codeCorrect);
 	}
 
