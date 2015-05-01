@@ -30,6 +30,8 @@ public class TriageController {
 	static TheQueue hospQueue = new TheQueue();
 
 	@FXML
+	private Label message;
+	@FXML
 	private Label AddressLineOne;
 	@FXML
 	private Label AddressLineThree;
@@ -67,9 +69,15 @@ public class TriageController {
 
 	private TriageNurse triage;
 
+	/**
+	 * FXML Initialize method setting screen 'widgets' and fields, setting up
+	 * respective handlers
+	 */
 	@FXML
 	public void initialize() {
 
+		// Sets up the back button to leave triage and return to generic Nurse
+		// login
 		back.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -79,6 +87,7 @@ public class TriageController {
 			}
 		});
 
+		// Sets up textfield to take user input for triage category
 		categoryToEnter.setOnKeyReleased(new EventHandler<Event>() {
 
 			@Override
@@ -89,54 +98,82 @@ public class TriageController {
 			}
 		});
 
+		// Button enabling the triage category to be set for admitted patients
 		setCategory.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 
-				try {
-					triage = new TriageNurse();
-					int triageCatInt = Integer.parseInt(triageCatString);
-
-					String triageCat = "";
-					switch (triageCatInt) {
-					case 1:
-						triageCat = "Emergency";
-						break;
-					case 2:
-						triageCat = "Urgent";
-						break;
-					case 3:
-						triageCat = "Semi-urgent";
-						break;
-					case 4:
-						triageCat = "Non-urgent";
-						break;
-					}
-						PatientViewController.Admittedpatients.get(0)
-								.setTriageNumber(triageCatInt);
-						PatientViewController.Admittedpatients.get(0)
-								.setTriageCategory(triageCat);
-
-						Receptionist.patientsFromDB
-								.addFirst(PatientViewController.Admittedpatients
-										.get(0));
-
-						PatientViewController.Admittedpatients.clear();
-					
-				} catch (Exception e) {
-					e.printStackTrace();
+				if(categoryToEnter.getText().isEmpty()){
+					message.setText("Please assign a Category");
 				}
-		
-			}
+				
+					// Ensures that patient is on admitted list before requesting
+					// triage
+					if (!PatientViewController.Admittedpatients.isEmpty()) {
+						try {
+							triage = new TriageNurse();
+							int triageCatInt = Integer.parseInt(triageCatString);
+
+							// Ensures correct category applied
+							String triageCat = "";
+							switch (triageCatInt) {
+							case 1:
+								triageCat = "Emergency";
+								break;
+							case 2:
+								triageCat = "Urgent";
+								break;
+							case 3:
+								triageCat = "Semi-urgent";
+								break;
+							case 4:
+								triageCat = "Non-urgent";
+								break;
+							}
+							PatientViewController.Admittedpatients.get(0)
+									.setTriageNumber(triageCatInt);
+							PatientViewController.Admittedpatients.get(0)
+									.setTriageCategory(triageCat);
+							Receptionist.patientsFromDB
+									.addFirst(PatientViewController.Admittedpatients
+											.get(0));
+							// Reset the list
+							PatientViewController.Admittedpatients.clear();
+
+							// Displays confirmation of triage category amendment
+							final Stage dialog = new Stage();
+							dialog.initModality(Modality.APPLICATION_MODAL);
+							dialog.initOwner(primaryStage);
+							VBox dialogVbox = new VBox(20);
+							dialogVbox.getChildren().add(
+									new Text("Patient Triaged!"));
+							Scene dialogScene = new Scene(dialogVbox, 150, 150);
+							dialog.setScene(dialogScene);
+							dialog.show();
+
+							// Returns to nurse screen once triage set
+							mainApp.showNurse();
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				
 		});
 
+		// Displays the patients details from the admitted patients list
 		if (!PatientViewController.Admittedpatients.isEmpty()) {
 			getPatients();
 		}
 
 	}
 
+	/**
+	 * Method that displays the patients details for triage nurse form admitted patients list
+	 * If the list is empty nothing will show
+	 */
 	private void getPatients() {
 
 		AddressLineOne.setText(PatientViewController.Admittedpatients.get(0)

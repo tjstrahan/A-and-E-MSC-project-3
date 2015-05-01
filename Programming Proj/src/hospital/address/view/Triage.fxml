@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -16,7 +17,7 @@
       <Button fx:id="back" layoutX="226.0" layoutY="246.0" mnemonicParsing="false" onAction="#initialize" text="Back" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="25.0" />
       <Label layoutX="25.0" layoutY="104.0" text="Emergency" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="100.0" />
       <Label layoutX="25.0" layoutY="179.0" text="Non-urgent" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="250.0" />
-      <Button fx:id="setCategory" layoutX="25.0" layoutY="254.0" mnemonicParsing="false" onAction="#initialize" text="Set Category" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="179.0" />
+      <Button fx:id="setCategory" layoutX="25.0" layoutY="254.0" mnemonicParsing="false" onAction="#initialize" prefHeight="26.0" prefWidth="176.0" text="Set Category" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="399.0" />
       <Label layoutX="25.0" layoutY="154.0" text="Semi-urgent" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="200.0" />
       <Label layoutX="25.0" layoutY="129.0" text="Urgent" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="150.0" />
       <Label layoutX="173.0" layoutY="109.0" text="1" AnchorPane.leftAnchor="170.0" AnchorPane.topAnchor="100.0" />
@@ -61,15 +62,16 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <Label layoutX="66.0" layoutY="63.0" text="Categories" AnchorPane.topAnchor="50.0">
+      <Label layoutX="66.0" layoutY="63.0" text="Categories" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="348.0" layoutY="65.0" text="Patient Details" AnchorPane.topAnchor="50.0">
+      <Label layoutX="348.0" layoutY="65.0" text="Patient Details" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <Label fx:id="message" layoutX="252.0" layoutY="359.0" prefHeight="16.0" prefWidth="215.0" textFill="#c61212" />
    </children>
 </AnchorPane>
