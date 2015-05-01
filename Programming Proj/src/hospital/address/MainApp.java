@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
 
 	static QueueTimerAlt qTa = new QueueTimerAlt();
+	static TheQueue tQ = new TheQueue();
 
 	public static ObservableList<Patient> fxTreatmentList = FXCollections
 			.observableArrayList();
@@ -36,6 +37,15 @@ public class MainApp extends Application {
 			.observableArrayList();
 
 	public static ObservableList<Status> fxStatusCode = FXCollections
+			.observableArrayList();
+	
+	public static ObservableList<Patient> fxCallNextPatient = FXCollections
+			.observableArrayList();
+	
+	public static ObservableList<Patient> fxCallOnCallPatient = FXCollections
+			.observableArrayList();
+
+	public static ObservableList<Patient> fxByeByePatient = FXCollections
 			.observableArrayList();
 
 	static Patient patient;
@@ -52,6 +62,7 @@ public class MainApp extends Application {
 		this.primaryStage.setTitle("PAS");
 		initRootLayout();
 		queueWindow();
+		patientViewWaitingList();
 		showLogin();
 
 	}
@@ -68,12 +79,36 @@ public class MainApp extends Application {
 			controller.setMainApp(this);
 
 			stage.setScene(new Scene(root, 1000, 800));
+			stage.setTitle("Staff View");
+			stage.setResizable(false);
 			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public void patientViewWaitingList() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class
+					.getResource("view/WaitingMaster.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+
+			
+			WaitingController controller = loader.getController();
+			controller.setMainApp(this);
+
+			
+			stage.setScene(new Scene(root, 1000, 400));
+			stage.setTitle("Patient View");
+			stage.setResizable(false);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Initializes the root layout.
 	 */
@@ -88,18 +123,13 @@ public class MainApp extends Application {
 			// Show the scene containing the root layout.
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	/*
-	 * public void secondWindow() { try { Parent root =
-	 * FXMLLoader.load(test.fxml); Stage stage = new Stage(); stage.setScene(new
-	 * Scene(root, 1200, 800)); stage.show(); } catch (IOException e) {
-	 * e.printStackTrace(); } }
-	 */
 	/**
 	 * Shows the person overview inside the root layout.
 	 */
@@ -262,10 +292,11 @@ public class MainApp extends Application {
 		}
 	}
 
+
 	public static void clearFxTreatmentList() {
 		fxTreatmentList.clear();
 	}
-
+	
 	public static void copyFxTreatmentListAgain() {
 		fxTreatmentList.addAll(QueueTimerAlt.forDisplay);
 	}
@@ -273,7 +304,7 @@ public class MainApp extends Application {
 	public static void clearFxWaitingList() {
 		fxWaitingList.clear();
 	}
-
+	
 	public static void copyFxWaitingListAgain() {
 		fxWaitingList.addAll(QueueTimerAlt.waitingCopy);
 	}
@@ -281,19 +312,19 @@ public class MainApp extends Application {
 	public static void clearFxOnCallList() {
 		fxOnCallList.clear();
 	}
-
+	
 	public static void copyFxOnCallListAgain() {
 		fxOnCallList.addAll(QueueTimerAlt.onCallCopy);
 	}
 
 	public static void clearFxStatus() {
 		fxStatusCode.clear();
+		
 	}
-
 	public static void copyFxStatusAgain() {
 		fxStatusCode.addAll(QueueTimerAlt.statusCodeList);
 	}
-
+	
 	public ObservableList<Patient> getFxTreatmentList() {
 		fxTreatmentList.addAll(QueueTimerAlt.forDisplay);
 		return fxTreatmentList;
@@ -312,6 +343,18 @@ public class MainApp extends Application {
 	public ObservableList<Status> getFxStatusCode() {
 		fxStatusCode.addAll(QueueTimerAlt.statusCodeList);
 		return fxStatusCode;
+	}
+	
+	public ObservableList<Patient> getFxCallOnCallPatient() {
+		return fxCallOnCallPatient;
+	}
+	
+	public ObservableList<Patient> getFxCallNextPatient() {
+		return fxCallNextPatient;
+	}
+	
+	public ObservableList<Patient> getFxByeByePatient() {
+		return fxByeByePatient;
 	}
 
 	/**
