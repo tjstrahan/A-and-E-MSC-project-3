@@ -7,6 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class NurseTest {
+	
+	/**
+	 * Test class for nurse
+	 */
 
 	String TitleCorrect, TitleWrong, firstNameCorrect, firstNameWrong,
 			middleNameCorrect, middleNameWrong, lastNameCorrect, lastNameWrong,
@@ -22,6 +26,10 @@ public class NurseTest {
 
 	@Before
 	public void setUp() throws Exception {
+		
+		/**
+		 * Test data for nurse
+		 */
 		
 		TitleCorrect = "Mr";
 		TitleWrong = null;
@@ -55,12 +63,18 @@ public class NurseTest {
 		mobileNumberCorrect = 447592010304L;
 		mobileNumberWrong = 4475920103040L;
 	}
-
+	/**
+	 * Testing the nurse default constructor
+	 */
 	@Test
 	public void testNurseDefaultConstructor() {
 		Nurse nurse = new Nurse();
 		assertNotNull(nurse);
 	}
+	/**
+	 * Testing the nurse non default constructor with all correct arguments
+	 * @throws Exception
+	 */
 
 	@Test
 	public void testConstructorWithArgsCorrect() throws Exception {
@@ -72,7 +86,11 @@ public class NurseTest {
 				passwordCorrect, medicalTeamCorrect);
 		assertNotNull(nurse);
 	}
-
+	/**
+	 * Testing the nurse non default constructor with the wrong staff id
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongStaffID()
 			throws IllegalArgumentException, Exception {
@@ -84,6 +102,10 @@ public class NurseTest {
 				passwordCorrect, medicalTeamCorrect);
 		assertEquals(StaffIDCorrect, nurse.getStaffID());
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong password
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongPassword() throws Exception {
@@ -96,6 +118,10 @@ public class NurseTest {
 		assertEquals(passwordCorrect, nurse.getPassword());
 
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong login
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongLogIn() throws Exception {
@@ -109,6 +135,10 @@ public class NurseTest {
 		assertEquals(loginIDCorrect, nurse.getLoginID());
 
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong mobile number
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongMobileNumber() throws Exception {
@@ -121,6 +151,10 @@ public class NurseTest {
 		assertEquals(mobileNumberCorrect, nurse.getContactNumber());
 
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong title
+	 * @throws Exception
+	 */
 
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoTitle() throws Exception {
@@ -132,6 +166,10 @@ public class NurseTest {
 				loginIDCorrect, passwordCorrect, medicalTeamCorrect);
 
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong first name
+	 * @throws Exception
+	 */
 
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoFirstName() throws Exception {
@@ -143,6 +181,10 @@ public class NurseTest {
 				loginIDCorrect, passwordCorrect, medicalTeamCorrect);
 	
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong middle name
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoMiddleName() throws Exception {
@@ -154,6 +196,10 @@ public class NurseTest {
 		assertEquals(middleNameCorrect, nurse.getMiddleName());
 
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong last name
+	 * @throws Exception
+	 */
 
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoLastName() throws Exception {
@@ -165,6 +211,10 @@ public class NurseTest {
 				loginIDCorrect, passwordCorrect, medicalTeamCorrect);
 	
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong date of birth
+	 * @throws Exception
+	 */
 
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoDOB() throws Exception {
@@ -176,6 +226,9 @@ public class NurseTest {
 				loginIDCorrect, passwordCorrect, medicalTeamCorrect);
 
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong addres line one
+	 */
 
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoAddressLineOne() throws Exception {
@@ -188,6 +241,10 @@ public class NurseTest {
 				passwordCorrect, medicalTeamCorrect);
 	
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong address line two
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineTwo() throws Exception {
@@ -200,6 +257,10 @@ public class NurseTest {
 		assertEquals(addressLineTwoCorrect, nurse.getAddressLineTwo());
 
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong address line three
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineThree() throws Exception {
@@ -212,6 +273,10 @@ public class NurseTest {
 		assertEquals(addressLineThreeCorrect, nurse.getAddressLineThree());
 
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong city
+	 * @throws Exception
+	 */
 
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoCity() throws Exception {
@@ -224,6 +289,10 @@ public class NurseTest {
 				passwordCorrect, medicalTeamCorrect);
 	
 	}
+	/**
+	 * Testing the nurse non default constructor with the wrong postcode
+	 * @throws Exception
+	 */
 
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoPostCode() throws Exception {
@@ -236,17 +305,25 @@ public class NurseTest {
 				passwordCorrect, medicalTeamCorrect);
 
 	}
+	/**
+	 * Test stub for amend record method
+	 */
 
-	@Test
+	@Test   
 	public void testAmendRecord() {
 		fail("Not yet implemented");
 	}
+	/**
+	 * Test stub for extend treatment method
+	 */
 
 	@Test
 	public void testExtendTreatment() {
 		fail("Not yet implemented");
 	}
-
+	/**
+	 * Test stub for is on call method
+	 */
 	@Test
 	public void testIsOnCall() {
 		fail("Not yet implemented");
