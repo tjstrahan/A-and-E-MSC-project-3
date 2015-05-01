@@ -1,10 +1,12 @@
 package hospital.address.jdbc;
 
 import hospital.address.TheQueue;
+import hospital.address.view.DoctorController;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 
@@ -113,6 +115,41 @@ public class DoctorAccess {
 			System.err.println("Failed to update \'Notes\'");
 		}
 	}
+	
+	/**
+	 * Method to view notes 
+	 * 
+	 * @param NHS_Number
+	 * @return 
+	 * @throws SQLException
+	 */
+	public String viewNotesOnPatientRecord(int NHS_Number)
+			throws SQLException {
+
+		Connection con = getConnection();
+	
+			pstmt = con.prepareStatement("SELECT notes FROM Patient WHERE NHS_number = ?");
+			
+			pstmt.setInt(1, NHS_Number);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			String notes = rs.getString("Notes");
+			pstmt.close();
+			con.close();
+			//System.out.println(notes);
+			//System.out.println("Notes from visit: " + notes);
+		DoctorController.notesPatient.add(notes);
+			//System.err.println("Failed to view \'Notes\'");
+			if (notes == null){
+				notes = "n/a";	
+			}
+			return notes;
+		}
+
+		
+		
+	
+	
 
 }// end of class
 
