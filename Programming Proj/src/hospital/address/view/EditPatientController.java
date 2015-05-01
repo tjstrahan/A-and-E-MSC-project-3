@@ -1,17 +1,20 @@
 package hospital.address.view;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import hospital.address.MainApp;
 import hospital.address.jdbc.ReceptionistAccess;
-import hospital.address.model.Receptionist;
 
 public class EditPatientController {
 
@@ -41,6 +44,8 @@ public class EditPatientController {
 	@FXML
 	private Button save;
 	
+	long test = 123451234512L;
+	
 	@FXML 
 	private Button ok;
 	
@@ -53,8 +58,6 @@ public class EditPatientController {
 	private String AddressLineTwoNEw;
 
 	private String PostcodeNew;
-
-	private String StreetNew;
 
 	private String ContactNumberNew;
 
@@ -74,8 +77,6 @@ public class EditPatientController {
 
 	private String PostcodeOld;
 
-	private String StreetOld;
-
 	private String ContactNumberOld;
 
 	private String allergiesOld;
@@ -91,36 +92,48 @@ public class EditPatientController {
 	
 	@FXML
 	private void initialize() {
-		ReceptonistSearchController recs = new ReceptonistSearchController();
+		//ReceptonistSearchController recs = new ReceptonistSearchController();
 
-		String contactnum = String.valueOf(recs.PatientSearched.get(0)
+		ContactNumberOld = String.valueOf(ReceptonistSearchController.PatientSearched.get(0)
 				.getContactNumber());
 		
-		AddressLineOneOld = recs.PatientSearched.get(0).getAddressLineOne();
+		
+		AddressLineOneOld = ReceptonistSearchController.PatientSearched.get(0).getAddressLineOne();
 
-		AddressLineThreeOld =  recs.PatientSearched.get(0).getAddressLineThree();
+		AddressLineThreeOld =  ReceptonistSearchController.PatientSearched.get(0).getAddressLineThree();
 
-		cityOld = recs.PatientSearched.get(0).getCity();
+		cityOld = ReceptonistSearchController.PatientSearched.get(0).getCity();
 
-		AddressLineTwoOld = recs.PatientSearched.get(0).getAddressLineTwo();
+		AddressLineTwoOld = ReceptonistSearchController.PatientSearched.get(0).getAddressLineTwo();
 
-		PostcodeOld = recs.PatientSearched.get(0).getPostcode();
+		PostcodeOld = ReceptonistSearchController.PatientSearched.get(0).getPostcode();
 
-		allergiesOld = recs.PatientSearched.get(0).getAllergies();
+		allergiesOld = ReceptonistSearchController.PatientSearched.get(0).getAllergies();
 
-		ConditionsOld = recs.PatientSearched.get(0).getKnownConditions();
+		ConditionsOld = ReceptonistSearchController.PatientSearched.get(0).getKnownConditions();
 
-		nextOFKinOld = recs.PatientSearched.get(0).getNextOfKin();
+		nextOFKinOld = ReceptonistSearchController.PatientSearched.get(0).getNextOfKin();
 		
 		NewAddressLineOne.setText(AddressLineOneOld);
 		NewAddressLineThree.setText(AddressLineThreeOld);
 		Newcity.setText(cityOld);
 		NewAddressLineTwo.setText(AddressLineTwoOld);
 		NewPostcode.setText(PostcodeOld);
-		NewContactNumber.setText(contactnum);
+		NewContactNumber.setText(ContactNumberOld);
 		Newallergies.setText(allergiesOld);
 		NewConditions.setText(ConditionsOld);
 		NewNextOFKin.setText(nextOFKinOld);
+		
+		AddressLineOneNew = AddressLineOneOld;
+		AddressLineThreeNew = AddressLineThreeOld;
+		AddressLineTwoNEw = AddressLineTwoOld;
+		cityNew = cityOld;
+		PostcodeNew = PostcodeOld;
+		ContactNumberNew = ContactNumberOld;
+		allergiesNew = allergiesOld;
+		ConditionsNew = ConditionsOld;
+		nextOFKinNew = nextOFKinOld;
+		
 		
 		
 		NewAddressLineOne.setOnKeyReleased(new EventHandler<Event>() {
@@ -211,25 +224,52 @@ public class EditPatientController {
 			@Override
 			public void handle(ActionEvent event) {
 				
-				int NHS = recs.PatientSearched.get(0).getNhsNumber();
+				int NHS = ReceptonistSearchController.PatientSearched.get(0).getNhsNumber();
 				long contactnums = Long.parseLong(ContactNumberNew) ;
 				
 				try {
 						rec.updateFirstLineOfAddress(NHS, AddressLineOneNew);
+						ReceptonistSearchController.PatientSearched.get(0).setAddressLineOne(AddressLineOneNew);
 						rec.updateCity(NHS, cityNew);
+						ReceptonistSearchController.PatientSearched.get(0).setCity(cityNew);
 						rec.updateContactNumber(NHS, contactnums);
+						ReceptonistSearchController.PatientSearched.get(0).setContactNumber(contactnums);
 						rec.updateNextOfKin(NHS, nextOFKinNew);
+						ReceptonistSearchController.PatientSearched.get(0).setNextOfKin(nextOFKinNew);
 						rec.updatePostcode(NHS, PostcodeNew);
+						ReceptonistSearchController.PatientSearched.get(0).setPostcode(PostcodeNew);
 						rec.updateSecondLineOfAddress(NHS, AddressLineTwoNEw);
+						ReceptonistSearchController.PatientSearched.get(0).setAddressLineTwo(AddressLineTwoNEw);
 						rec.updateThirdLineOfAddress(NHS, AddressLineThreeNew);
-						rec.addMoreAllergies(NHS, allergiesNew);
-						rec.addMoreKnownConditions(NHS, ConditionsNew);
+						ReceptonistSearchController.PatientSearched.get(0).setAddressLineThree(AddressLineThreeNew);
+						rec.addFirstAllergies(NHS, allergiesNew);
+						ReceptonistSearchController.PatientSearched.get(0).setAllergies(allergiesNew);
+						rec.addFirstKnownConditions(NHS, ConditionsNew);
+						ReceptonistSearchController.PatientSearched.get(0).setKnownConditions(ConditionsNew);
 						Saved.setText("Saved");
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
+					} catch (Exception e) {
 						e.printStackTrace();
 					};
-				
+					Platform.runLater(new Runnable() {
+						  @Override public void run() {
+							  try {
+									
+									// Load person overview.
+									FXMLLoader load = new FXMLLoader();
+									load.setLocation(MainApp.class.getResource("view/PatientView.fxml"));
+									AnchorPane PatientView = load.load();
+
+									// Set person overview into the center of root layout.
+									MainApp.rootLayout.setCenter(PatientView);
+
+									PatientViewController controller = load.getController();
+									controller.setMainApp(mainApp);
+
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+						  }
+						});
 			}	
 			
 		});

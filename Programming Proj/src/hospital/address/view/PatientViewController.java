@@ -125,7 +125,7 @@ public class PatientViewController {
 							MainApp.rootLayout.setCenter(edit);
 
 							// Give the controller access to the main app.
-							ReceptionistController controller = loader
+							EditPatientController controller = loader
 									.getController();
 							controller.setMainApp(mainApp);
 
@@ -203,7 +203,7 @@ public class PatientViewController {
 							MainApp.rootLayout.setCenter(edit);
 
 							// Give the controller access to the main app.
-							ReceptionistController controller = loader
+							LoginController controller = loader
 									.getController();
 							controller.setMainApp(mainApp);
 

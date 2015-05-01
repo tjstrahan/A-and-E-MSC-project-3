@@ -34,7 +34,7 @@ public class LoginController {
 
 	@FXML
 	private Label RequireUser;
-	
+
 	@FXML
 	private Label wrong;
 
@@ -52,8 +52,7 @@ public class LoginController {
 
 	@FXML
 	private void initialize() {
-		
-		
+
 		wrong.setText(" ");
 		// Initialize the person table with the two columns.
 		username.setOnKeyReleased(new EventHandler<Event>() {
@@ -70,47 +69,47 @@ public class LoginController {
 			@Override
 			public void handle(KeyEvent keyEvent) {
 				pass = password.getText();
-				 if(keyEvent.getCode() == KeyCode.ENTER)
-			        {
-					 if (username.getText().isEmpty()){
-							RequireUser.setText("*Required");
+				if (keyEvent.getCode() == KeyCode.ENTER) {
+					if (username.getText().isEmpty()) {
+						RequireUser.setText("*Required");
+					}
+
+					if (password.getText().isEmpty()) {
+						RequiredPass.setText("*Required");
+					}
+
+					Staff staff = new Staff();
+
+					staffType = null;
+
+					int number = Integer.parseInt(user);
+
+					for (int loop = 0; loop < MainApp.staffList.size(); loop++) {
+						if (number == (MainApp.staffList.get(loop).getLoginID())
+								&& pass.equals(MainApp.staffList.get(loop)
+										.getPassword())) {
+							if (number >= 100000 && number < 200000) {
+								// System.out.println("doctor");
+								staffType = "Doctor";
+								mainApp.showDoc();
+							} else if (number >= 300000 && number < 400000) {
+								staffType = "Hospital Manager";
+							} else if (number >= 500000 && number < 600000) {
+								// System.out.println("receptionist");
+								staffType = "Receptionist";
+								mainApp.showRecep();
+							} else if (number >= 700000 && number < 800000) {
+								// System.out.println("nurse");
+								staffType = "Nurse";
+								mainApp.showNurse();
+							}
+						} else {
+							wrong.setText("Username/Password incorrect");
 						}
-						
-						if (password.getText().isEmpty()){
-							RequiredPass.setText("*Required");
-						}
-
-						Staff staff = new Staff();
-					
-						staffType = null;
-
-						int number = Integer.parseInt(user);
-
-						for (int loop = 0; loop < MainApp.staffList.size(); loop++) {
-							if (number == (MainApp.staffList.get(loop).getLoginID())
-									&& pass.equals(MainApp.staffList.get(loop).getPassword())) {
-								if (number >= 100000 && number < 200000) {
-									//System.out.println("doctor");
-									staffType = "Doctor";
-									mainApp.showDoc();
-								} else if (number >= 300000 && number < 400000) {
-									staffType = "Hospital Manager";
-								} else if (number >= 500000 && number < 600000) {
-									//System.out.println("receptionist");
-									staffType = "Receptionist";
-									mainApp.showRecep();						
-								} else if (number >= 700000 && number < 800000) {
-									//System.out.println("nurse");
-									staffType = "Nurse";
-									mainApp.showNurse();
-								}
-							}else {
-								wrong.setText("Username/Password incorrect");
-						} 
 
 					}
-					}  //sendMessage();
-			        }
+				} // sendMessage();
+			}
 		});
 
 		loginButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -118,44 +117,46 @@ public class LoginController {
 			@SuppressWarnings("unused")
 			@Override
 			public void handle(ActionEvent arg0) {
-				
-				if (username.getText().isEmpty()){
+
+				if (username.getText().isEmpty()) {
 					RequireUser.setText("*Required");
 				}
-				
-				if (password.getText().isEmpty()){
+
+				if (password.getText().isEmpty()) {
 					RequiredPass.setText("*Required");
 				}
 
 				Staff staff = new Staff();
-			
+
 				staffType = null;
-
-				int number = Integer.parseInt(user);
-
+				
+					int number = Integer.parseInt(user);
+				
 				for (int loop = 0; loop < MainApp.staffList.size(); loop++) {
 					if (number == (MainApp.staffList.get(loop).getLoginID())
-							&& pass.equals(MainApp.staffList.get(loop).getPassword())) {
+							&& pass.equals(MainApp.staffList.get(loop)
+									.getPassword())) {
 						if (number >= 100000 && number < 200000) {
-							//System.out.println("doctor");
+							// System.out.println("doctor");
 							staffType = "Doctor";
 							mainApp.showDoc();
 						} else if (number >= 300000 && number < 400000) {
 							staffType = "Hospital Manager";
 						} else if (number >= 500000 && number < 600000) {
-							//System.out.println("receptionist");
+							// System.out.println("receptionist");
 							staffType = "Receptionist";
-							mainApp.showRecep();						
+							mainApp.showRecep();
 						} else if (number >= 700000 && number < 800000) {
-							//System.out.println("nurse");
+							// System.out.println("nurse");
 							staffType = "Nurse";
 							mainApp.showNurse();
 						}
-					}else {
+					} else {
 						wrong.setText("Username/Password incorrect");
-				} 
+					}
 
-			}
+				}
+				
 			}
 		});
 
