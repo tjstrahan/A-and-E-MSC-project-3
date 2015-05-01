@@ -25,7 +25,7 @@ import javax.mail.Session;
 import javax.mail.Store;
 
 /**
- * @author James Maguire
+ * Class to simulate what a hospital manager can do in the system
  *
  */
 public class HospitalManager {
@@ -72,11 +72,11 @@ public class HospitalManager {
 
 	}
 
-	public void setOnCallTeam() throws Exception {
+	public void setOnCallTeam(int team) throws Exception {
 
-		int team = 0;
-		System.out.println("Select medical team 1 or 2 for on call duties");
-		team = scanner.nextInt();
+		//int team = 0;
+		//System.out.println("Select medical team 1 or 2 for on call duties");
+		//team = scanner.nextInt();
 		if (team == 1) {
 			hMa.getOnCallTeamDocs(team);
 			hMa.getOnCallTeamNurses(team);
