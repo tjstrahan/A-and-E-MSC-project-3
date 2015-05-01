@@ -21,9 +21,9 @@ public class AdHocJDBCTest {
 		int staffID;
 
 		try {
-			hM.populateReceptionistList();
-			
-			hM.populateMedicalTeam();
+			//hM.populateReceptionistList();
+			hM.populateHospitalManagerList();
+			//hM.populateMedicalTeam();
 			//hM.setOnCallTeam();
 			//SendSMS.checkSMSCredit();
 			//SendSMS.sendSMSOnCallTeam();
