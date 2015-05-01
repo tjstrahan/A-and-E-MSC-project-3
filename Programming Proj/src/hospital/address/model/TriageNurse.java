@@ -2,12 +2,11 @@ package hospital.address.model;
 
 // Imports
 import hospital.address.TheQueue;
+import hospital.address.view.PatientViewController;
 
 import java.time.Instant;
 import java.util.Random;
 import java.util.Scanner;
-
-
 
 /**
  * Triage Nurse class - this represents the triage nurse and is where patients
@@ -22,12 +21,12 @@ public class TriageNurse implements Runnable {
 	 * Instantiate the Queue class
 	 */
 	static TheQueue hospQueue = new TheQueue();
-	
+
 	/**
 	 * Instantiate the Random class
 	 */
 	static Random random = new Random();
-	
+
 	static Scanner scanner = new Scanner(System.in);
 
 	/**
@@ -46,18 +45,20 @@ public class TriageNurse implements Runnable {
 			// Increment patient number
 			admissionNumber++;
 
-			// Set triage rating
-			try {
-				assignTriageNumber(randomTriageNumber());
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if (Receptionist.patientsFromDB.get(0).getTriageNumber() == 0) {
+				// Set triage rating
+				try {
+					assignTriageNumber(randomTriageNumber());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-
+			
 			// Set patient's admission number
 			Receptionist.patientsFromDB.get(0).setAdmissionNumber(
 					admissionNumber);
-			
+
 			// Get new instant of time
 			Instant startWait = Instant.now();
 
@@ -75,8 +76,9 @@ public class TriageNurse implements Runnable {
 
 			// Pause to represent gaps between patients - set at 1 to 2 minutes
 			try {
-				Thread.sleep((random.nextInt(60000) + 60000)
-						/ TheQueue.TIME_FACTOR);
+				Thread.sleep(59900 / TheQueue.TIME_FACTOR);
+				// Thread.sleep((random.nextInt(60000) + 60000)
+				// / TheQueue.TIME_FACTOR);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -85,23 +87,23 @@ public class TriageNurse implements Runnable {
 		} while (Receptionist.patientsFromDB.size() != 0);
 
 	}
-	
+
 	public int randomTriageNumber() {
-		return random.nextInt(4);
+		return random.nextInt(5);
 	}
 
-	
 	public void manualTriageNumber() throws Exception {
 		int input = 0;
 		System.out.println("Enter triage number");
 		input = scanner.nextInt();
 		assignTriageNumber(input);
 	}
-	
+
 	/**
 	 * Method to randomly assign triage number
+	 * 
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public void assignTriageNumber(int selection) throws Exception {
 		int triageRating = 0;
@@ -112,17 +114,22 @@ public class TriageNurse implements Runnable {
 			triageCat = "Emergency";
 			break;
 		case 1:
+			triageRating = 1;
+			triageCat = "Emergency";
+			break;
+		case 2:
 			triageRating = 2;
 			triageCat = "Urgent";
 			break;
-		case 2:
+		case 3:
 			triageRating = 3;
 			triageCat = "Semi-urgent";
 			break;
-		case 3:
+		case 4:
 			triageRating = 4;
 			triageCat = "Non-urgent";
 			break;
+
 		}
 
 		Receptionist.patientsFromDB.get(0).setTriageNumber(triageRating);
