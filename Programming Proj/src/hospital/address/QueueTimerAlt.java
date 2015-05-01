@@ -40,12 +40,9 @@ public class QueueTimerAlt implements Runnable {
 	static final int SMS_TO_HOSP_MANAGER = 1;
 
 	/**
-	 * ArrayList to hold a temporary copy of Treatment Room list. Set to same
-	 * size as is equal to the number of treatment rooms for memory allocation
-	 * reasons
+	 * ArrayList to hold a temporary copy of Treatment Room list. 
 	 */
-	static ArrayList<Patient> treatmentCopy = new ArrayList<Patient>(
-			TheQueue.NUMBER_OF_TREATMENT_ROOMS);
+	static ArrayList<Patient> treatmentCopy = new ArrayList<Patient>();
 
 	/**
 	 * LinkedList to hold a temporary copy of Waiting list.
@@ -132,7 +129,7 @@ public class QueueTimerAlt implements Runnable {
 		// While alive
 		while (Starter.isAlive) {
 
-			// printTime(); was used for testing purposes
+			printTime();
 			checkTreatmentRooms();
 			checkOnCallTeam();
 			setWaitingTimes();
@@ -403,7 +400,7 @@ public class QueueTimerAlt implements Runnable {
 		// this more user friendly rather than the standard ISO-8601
 		// format
 		// System.out.println(now.toString());
-		System.out.println(germanDateTime);
+		// System.out.println(germanDateTime);
 
 	}
 

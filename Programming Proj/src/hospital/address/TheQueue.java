@@ -24,7 +24,7 @@ public class TheQueue {
 	 * If set to 40 it runs forty times faster than real time. To set to real
 	 * time set this variable to 1. Main purpose is testing and demonstrating.
 	 */
-	public static final int TIME_FACTOR = 16;
+	public static final int TIME_FACTOR = 10;
 
 	/**
 	 * Maximum length of Waiting List as described in specifications - Should
@@ -85,11 +85,9 @@ public class TheQueue {
 
 	/**
 	 * ArrayList of patients to represent the five Treatment Rooms in the
-	 * Accident and Emergency Department at the hospital. The memory space is
-	 * allocated when created
+	 * Accident and Emergency Department at the hospital. 
 	 */
-	public static ArrayList<Patient> TreatmentRoom = new ArrayList<Patient>(
-			NUMBER_OF_TREATMENT_ROOMS);
+	public static ArrayList<Patient> TreatmentRoom = new ArrayList<Patient>();
 
 	/**
 	 * LinkedList that will hold a patient when they are being treated by the on
