@@ -77,6 +77,8 @@ public class Starter implements Runnable{
 		// Get receptionist to start adding patients
 		rA.admitAllPatients();
 
+		Thread.sleep(1000);
+		
 		// Start TriageNurse thread to assign triage categories and add patients
 		// into the queueing system
 		TriageNurse triNurse = new TriageNurse();

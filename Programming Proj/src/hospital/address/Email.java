@@ -15,15 +15,18 @@ import javax.mail.internet.*;
  * @author James Maguire
  */
 public class Email implements Runnable {
+	
 	/**
 	 * User_Name for gmail.com. NOTE: Use just information before @gmail.com as
 	 * the username.
 	 */
 	private static String USER_NAME = "tothehospitalmanager";
+	
 	/**
 	 * Password for your gmail account connected to username
 	 */
 	private static String PASSWORD = "javateers2015";
+	
 	/**
 	 * Who you are sending the mail to.
 	 */

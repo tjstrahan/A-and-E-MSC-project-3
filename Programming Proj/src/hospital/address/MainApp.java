@@ -6,7 +6,9 @@ import java.util.LinkedList;
 import hospital.address.QueueTimerAlt;
 import hospital.address.model.Doctor;
 import hospital.address.model.HospitalManager;
+import hospital.address.model.Nurse;
 import hospital.address.model.Patient;
+import hospital.address.model.Receptionist;
 import hospital.address.model.Staff;
 import hospital.address.model.Status;
 import hospital.address.view.DoctorController;
@@ -177,9 +179,9 @@ public class MainApp extends Application {
 		//staffList.addAll(HospitalManager.hospitalManagerList);
 		
 		try {
-			staffList.add(new Doctor("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 100300, 199300, "Password0", 1));
-			staffList.add(new Doctor("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 700301, 799301, "Password1", 1));
-			staffList.add(new Doctor("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 500311, 599311, "Password11", 1));
+			staffList.add(0, new Doctor("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 100300, 199300, "Password0", 1));
+			staffList.add(1, new Nurse("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 700301, 799301, "Password1", 1));
+			staffList.add(2, new Staff("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 500311, 599311, "Password11"));
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
