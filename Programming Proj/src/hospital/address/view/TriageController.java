@@ -104,7 +104,9 @@ public class TriageController {
 		});
 
 		
-		getPatients();
+		if(!PatientViewController.Admittedpatients.isEmpty()){
+			getPatients();
+		}
 
 	}
 

@@ -69,13 +69,12 @@ public class NurseController {
 	@FXML
 	private Button triagePatient;
 
+	@FXML
+	private Button logout;
+
 	public static String treatRoomNoString;
 
 	public static int treatRoomNoInt;
-
-	private Object selectedItem; 
-	
-	private GeneralAccess ga;
 	
 	public static MainApp mainApp;
 	
