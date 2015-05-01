@@ -1,16 +1,20 @@
 package hospital.address.view;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.LinkedList;
 
 import hospital.address.MainApp;
 import hospital.address.MedicalTeamOperations;
 import hospital.address.jdbc.DoctorAccess;
 import hospital.address.model.Patient;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -63,8 +68,13 @@ public class DoctorController {
 
 	@FXML
 	private Button search;
-
-
+	
+	@FXML
+	private Button logout;
+	
+	@FXML
+	private Label displayNotes;
+	
 	public static String NHSNumber;
 
 	public static int NHSNumberInt;
@@ -74,6 +84,8 @@ public class DoctorController {
 	public static int treatRoomNoInt;
 	
 	private Stage primaryStage;
+	
+	public static LinkedList<String> notesPatient = new LinkedList<String>();
 
 	DoctorAccess da = new DoctorAccess();
 
@@ -130,9 +142,20 @@ public class DoctorController {
 			@Override
 			public void handle(ActionEvent event) {
 				NHSNumberInt = Integer.parseInt(NHSNumber);
-			}
+			
+				try {
+					System.out.println("here");
+					DoctorAccess da = new DoctorAccess();
+					String previousNotes;
+					previousNotes = da.viewNotesOnPatientRecord(NHSNumberInt);
+					displayNotes.setText(notesPatient.get(0));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+		}
 		});
-
 
 		notes.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -151,8 +174,40 @@ public class DoctorController {
 			}
 		});
 
-	}
+	
+	logout.setOnAction(new EventHandler<ActionEvent>() {
 
+		@Override
+		public void handle(ActionEvent event) {
+			
+			LoginController log = new LoginController();
+			Platform.runLater(new Runnable() {
+				  
+				@Override public void run() {
+					  try {
+						  LoginController.user = null;
+						  LoginController.pass = null;
+						  	log.setStaffType(null);
+							// Load person overview.
+							FXMLLoader load = new FXMLLoader();
+							load.setLocation(MainApp.class.getResource("view/Login.fxml"));
+							AnchorPane Login = load.load();
+
+							// Set person overview into the center of root layout.
+							MainApp.rootLayout.setCenter(Login);
+
+							LoginController controller = load.getController();
+							controller.setMainApp(mainApp);
+							
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+				  }
+				});
+		}
+	});
+	
+	}
 	private void prepareWindow() {
 
 		treatmentTable.setEditable(false);

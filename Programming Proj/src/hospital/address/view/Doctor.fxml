@@ -10,9 +10,9 @@
    <children>
       <Button fx:id="notes" layoutX="25.0" layoutY="159.0" maxHeight="26.0" maxWidth="156.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="156.0" text="Add Notes" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" />
       <TextField fx:id="nhsNumberInput" layoutX="25.0" layoutY="14.0" promptText="Enter NHS#:" AnchorPane.leftAnchor="25.0" />
-      <TextField fx:id="notesInput" alignment="TOP_LEFT" layoutX="25.0" layoutY="51.0" prefHeight="94.0" prefWidth="550.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-      <Button fx:id="search" layoutX="515.0" layoutY="14.0" mnemonicParsing="false" text="Search" AnchorPane.rightAnchor="25.0" />
-      <TableView fx:id="treatmentTable" focusTraversable="false" layoutX="14.0" layoutY="287.0" mouseTransparent="true" prefHeight="286.0" prefWidth="750.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="200.0">
+      <TextField fx:id="notesInput" alignment="TOP_LEFT" layoutX="25.0" layoutY="102.0" prefHeight="50.0" prefWidth="550.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <Button fx:id="search" layoutX="184.0" layoutY="14.0" mnemonicParsing="false" text="Search" AnchorPane.rightAnchor="364.0" />
+      <TableView fx:id="treatmentTable" focusTraversable="false" layoutX="25.0" layoutY="200.0" mouseTransparent="true" prefHeight="286.0" prefWidth="750.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="200.0">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
@@ -31,5 +31,7 @@
       </TableView>
       <Button fx:id="extendTreatment" layoutX="429.0" layoutY="158.0" maxHeight="26.0" maxWidth="156.0" mnemonicParsing="false" onAction="#initialize" prefHeight="26.0" prefWidth="156.0" text="Extend Treatment Time" AnchorPane.leftAnchor="429.0" AnchorPane.rightAnchor="25.0" />
       <TextField fx:id="treatmentRoomField" layoutX="210.0" layoutY="160.0" maxHeight="26.0" maxWidth="156.0" onAction="#initialize" prefHeight="26.0" prefWidth="156.0" promptText="Enter Treatment Room:" />
+      <Button fx:id="logout" layoutX="532.0" layoutY="14.0" mnemonicParsing="false" onAction="#initialize" text="Logout" />
+      <Label fx:id="displayNotes" layoutX="25.0" layoutY="50.0" />
    </children>
 </AnchorPane>
