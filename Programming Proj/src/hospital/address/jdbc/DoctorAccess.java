@@ -139,7 +139,10 @@ public class DoctorAccess {
 				ResultSet.CONCUR_READ_ONLY);
 		String sql;
 		String notes = "";
-		sql = "SELECT Notes FROM patient WHERE NHS_number = " + NHS_Number
+		String knownConditions="";
+		String allergies= "";
+		
+		sql = "SELECT Notes, Known_Conditions, Allergies FROM patient WHERE NHS_number = " + NHS_Number
 				+ ";";
 
 		ResultSet rs = stmt.executeQuery(sql);
@@ -147,11 +150,18 @@ public class DoctorAccess {
 		while (rs.next()) {
 
 			notes = rs.getString("Notes");
+			allergies = rs.getString("Allergies");
+			knownConditions = rs.getString("Known_Conditions");
+			
+			
 		}
 		stmt.close();
 		con.close();
 
 		DoctorController.notesPatient.add(notes);
+		DoctorController.notesPatient.add(allergies);
+		DoctorController.notesPatient.add(knownConditions);
+		
 		// System.err.println("Failed to view \'Notes\'");
 		if (notes == null) {
 			notes = "n/a";

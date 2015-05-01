@@ -75,6 +75,12 @@ public class DoctorController {
 	@FXML
 	private Label displayNotes;
 	
+	@FXML
+	private Label displayConditons;
+	
+	@FXML
+	private Label displayAllergies;
+	
 	public static String NHSNumber;
 
 	public static int NHSNumberInt;
@@ -149,6 +155,8 @@ public class DoctorController {
 					String previousNotes;
 					previousNotes = da.viewNotesOnPatientRecord(NHSNumberInt);
 					displayNotes.setText(notesPatient.get(0));
+					displayAllergies.setText(notesPatient.get(1));
+					displayConditons.setText(notesPatient.get(2));
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

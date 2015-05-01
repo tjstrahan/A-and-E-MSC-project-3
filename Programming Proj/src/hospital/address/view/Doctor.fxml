@@ -32,6 +32,11 @@
       <Button fx:id="extendTreatment" layoutX="429.0" layoutY="158.0" maxHeight="26.0" maxWidth="156.0" mnemonicParsing="false" onAction="#initialize" prefHeight="26.0" prefWidth="156.0" text="Extend Treatment Time" AnchorPane.leftAnchor="429.0" AnchorPane.rightAnchor="25.0" />
       <TextField fx:id="treatmentRoomField" layoutX="210.0" layoutY="160.0" maxHeight="26.0" maxWidth="156.0" onAction="#initialize" prefHeight="26.0" prefWidth="156.0" promptText="Enter Treatment Room:" />
       <Button fx:id="logout" layoutX="532.0" layoutY="14.0" mnemonicParsing="false" onAction="#initialize" text="Logout" />
-      <Label fx:id="displayNotes" layoutX="25.0" layoutY="50.0" />
+      <Label fx:id="displayNotes" layoutX="200.0" layoutY="42.0" prefHeight="17.0" prefWidth="388.0" />
+      <Label layoutX="25.0" layoutY="42.0" text="Notes from previous visit:" />
+      <Label layoutX="25.0" layoutY="59.0" text="Allergies:" />
+      <Label layoutX="25.0" layoutY="76.0" text="Known conditions:" />
+      <Label fx:id="displayAllergies" layoutX="200.0" layoutY="59.0" prefHeight="17.0" prefWidth="388.0" />
+      <Label fx:id="displayConditions" layoutX="200.0" layoutY="76.0" prefHeight="17.0" prefWidth="388.0" />
    </children>
 </AnchorPane>
