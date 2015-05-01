@@ -16,11 +16,7 @@ import hospital.address.model.Staff;
 
 public class LoginController {
 
-	/**
-	 * LinkedList of doctors and nurses working in medical team on site
-	 */
-	static LinkedList<Staff> staffList = new LinkedList<Staff>();
-	static LinkedList<Staff> receptionists = new LinkedList<Staff>();
+	private String staffType;
 
 	@FXML
 	private TextField username;
@@ -55,6 +51,7 @@ public class LoginController {
 	@FXML
 	private void initialize() {
 		
+		
 		wrong.setText(" ");
 		// Initialize the person table with the two columns.
 		username.setOnKeyReleased(new EventHandler<Event>() {
@@ -81,43 +78,28 @@ public class LoginController {
 			@Override
 			public void handle(ActionEvent arg0) {
 				
-				receptionists.clear();
 
-				HospitalManager hM = new HospitalManager();
-
-				try {
-					hM.populateMedicalTeam();
-					hM.populateReceptionistList();
-					hM.populateHospitalManagerList();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
 				Staff staff = new Staff();
-				String staffType;
-
-				staffList.addAll(HospitalManager.medicalTeam);
-				staffList.addAll(HospitalManager.receptionistList);
-				staffList.addAll(HospitalManager.hospitalManagerList);
+			
+				staffType = null;
 
 				int number = Integer.parseInt(user);
 
-				for (int loop = 0; loop < staffList.size(); loop++) {
-					if (number == (staffList.get(loop).getLoginID())
-							&& pass.equals(staffList.get(loop).getPassword())) {
+				for (int loop = 0; loop < MainApp.staffList.size(); loop++) {
+					if (number == (MainApp.staffList.get(loop).getLoginID())
+							&& pass.equals(MainApp.staffList.get(loop).getPassword())) {
 						if (number >= 100000 && number < 200000) {
-							System.out.println("doctor");
+							//System.out.println("doctor");
 							staffType = "Doctor";
 							mainApp.showDoc();
 						} else if (number >= 300000 && number < 400000) {
 							staffType = "Hospital Manager";
 						} else if (number >= 500000 && number < 600000) {
-							System.out.println("receptionist");
+							//System.out.println("receptionist");
 							staffType = "Receptionist";
 							mainApp.showRecep();						
 						} else if (number >= 700000 && number < 800000) {
-							System.out.println("nurse");
+							//System.out.println("nurse");
 							staffType = "Nurse";
 							mainApp.showNurse();
 						}
@@ -138,6 +120,14 @@ public class LoginController {
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
+	}
+
+	public String getStaffType() {
+		return staffType;
+	}
+
+	public void setStaffType(String staffType) {
+		this.staffType = staffType;
 	}
 
 	// public static void LoginProcess (String username, String password){

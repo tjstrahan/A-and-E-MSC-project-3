@@ -42,12 +42,12 @@ public class ReceptionistController {
 			public void handle(ActionEvent event) {
 				
 				LoginController log = new LoginController();
-				log.receptionists.clear();
-				log.staffList.clear();
 				Platform.runLater(new Runnable() {
 					  @Override public void run() {
 						  try {
-								
+							  LoginController.user = null;
+							  LoginController.pass = null;
+							  	log.setStaffType(null);
 								// Load person overview.
 								FXMLLoader load = new FXMLLoader();
 								load.setLocation(MainApp.class.getResource("view/Login.fxml"));
@@ -56,9 +56,11 @@ public class ReceptionistController {
 								// Set person overview into the center of root layout.
 								MainApp.rootLayout.setCenter(Login);
 
-								PatientViewController controller = load.getController();
+								LoginController controller = load.getController();
 								controller.setMainApp(mainApp);
 
+								
+								
 							} catch (IOException e) {
 								e.printStackTrace();
 							}

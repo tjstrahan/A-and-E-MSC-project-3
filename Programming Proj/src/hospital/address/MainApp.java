@@ -1,9 +1,12 @@
 package hospital.address;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 import hospital.address.QueueTimerAlt;
+import hospital.address.model.HospitalManager;
 import hospital.address.model.Patient;
+import hospital.address.model.Staff;
 import hospital.address.model.Status;
 import hospital.address.view.DoctorController;
 import hospital.address.view.LoginController;
@@ -23,26 +26,44 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * The main executable of the whole application - allows different users to log
+ * into the system and interact with both the database and the queue. Also
+ * displays both the staff and patient views of the queue.
+ * 
+ */
 public class MainApp extends Application {
-
-	static QueueTimerAlt qTa = new QueueTimerAlt();
-	static TheQueue tQ = new TheQueue();
-
+	
+	/**
+	 * List of treatment room patients to be displayed
+	 */
 	public static ObservableList<Patient> fxTreatmentList = FXCollections
 			.observableArrayList();
 
+	/**
+	 * List of waiting list patients to be displayed
+	 */
 	public static ObservableList<Patient> fxWaitingList = FXCollections
 			.observableArrayList();
 
+	/**
+	 * LinkedList of doctors and nurses working in medical team on site
+	 */
+	public static LinkedList<Staff> staffList = new LinkedList<Staff>();
+	static LinkedList<Staff> receptionists = new LinkedList<Staff>();
+	
+	/**
+	 * List holding patient being treated by on call team to be displayed
+	 */
 	public static ObservableList<Patient> fxOnCallList = FXCollections
 			.observableArrayList();
 
 	public static ObservableList<Status> fxStatusCode = FXCollections
 			.observableArrayList();
-	
+
 	public static ObservableList<Patient> fxCallNextPatient = FXCollections
 			.observableArrayList();
-	
+
 	public static ObservableList<Patient> fxCallOnCallPatient = FXCollections
 			.observableArrayList();
 
@@ -67,7 +88,11 @@ public class MainApp extends Application {
 		showLogin();
 
 	}
- 
+
+	/**
+	 * Method to open new JavaFX stage to display the whole queue and Accident
+	 * and Emergency status
+	 */
 	public void queueWindow() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -88,6 +113,10 @@ public class MainApp extends Application {
 		}
 	}
 
+	/**
+	 * Method to open new JavaFX stage to show messages to patients who are
+	 * waiting to be treated.
+	 */
 	public void patientViewWaitingList() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -96,11 +125,9 @@ public class MainApp extends Application {
 			Parent root = loader.load();
 			Stage stage = new Stage();
 
-			
 			WaitingController controller = loader.getController();
 			controller.setMainApp(this);
 
-			
 			stage.setScene(new Scene(root, 1000, 400));
 			stage.setTitle("Patient View");
 			stage.setResizable(false);
@@ -109,7 +136,7 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Initializes the root layout.
 	 */
@@ -129,6 +156,23 @@ public class MainApp extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void populateStaff (){
+		HospitalManager hM = new HospitalManager();
+
+		try {
+			hM.populateMedicalTeam();
+			hM.populateReceptionistList();
+			hM.populateHospitalManagerList();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		staffList.addAll(HospitalManager.medicalTeam);
+		staffList.addAll(HospitalManager.receptionistList);
+		staffList.addAll(HospitalManager.hospitalManagerList);
 	}
 
 	/**
@@ -172,7 +216,7 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void showEdit() {
 		try {
 			// Load person overview.
@@ -195,7 +239,7 @@ public class MainApp extends Application {
 
 	public void showPatientView() {
 		try {
-		
+
 			// Load person overview.
 			FXMLLoader load = new FXMLLoader();
 			load.setLocation(MainApp.class.getResource("view/PatientView.fxml"));
@@ -250,15 +294,13 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public void showTriage() {
 
 		try {
 			// Load person overview.
 			FXMLLoader load = new FXMLLoader();
-			load.setLocation(MainApp.class
-					.getResource("view/Triage.fxml"));
+			load.setLocation(MainApp.class.getResource("view/Triage.fxml"));
 			AnchorPane searchRecep = load.load();
 
 			// Set person overview into the center of root layout.
@@ -293,11 +335,10 @@ public class MainApp extends Application {
 		}
 	}
 
-
 	public static void clearFxTreatmentList() {
 		fxTreatmentList.clear();
 	}
-	
+
 	public static void copyFxTreatmentListAgain() {
 		fxTreatmentList.addAll(QueueTimerAlt.forDisplay);
 	}
@@ -305,7 +346,7 @@ public class MainApp extends Application {
 	public static void clearFxWaitingList() {
 		fxWaitingList.clear();
 	}
-	
+
 	public static void copyFxWaitingListAgain() {
 		fxWaitingList.addAll(QueueTimerAlt.waitingCopy);
 	}
@@ -313,19 +354,20 @@ public class MainApp extends Application {
 	public static void clearFxOnCallList() {
 		fxOnCallList.clear();
 	}
-	
+
 	public static void copyFxOnCallListAgain() {
 		fxOnCallList.addAll(QueueTimerAlt.onCallCopy);
 	}
 
 	public static void clearFxStatus() {
 		fxStatusCode.clear();
-		
+
 	}
+
 	public static void copyFxStatusAgain() {
 		fxStatusCode.addAll(QueueTimerAlt.statusCodeList);
 	}
-	
+
 	public ObservableList<Patient> getFxTreatmentList() {
 		fxTreatmentList.addAll(QueueTimerAlt.forDisplay);
 		return fxTreatmentList;
@@ -345,15 +387,15 @@ public class MainApp extends Application {
 		fxStatusCode.addAll(QueueTimerAlt.statusCodeList);
 		return fxStatusCode;
 	}
-	
+
 	public ObservableList<Patient> getFxCallOnCallPatient() {
 		return fxCallOnCallPatient;
 	}
-	
+
 	public ObservableList<Patient> getFxCallNextPatient() {
 		return fxCallNextPatient;
 	}
-	
+
 	public ObservableList<Patient> getFxByeByePatient() {
 		return fxByeByePatient;
 	}
@@ -367,11 +409,13 @@ public class MainApp extends Application {
 		return primaryStage;
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 
+		populateStaff();
 		Starter start = new Starter();
 		Thread t1 = new Thread(start);
 		t1.start();
+		
 
 		launch(args);
 	}
