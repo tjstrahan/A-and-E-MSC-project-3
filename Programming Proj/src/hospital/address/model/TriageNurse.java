@@ -2,8 +2,6 @@ package hospital.address.model;
 
 // Imports
 import hospital.address.TheQueue;
-import hospital.address.view.PatientViewController;
-
 import java.time.Instant;
 import java.util.Random;
 import java.util.Scanner;
