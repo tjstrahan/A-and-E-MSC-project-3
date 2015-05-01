@@ -18,12 +18,12 @@
             <Font name="Comic Sans MS" size="38.0" />
          </font>
       </Text>
-      <ImageView fitHeight="260.0" fitWidth="222.0" layoutX="220.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="260.0" fitWidth="222.0" layoutX="225.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../../receptionist.png" />
          </image>
       </ImageView>
-      <Button layoutX="69.0" layoutY="190.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="129.0" text="Logout">
+      <Button fx:id="Logout" layoutX="69.0" layoutY="190.0" mnemonicParsing="false" onAction="#initialize" prefHeight="84.0" prefWidth="129.0" text="Logout">
          <font>
             <Font name="Comic Sans MS" size="23.0" />
          </font>
