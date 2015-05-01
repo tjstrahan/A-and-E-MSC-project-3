@@ -9,13 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
-
-
-
 import hospital.address.model.Patient;
 import hospital.address.model.Receptionist;
-import hospital.address.model.Staff;
 import hospital.address.view.ReceptonistSearchController;
 
 
@@ -216,7 +211,6 @@ public class ReceptionistAccess {
 				rs.next();
 
 				// Retrieve by column name
-				ReceptonistSearchController recep = new ReceptonistSearchController();
 				try {
 					ReceptonistSearchController.PatientSearched.add(new Patient (
 					rs.getString("Title"),
