@@ -352,19 +352,19 @@ public abstract class Person {
 	public void setContactNumber(long contactNumber)
 			throws IllegalArgumentException, Exception {
 
-		// if the mobile number if 11 digits long set it to the mobile number
+		// if the mobile number if 12 digits long set it to the mobile number
 		// variable
 		if (contactNumber >= MOBILE_NUMBER_MIN_LENGTH
 				&& contactNumber <= MOBILE_NUMBER_MAX_LENGTH) {
 
 			this.contactNumber = contactNumber;
-			// if the mobile number is not 11 digits long
+			// if the mobile number is not 12 digits long
 		} else if (contactNumber < MOBILE_NUMBER_MIN_LENGTH
 				|| contactNumber > MOBILE_NUMBER_MAX_LENGTH) {
 			// throw a new illegal argument exception with an appropriate
 			// message
 			throw new IllegalArgumentException(
-					"Sorry your mobile number must be 11 numbers long");
+					"Sorry your mobile number must be 12 numbers long");
 			// if anything else
 		} else {
 			// throw a new illegal argument exception with an appropriate
