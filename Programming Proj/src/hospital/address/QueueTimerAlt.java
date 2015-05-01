@@ -395,6 +395,7 @@ public class QueueTimerAlt implements Runnable {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(
 				FormatStyle.SHORT).withLocale(new Locale("de"));
+		@SuppressWarnings("unused")
 		String germanDateTime = dateTime.format(formatter);
 		// Print time to screen - some work possibly needed here to make
 		// this more user friendly rather than the standard ISO-8601
