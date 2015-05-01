@@ -121,7 +121,7 @@ public class Patient extends Person {
 	 * display purposes in javaFX classes
 	 */
 	private int actualTreatmentRoom;
-	
+
 	/**
 	 * Instance var boolean to show that a patient was treate by the on call
 	 * team, as this would not necessarily be obvious from treatment time alone
@@ -761,18 +761,38 @@ public class Patient extends Person {
 		this.extraTime = extraTime;
 	}
 
+	/**
+	 * Method to get the triage category
+	 * 
+	 * @return
+	 */
 	public String getTriageCategory() {
 		return triageCategory;
 	}
 
+	/**
+	 * Method to set triage category
+	 * 
+	 * @param triageCategory
+	 */
 	public void setTriageCategory(String triageCategory) {
 		this.triageCategory = triageCategory;
 	}
 
+	/**
+	 * Method to get actual treatment room
+	 * 
+	 * @return
+	 */
 	public int getActualTreatmentRoom() {
 		return actualTreatmentRoom;
 	}
 
+	/**
+	 * Method to set actual treatment room
+	 * 
+	 * @param actualTreatmentRoom
+	 */
 	public void setActualTreatmentRoom(int actualTreatmentRoom) {
 		this.actualTreatmentRoom = actualTreatmentRoom;
 	}

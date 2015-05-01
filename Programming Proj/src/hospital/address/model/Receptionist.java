@@ -13,11 +13,21 @@ import hospital.address.jdbc.GeneralAccess;
 import hospital.address.jdbc.ReceptionistAccess;
 
 public class Receptionist extends Staff {
-	
+	/**
+	 * Linked list to store the patients from the database
+	 */
 	public static LinkedList<Patient> patientsFromDB = new LinkedList<Patient>();
+	/**
+	 * Instantiation of the scanner
+	 */
 	static Scanner scanner = new Scanner(System.in);
+	/**
+	 * Instantiation of the receptionist access
+	 */
 	static ReceptionistAccess rA = new ReceptionistAccess();
-	
+	/**
+	 * Constant for NHS number maximum value
+	 */
 	private static final int NHS_NUMBER_MAX = 999999999;
 
 	/**
@@ -28,7 +38,6 @@ public class Receptionist extends Staff {
 	/**
 	 * default constructor for Receptionist
 	 */
-	
 
 	/**
 	 * constructor with arguments
@@ -122,7 +131,7 @@ public class Receptionist extends Staff {
 		case 11:
 			updateNextOfKin();
 			break;
-		case 12 :
+		case 12:
 			lookUpPatient();
 
 		}
@@ -177,11 +186,11 @@ public class Receptionist extends Staff {
 	 * Method to allow the Receptionist to admit a patient
 	 */
 	public void admitPatient(int nhsNumber) {
-		//do {
-			//System.out.print("Please enter nhsNumber : ");
-			//nhsNumber = scanner.nextInt();
-			// Check that the NHS number is nine figures long
-		//} while (nhsNumber >= NHS_NUMBER_MIN && nhsNumber <= NHS_NUMBER_MAX);
+		// do {
+		// System.out.print("Please enter nhsNumber : ");
+		// nhsNumber = scanner.nextInt();
+		// Check that the NHS number is nine figures long
+		// } while (nhsNumber >= NHS_NUMBER_MIN && nhsNumber <= NHS_NUMBER_MAX);
 
 		try {
 			ReceptionistAccess.admitPatient(nhsNumber);
@@ -228,8 +237,11 @@ public class Receptionist extends Staff {
 				.format(dateDOB);
 	}
 
+	/**
+	 * Method to update first line of patient address
+	 */
 	public static void updateFirstLinePatientAddress() {
-		
+
 		int nhsNumber;
 		String addressLineOne;
 
@@ -251,8 +263,11 @@ public class Receptionist extends Staff {
 
 	}
 
+	/**
+	 * Method to update second line of patient address
+	 */
 	public static void updateSecondLineOfPatientAddress() {
-		
+
 		int nhsNumber;
 		String addressLineTwo;
 
@@ -273,8 +288,11 @@ public class Receptionist extends Staff {
 		}
 	}
 
+	/**
+	 * Method to update third line of patient address
+	 */
 	public static void updateThirdLineOfPatientAddress() {
-		
+
 		int nhsNumber;
 		String addressLineThree;
 
@@ -296,8 +314,12 @@ public class Receptionist extends Staff {
 
 	}
 
+	/**
+	 * Method to update patient city
+	 */
+
 	public static void updatePatientCity() {
-		
+
 		int nhsNumber;
 		String city;
 
@@ -319,8 +341,11 @@ public class Receptionist extends Staff {
 
 	}
 
+	/**
+	 * Method to update patient postcode
+	 */
 	public static void updatePatientPostcode() {
-		
+
 		int nhsNumber;
 		String postCode;
 
@@ -341,12 +366,15 @@ public class Receptionist extends Staff {
 
 	}
 
+	/**
+	 * Method to update patient contact number
+	 */
 	public static void updatePatientContactNumber() {
-		
+
 		int nhsNumber;
 		long contactNumber = 0;
 
-		//Long contact = contactNumber;
+		// Long contact = contactNumber;
 
 		System.out.print("Please enter contact number : ");
 		contactNumber = scanner.nextLong();
@@ -368,8 +396,11 @@ public class Receptionist extends Staff {
 		}
 	}
 
+	/**
+	 * Method to add patient first allergies
+	 */
 	public static void addPatientFirstAllergies() {
-		
+
 		int nhsNumber;
 		String allergies;
 
@@ -389,8 +420,11 @@ public class Receptionist extends Staff {
 		}
 	}
 
+	/**
+	 * Method to add more patient allergies
+	 */
 	public static void addPatientMoreAllergies() {
-		
+
 		int nhsNumber;
 		String allergies;
 
@@ -411,8 +445,11 @@ public class Receptionist extends Staff {
 
 	}
 
+	/**
+	 * Method to add first known patient conditions
+	 */
 	public static void addFirstKnownPatientConditions() {
-		
+
 		int nhsNumber;
 		String knownConditions;
 
@@ -433,8 +470,11 @@ public class Receptionist extends Staff {
 
 	}
 
+	/**
+	 * Method to add more known patient conditions
+	 */
 	public static void addMoreKnownPatientConditions() {
-		
+
 		int nhsNumber;
 		String knownConditions;
 
@@ -454,8 +494,11 @@ public class Receptionist extends Staff {
 		}
 	}
 
+	/**
+	 * Method to update next of kin
+	 */
 	public static void updateNextOfKin() {
-		
+
 		int nhsNumber;
 		String nextOfKin = null;
 
