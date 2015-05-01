@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import hospital.address.QueueTimerAlt;
+import hospital.address.model.Doctor;
 import hospital.address.model.HospitalManager;
 import hospital.address.model.Patient;
 import hospital.address.model.Staff;
@@ -160,19 +161,33 @@ public class MainApp extends Application {
 	
 	public static void populateStaff (){
 		HospitalManager hM = new HospitalManager();
-
+		Staff staff = new Staff();
+		
 		try {
-			hM.populateMedicalTeam();
-			hM.populateReceptionistList();
-			hM.populateHospitalManagerList();
+		//	hM.populateMedicalTeam();
+		//	hM.populateReceptionistList();
+		//	hM.populateHospitalManagerList();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		staffList.addAll(HospitalManager.medicalTeam);
-		staffList.addAll(HospitalManager.receptionistList);
-		staffList.addAll(HospitalManager.hospitalManagerList);
+		//staffList.addAll(HospitalManager.medicalTeam);
+		//staffList.addAll(HospitalManager.receptionistList);
+		//staffList.addAll(HospitalManager.hospitalManagerList);
+		
+		try {
+			staffList.add(new Doctor("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 100300, 199300, "Password0", 1));
+			staffList.add(new Doctor("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 700301, 799301, "Password1", 1));
+			staffList.add(new Doctor("Dr", "John", null, "Allen", "28-12-1999", "12 Rose Close", null, null, "Belfast", "BT1 5PN", 447777658080L, 500311, 599311, "Password11", 1));
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 	}
 
 	/**
