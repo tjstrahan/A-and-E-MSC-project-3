@@ -54,8 +54,6 @@ public class NurseController {
 
 	@FXML
 	private Label message;
-
-	private Stage primaryStage;
 	@FXML
 	private TextField treatmentRoomField;
 
@@ -71,18 +69,25 @@ public class NurseController {
 	@FXML
 	private Button logout;
 
+
+	private Stage primaryStage;
+	
 	public static String treatRoomNoString;
 
 	public static int treatRoomNoInt;
 	
 	public static MainApp mainApp;
 	
+	/**
+	 * Initializes FX with screen fields and controls
+	 */
 	@FXML
 	private void initialize() {
 		
+		// Dynamically populates queue 'widget' with up to date information
 		prepareWindow();
 		
-		// Initialize the person table with the two columns.
+		// Initializes treatment room field to enter room to extend
 		treatmentRoomField.setOnKeyReleased(new EventHandler<Event>() {
 
 			@Override
@@ -94,27 +99,30 @@ public class NurseController {
 			}
 		});
 	
-	
+		// Sets up button for extension of treatments
 		extendTreatment.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 
-				DropShadow dropShadow = new DropShadow();
+				
+				if(treatmentRoomField.getText().isEmpty()){
+					message.setText("Please assign a Category");
+				}
+				else{
+					final Stage dialog = new Stage();
+					dialog.initModality(Modality.APPLICATION_MODAL);
+					dialog.initOwner(primaryStage);
+					VBox dialogVbox = new VBox(20);
+					dialogVbox.getChildren().add(new Text("Treatment Extended!"));
+					Scene dialogScene = new Scene(dialogVbox, 150, 150);
+					dialog.setScene(dialogScene);
+					dialog.show();
+					message.setText("Treatment Extended");
+					MedicalTeamOperations.extraTreatmentTime(treatRoomNoInt);
+				}
 
-				message.setText("Extended....");
-				message.setEffect(dropShadow);
-
-				final Stage dialog = new Stage();
-				dialog.initModality(Modality.APPLICATION_MODAL);
-				dialog.initOwner(primaryStage);
-				VBox dialogVbox = new VBox(20);
-				dialogVbox.getChildren().add(new Text("Treatment Extended!"));
-				Scene dialogScene = new Scene(dialogVbox, 150, 150);
-				dialog.setScene(dialogScene);
-				dialog.show();
-
-				MedicalTeamOperations.extraTreatmentTime(treatRoomNoInt);
+				
 				
 				
 			}
