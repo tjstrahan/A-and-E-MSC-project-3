@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.address.view.WaitingController">
+   <children>
+      <SplitPane dividerPositions="0.4371859296482412" layoutX="296.0" layoutY="60.0" orientation="VERTICAL" prefHeight="274.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="156.0" prefWidth="998.0">
+               <children>
+                  <TableView fx:id="callPatient" focusTraversable="false" mouseTransparent="true" prefHeight="170.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <columns>
+                        <TableColumn editable="true" prefWidth="998.0" sortable="false" text="Can the following patient(s) please go to the designated Treatment Room">
+                           <columns>
+                              <TableColumn fx:id="titleColumn" editable="true" prefWidth="81.0" sortable="false" text="Title" />
+                              <TableColumn fx:id="forenameColumn" editable="true" prefWidth="232.0" sortable="false" text="Patient Forename" />
+                              <TableColumn fx:id="surnameColumn" editable="true" prefWidth="232.0" sortable="false" text="Patient Surname" />
+                              <TableColumn fx:id="dobColumn" editable="true" prefWidth="151.0" sortable="false" text="D.O.B." />
+                              <TableColumn fx:id="nhsColumn" editable="true" prefWidth="151.0" sortable="false" text="NHS Number" />
+                              <TableColumn fx:id="treatmentColumn" editable="true" prefWidth="151.0" sortable="false" text="Treatment Room" />
+                           </columns>
+                        </TableColumn>
+                     </columns>
+                     <cursor>
+                        <Cursor fx:constant="NONE" />
+                     </cursor>
+                     <placeholder>
+                        <Label text="Please wait ..." />
+                     </placeholder>
+                  </TableView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="215.0" prefWidth="998.0">
+               <children>
+                  <SplitPane dividerPositions="0.5" layoutX="392.0" layoutY="-26.0" orientation="VERTICAL" prefHeight="220.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <TableView fx:id="onCallPatient" focusTraversable="false" mouseTransparent="true" prefHeight="105.0" prefWidth="996.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columns>
+                                    <TableColumn editable="true" prefWidth="998.0" sortable="false" text="Can the following patient please present to the On Call Team for treatment">
+                                       <columns>
+                                          <TableColumn fx:id="titleColumn1" editable="true" prefWidth="81.0" sortable="false" text="Title" />
+                                          <TableColumn fx:id="forenameColumn1" editable="true" prefWidth="232.0" sortable="false" text="Patient Forename" />
+                                          <TableColumn fx:id="surnameColumn1" editable="true" prefWidth="232.0" sortable="false" text="Patient Surname" />
+                                          <TableColumn fx:id="dobColumn1" editable="true" prefWidth="151.0" sortable="false" text="D.O.B." />
+                                          <TableColumn fx:id="nhsColumn1" editable="true" prefWidth="151.0" sortable="false" text="NHS Number" />
+                                       </columns>
+                                    </TableColumn>
+                                 </columns>
+                                 <cursor>
+                                    <Cursor fx:constant="NONE" />
+                                 </cursor>
+                                 <placeholder>
+                                    <Label text="Please wait ..." />
+                                 </placeholder>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <TableView fx:id="byeByePatient" focusTraversable="false" mouseTransparent="true" prefHeight="105.0" prefWidth="996.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columns>
+                                    <TableColumn editable="true" prefWidth="991.0" sortable="false" text=" Can the following patient please speak to the Receptionist">
+                                       <columns>
+                                          <TableColumn fx:id="titleColumn2" editable="true" prefWidth="81.0" sortable="false" text="Title" />
+                                          <TableColumn fx:id="forenameColumn2" editable="true" prefWidth="232.0" sortable="false" text="Patient Forename" />
+                                          <TableColumn fx:id="surnameColumn2" editable="true" prefWidth="232.0" sortable="false" text="Patient Surname" />
+                                          <TableColumn fx:id="dobColumn2" editable="true" prefWidth="151.0" sortable="false" text="D.O.B." />
+                                          <TableColumn fx:id="nhsColumn2" editable="true" prefWidth="151.0" sortable="false" text="NHS Number" />
+                                       </columns>
+                                    </TableColumn>
+                                 </columns>
+                                 <cursor>
+                                    <Cursor fx:constant="NONE" />
+                                 </cursor>
+                                 <placeholder>
+                                    <Label text="Please wait ..." />
+                                 </placeholder>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

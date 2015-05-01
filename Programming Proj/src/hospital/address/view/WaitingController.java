@@ -1,5 +1,15 @@
 package hospital.address.view;
 
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Calendar;
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -11,10 +21,10 @@ import hospital.address.TheQueue;
 import hospital.address.model.Patient;
 import hospital.address.model.Status;
 
-public class QueueController {
+public class WaitingController {
 
 	@FXML
-	private TableView<Patient> treatmentTable;
+	private TableView<Patient> callPatient;
 	@FXML
 	private TableColumn<Patient, Integer> treatmentColumn;
 	@FXML
@@ -26,12 +36,12 @@ public class QueueController {
 	@FXML
 	private TableColumn<Patient, String> dobColumn;
 	@FXML
-	private TableColumn<Patient, String> triageColumn;
-	@FXML
 	private TableColumn<Patient, Integer> nhsColumn;
 
 	@FXML
-	private TableView<Patient> waitingList;
+	private TableView<Patient> onCallPatient;
+	@FXML
+	private TableColumn<Patient, Integer> treatmentColumn1;
 	@FXML
 	private TableColumn<Patient, String> titleColumn1;
 	@FXML
@@ -41,12 +51,12 @@ public class QueueController {
 	@FXML
 	private TableColumn<Patient, String> dobColumn1;
 	@FXML
-	private TableColumn<Patient, String> triageColumn1;
-	@FXML
 	private TableColumn<Patient, Integer> nhsColumn1;
 
 	@FXML
-	private TableView<Patient> onCallTeam;
+	private TableView<Patient> byeByePatient;
+	@FXML
+	private TableColumn<Patient, Integer> treatmentColumn2;
 	@FXML
 	private TableColumn<Patient, String> titleColumn2;
 	@FXML
@@ -56,26 +66,16 @@ public class QueueController {
 	@FXML
 	private TableColumn<Patient, String> dobColumn2;
 	@FXML
-	private TableColumn<Patient, String> triageColumn2;
-	@FXML
 	private TableColumn<Patient, Integer> nhsColumn2;
-
-	@FXML
-	private TableView<Status> statusCodeShow;
-	@FXML
-	private TableColumn<Status, Integer> codeColumn;
 
 	@SuppressWarnings("unused")
 	private MainApp mainApp;
 
-	public QueueController() {
+	public WaitingController() {
 	}
 
 	@FXML
 	private void initialize() {
-
-		treatmentTable.setEditable(false);
-		treatmentTable.setOnMouseClicked(null);
 
 		treatmentColumn
 				.setCellValueFactory(new PropertyValueFactory<Patient, Integer>(
@@ -92,15 +92,9 @@ public class QueueController {
 		dobColumn
 				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
 						"dateOfBirth"));
-		triageColumn
-				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
-						"triageCategory"));
 		nhsColumn
 				.setCellValueFactory(new PropertyValueFactory<Patient, Integer>(
 						"nhsNumber"));
-
-		waitingList.setEditable(false);
-		waitingList.setOnMouseClicked(null);
 
 		titleColumn1
 				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
@@ -114,15 +108,9 @@ public class QueueController {
 		dobColumn1
 				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
 						"dateOfBirth"));
-		triageColumn1
-				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
-						"triageCategory"));
 		nhsColumn1
 				.setCellValueFactory(new PropertyValueFactory<Patient, Integer>(
 						"nhsNumber"));
-
-		onCallTeam.setEditable(false);
-		onCallTeam.setOnMouseClicked(null);
 
 		titleColumn2
 				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
@@ -136,30 +124,18 @@ public class QueueController {
 		dobColumn2
 				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
 						"dateOfBirth"));
-		triageColumn2
-				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
-						"triageCategory"));
 		nhsColumn2
 				.setCellValueFactory(new PropertyValueFactory<Patient, Integer>(
 						"nhsNumber"));
-	
-		
-		codeColumn
-				.setCellValueFactory(new PropertyValueFactory<Status, Integer>(
-						"code"));
-		statusCodeShow.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		codeColumn.setStyle( "-fx-alignment: CENTER; -fx-font-weight: bold;");
-		
+
 	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 
-		treatmentTable.setItems(mainApp.getFxTreatmentList());
-		waitingList.setItems(mainApp.getFxWaitingList());
-		onCallTeam.setItems(mainApp.getFxOnCallList());
-		statusCodeShow.setItems(mainApp.getFxStatusCode());
-
+		callPatient.setItems(mainApp.getFxCallNextPatient());
+		onCallPatient.setItems(mainApp.getFxCallOnCallPatient());
+		byeByePatient.setItems(mainApp.getFxByeByePatient());
 	}
 
 }
