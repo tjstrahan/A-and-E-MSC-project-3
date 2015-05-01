@@ -6,6 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ReceptionistTest {
+	
+	/**
+	 * Test class to test receptionist
+	 */
 
 	String TitleCorrect, TitleWrong, firstNameCorrect, firstNameWrong,
 			middleNameCorrect, middleNameWrong, lastNameCorrect, lastNameWrong,
@@ -21,6 +25,10 @@ public class ReceptionistTest {
 
 	@Before
 	public void setUp() throws Exception {
+		
+		/**
+		 * Test data to test receptionist
+		 */
 
 		TitleCorrect = "Mr";
 		TitleWrong = null;
@@ -54,12 +62,19 @@ public class ReceptionistTest {
 		contactNumberCorrect = (long) 447592010304L;
 		contactNumberWrong = (long) 4475920103040L;
 	}
+	/**
+	 * Testing the default constructor
+	 */
 
 	@Test
 	public void testReceptionist() {
 		Receptionist receptionist = new Receptionist();
 		assertNotNull(receptionist);
 	}
+	/**
+	 * Testing the non default constructor
+	 * @throws Exception
+	 */
 
 	@Test
 	public void testConstructorWithArgsCorrect() throws Exception {
@@ -71,6 +86,11 @@ public class ReceptionistTest {
 				loginIDCorrect, passwordCorrect);
 		assertNotNull(receptionist);
 	}
+	/**
+	 * Testing the non default constructor with the wrong staff id
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongStaffID()
@@ -83,6 +103,10 @@ public class ReceptionistTest {
 				loginIDCorrect, passwordCorrect);
 		assertEquals(StaffIDCorrect, receptionist.getStaffID());
 	}
+	/**
+	 * Testing the non default constructor with the wrong password 
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongPassword() throws Exception {
@@ -95,6 +119,10 @@ public class ReceptionistTest {
 		assertEquals(passwordCorrect, receptionist.getPassword());
 
 	}
+	/**
+	 * Testing the non default constructor with the wrong login
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongLogIn() throws Exception {
@@ -108,6 +136,10 @@ public class ReceptionistTest {
 		assertEquals(loginIDCorrect, receptionist.getLoginID());
 
 	}
+	/**
+	 * Testing the non default constructor with the wrong mobile number
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongMobileNumber() throws Exception {
@@ -120,6 +152,10 @@ public class ReceptionistTest {
 		assertEquals(contactNumberCorrect, receptionist.getContactNumber());
 
 	}
+	/**
+	 * Testing the non default constructor with the wrong title
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoTitle() throws Exception {
@@ -131,6 +167,10 @@ public class ReceptionistTest {
 				loginIDCorrect, passwordCorrect);
 		assertEquals(TitleCorrect, receptionist.getTitle());
 	}
+	/**
+	 * Testing the non default constructor with the wrong first name
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoFirstName() throws Exception {
@@ -142,6 +182,9 @@ public class ReceptionistTest {
 				passwordCorrect);
 		assertEquals(firstNameCorrect, receptionist.getFirstName());
 	}
+	/**
+	 * Testing the non default constructor with the wrong middle name
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoMiddleName() throws Exception {
@@ -154,6 +197,10 @@ public class ReceptionistTest {
 		assertEquals(middleNameCorrect, receptionist.getMiddleName());
 
 	}
+	/**
+	 * Testing the non default constructor with the wrong last name
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoLastName() throws Exception {
@@ -166,6 +213,10 @@ public class ReceptionistTest {
 		assertEquals(lastNameCorrect, receptionist.getLastName());
 
 	}
+	/**
+	 * Testing the non default constructor with the wrong dob
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoDOB() throws Exception {
@@ -177,6 +228,10 @@ public class ReceptionistTest {
 				passwordCorrect);
 		assertEquals(dateOfBirthCorrect, receptionist.getDateOfBirth());
 	}
+	/**
+	 * Testing the non default constructor with the wrong address line one
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineOne() throws Exception {
@@ -188,6 +243,10 @@ public class ReceptionistTest {
 				passwordCorrect);
 		assertEquals(addressLineOneCorrect, receptionist.getAddressLineOne());
 	}
+	/**
+	 * Testing the non default constructor with the wrong address line two
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineTwo() throws Exception {
@@ -200,6 +259,10 @@ public class ReceptionistTest {
 		assertEquals(addressLineTwoCorrect, receptionist.getAddressLineTwo());
 
 	}
+	/**
+	 * Testing the non default constructor with the wrong address line three
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineThree() throws Exception {
@@ -213,6 +276,10 @@ public class ReceptionistTest {
 				receptionist.getAddressLineThree());
 
 	}
+	/**
+	 * Testing the non default constructor with the wrong city
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoCity() throws Exception {
@@ -225,6 +292,10 @@ public class ReceptionistTest {
 		assertEquals(cityCorrect,
 				receptionist.getCity());
 	}
+	/**
+	 * Testing the non default constructor with the wrong postcode
+	 * @throws Exception
+	 */
 
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoPostCode() throws Exception {
