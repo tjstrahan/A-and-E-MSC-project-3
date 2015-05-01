@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import hospital.address.MainApp;
 import hospital.address.model.HospitalManager;
 import hospital.address.model.Staff;
@@ -63,13 +65,52 @@ public class LoginController {
 			}
 		});
 
-		password.setOnKeyReleased(new EventHandler<Event>() {
+		password.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
 			@Override
-			public void handle(Event event) {
+			public void handle(KeyEvent keyEvent) {
 				pass = password.getText();
+				 if(keyEvent.getCode() == KeyCode.ENTER)
+			        {
+					 if (username.getText().isEmpty()){
+							RequireUser.setText("*Required");
+						}
+						
+						if (password.getText().isEmpty()){
+							RequiredPass.setText("*Required");
+						}
 
-			}
+						Staff staff = new Staff();
+					
+						staffType = null;
+
+						int number = Integer.parseInt(user);
+
+						for (int loop = 0; loop < MainApp.staffList.size(); loop++) {
+							if (number == (MainApp.staffList.get(loop).getLoginID())
+									&& pass.equals(MainApp.staffList.get(loop).getPassword())) {
+								if (number >= 100000 && number < 200000) {
+									//System.out.println("doctor");
+									staffType = "Doctor";
+									mainApp.showDoc();
+								} else if (number >= 300000 && number < 400000) {
+									staffType = "Hospital Manager";
+								} else if (number >= 500000 && number < 600000) {
+									//System.out.println("receptionist");
+									staffType = "Receptionist";
+									mainApp.showRecep();						
+								} else if (number >= 700000 && number < 800000) {
+									//System.out.println("nurse");
+									staffType = "Nurse";
+									mainApp.showNurse();
+								}
+							}else {
+								wrong.setText("Username/Password incorrect");
+						} 
+
+					}
+					}  //sendMessage();
+			        }
 		});
 
 		loginButton.setOnAction(new EventHandler<ActionEvent>() {
