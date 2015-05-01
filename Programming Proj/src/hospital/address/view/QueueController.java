@@ -139,6 +139,8 @@ public class QueueController {
 		triageColumn2
 				.setCellValueFactory(new PropertyValueFactory<Patient, String>(
 						"triageCategory"));
+		
+		
 		nhsColumn2
 				.setCellValueFactory(new PropertyValueFactory<Patient, Integer>(
 						"nhsNumber"));

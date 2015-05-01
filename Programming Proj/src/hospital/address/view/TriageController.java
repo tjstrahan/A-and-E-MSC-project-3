@@ -1,6 +1,8 @@
 package hospital.address.view;
 
 import hospital.address.MainApp;
+import hospital.address.TheQueue;
+import hospital.address.model.Receptionist;
 import hospital.address.model.TriageNurse;
 
 import java.net.URL;
@@ -22,6 +24,11 @@ import javafx.stage.Stage;
 
 public class TriageController {
 
+	/**
+	 * Instantiate the Queue class
+	 */
+	static TheQueue hospQueue = new TheQueue();
+
 	@FXML
 	private Label AddressLineOne;
 	@FXML
@@ -38,7 +45,7 @@ public class TriageController {
 	private Label allergies;
 	@FXML
 	private Label Conditions;
-	@FXML 
+	@FXML
 	private Label nextOFKin;
 	@FXML
 	private Label Search;
@@ -53,8 +60,6 @@ public class TriageController {
 	private TextField categoryToEnter;
 
 	private String triageCatString;
-
-	private int triageCatInt;
 
 	private MainApp mainApp;
 
@@ -91,20 +96,42 @@ public class TriageController {
 
 				try {
 					triage = new TriageNurse();
-					triageCatInt = Integer.parseInt(triageCatString);
-					triage.assignTriageNumber(triageCatInt);
+					int triageCatInt = Integer.parseInt(triageCatString);
 
-					// PatientViewController.Admittedpatients.get(0).setTriageNumber(triageCatInt);
+					String triageCat = "";
+					switch (triageCatInt) {
+					case 1:
+						triageCat = "Emergency";
+						break;
+					case 2:
+						triageCat = "Urgent";
+						break;
+					case 3:
+						triageCat = "Semi-urgent";
+						break;
+					case 4:
+						triageCat = "Non-urgent";
+						break;
+					}
+						PatientViewController.Admittedpatients.get(0)
+								.setTriageNumber(triageCatInt);
+						PatientViewController.Admittedpatients.get(0)
+								.setTriageCategory(triageCat);
 
+						Receptionist.patientsFromDB
+								.addFirst(PatientViewController.Admittedpatients
+										.get(0));
+
+						PatientViewController.Admittedpatients.clear();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
+		
 			}
 		});
 
-		
-		if(!PatientViewController.Admittedpatients.isEmpty()){
+		if (!PatientViewController.Admittedpatients.isEmpty()) {
 			getPatients();
 		}
 
