@@ -1,8 +1,9 @@
 package hospitalTest;
-
+/**
+ * Doctortest.java as part of the Team Internet Java Program. 
+ */
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
 
 import hospital.address.model.Doctor;
 import hospital.address.model.Staff;
@@ -10,8 +11,19 @@ import hospital.address.model.Staff;
 import org.junit.Before;
 import org.junit.Test;
 
-public class Doctortest{
-
+/**
+ * Class to test the Doctor.java file in the hospital.address.model package of
+ * the program.
+ * 
+ * @author Team Internet
+ *
+ */
+public class Doctortest {
+	
+	/**
+	 * Variables Declared for Testing
+	 * String, int, long
+	 */
 	String TitleCorrect, TitleWrong, firstNameCorrect, firstNameWrong,
 			middleNameCorrect, middleNameWrong, lastNameCorrect, lastNameWrong,
 			dateOfBirthCorrect, dateOfBirthWrong, addressLineOneCorrect,
@@ -20,13 +32,18 @@ public class Doctortest{
 			cityWrong, postcodeCorrect, postCodeWrong, passwordCorrect,
 			passwordWrong;
 
-	int loginIDCorrect, loginIDWrong, StaffIDCorrect, StaffIDWrong, medicalTeamCorrect;
+	int loginIDCorrect, loginIDWrong, StaffIDCorrect, StaffIDWrong,
+			medicalTeamCorrect;
 
 	long contactNumberCorrect, contactNumberWrong;
 
+	/**
+	 * Variables Declared for Testing Methods.
+	 * 
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
-
 		TitleCorrect = "Dr";
 		TitleWrong = null;
 		firstNameCorrect = "Mavis";
@@ -49,29 +66,37 @@ public class Doctortest{
 		postCodeWrong = null;
 		passwordCorrect = "password";
 		passwordWrong = "pass";
-
 		loginIDCorrect = 555555;
 		loginIDWrong = 5555555;
-
 		StaffIDCorrect = 555555;
 		StaffIDWrong = 5555;
-
 		contactNumberCorrect = 447594567811L;
 		contactNumberWrong = 4475920103040L;
 	}
 
+	/**
+	 * Test to confirm Doctor() is NotNull.
+	 */
 	@Test
 	public void testReceptionist() {
 		Doctor doctor = new Doctor();
 		assertNotNull(doctor);
 	}
 
+	/**
+	 * Test to confirm that Staff() is NotNull.
+	 */
 	@Test
 	public void testStaff() {
 		Staff staff = new Staff();
 		assertNotNull(staff);
 	}
 
+	/**
+	 * Test constructor with Args is correct and NotNull.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testConstructorWithArgsCorrect() throws Exception {
 		Doctor doctor = new Doctor(TitleCorrect, firstNameCorrect,
@@ -83,6 +108,12 @@ public class Doctortest{
 		assertNotNull(doctor);
 	}
 
+	/**
+	 * Test constructor with Args - with Staff ID not implemented
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongStaffID()
 			throws IllegalArgumentException, Exception {
@@ -95,6 +126,11 @@ public class Doctortest{
 		assertEquals(StaffIDCorrect, doctor.getStaffID());
 	}
 
+	/**
+	 * Test constructor with Args - with correct password not implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongPassword() throws Exception {
 		Doctor doctor = new Doctor(TitleCorrect, firstNameCorrect,
@@ -107,6 +143,11 @@ public class Doctortest{
 
 	}
 
+	/**
+	 * Test constructor with Args - with incorrect Log in details.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongLogIn() throws Exception {
 		Doctor doctor = new Doctor(TitleCorrect, firstNameCorrect,
@@ -120,6 +161,11 @@ public class Doctortest{
 
 	}
 
+	/**
+	 * Test constructor with Args - with incorrect mobile number.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsWrongMobileNumber() throws Exception {
 		Doctor doctor = new Doctor(TitleCorrect, firstNameCorrect,
@@ -132,61 +178,92 @@ public class Doctortest{
 
 	}
 
+	/**
+	 * Test constructor with Args - with title not implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoTitle() throws Exception {
 		@SuppressWarnings("unused")
-		Doctor doctor = new Doctor(TitleWrong, firstNameWrong, middleNameCorrect,
-				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
-				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
-				loginIDCorrect, passwordCorrect, medicalTeamCorrect);
+		Doctor doctor = new Doctor(TitleWrong, firstNameWrong,
+				middleNameCorrect, lastNameCorrect, dateOfBirthCorrect,
+				addressLineOneCorrect, addressLineTwoCorrect,
+				addressLineThreeCorrect, cityCorrect, postcodeCorrect,
+				contactNumberCorrect, StaffIDCorrect, loginIDCorrect,
+				passwordCorrect, medicalTeamCorrect);
 
 	}
 
+	/**
+	 * Test constructor with Args - with no FirstName implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoFirstName() throws Exception {
 		@SuppressWarnings("unused")
 		Doctor doctor = new Doctor("Mr", firstNameWrong, middleNameCorrect,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect, medicalTeamCorrect);
 
 	}
 
+	/**
+	 * Test constructor with Args - with no MiddleName implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoMiddleName() throws Exception {
 		Doctor doctor = new Doctor("Mr", firstNameCorrect, middleNameWrong,
 				lastNameCorrect, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect, medicalTeamCorrect);
 		assertEquals(middleNameCorrect, doctor.getMiddleName());
 
 	}
 
+	/**
+	 * Test constructor with Args - with lastName not implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoLastName() throws Exception {
 		@SuppressWarnings("unused")
 		Doctor doctor = new Doctor("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameWrong, dateOfBirthCorrect, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect, medicalTeamCorrect);
 
 	}
 
+	/**
+	 * Test constructor with Args - with DOB not implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoDOB() throws Exception {
 		@SuppressWarnings("unused")
 		Doctor doctor = new Doctor("Mr", firstNameCorrect, middleNameCorrect,
 				lastNameCorrect, dateOfBirthWrong, addressLineOneCorrect,
 				addressLineTwoCorrect, addressLineThreeCorrect, cityCorrect,
-				postcodeCorrect, contactNumberCorrect, StaffIDCorrect, 
+				postcodeCorrect, contactNumberCorrect, StaffIDCorrect,
 				loginIDCorrect, passwordCorrect, medicalTeamCorrect);
 
 	}
 
+	/**
+	 * Test constructor with Args - with AddressLineOne not Implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoAddressLineOne() throws Exception {
 		@SuppressWarnings("unused")
@@ -199,6 +276,11 @@ public class Doctortest{
 
 	}
 
+	/**
+	 * Test constructor with Args - with AddressLineTwo not Implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineTwo() throws Exception {
 		Doctor doctor = new Doctor(TitleCorrect, firstNameCorrect,
@@ -211,6 +293,11 @@ public class Doctortest{
 
 	}
 
+	/**
+	 * Test constructor with Args - with AddressLineThree not Implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = AssertionError.class)
 	public void testConstructorWithArgsNoAddressLineThree() throws Exception {
 		Doctor doctor = new Doctor(TitleCorrect, firstNameCorrect,
@@ -223,6 +310,11 @@ public class Doctortest{
 
 	}
 
+	/**
+	 * Test constructor with Args - with no City Name implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoCity() throws Exception {
 		@SuppressWarnings("unused")
@@ -232,9 +324,14 @@ public class Doctortest{
 				addressLineThreeCorrect, cityWrong, postcodeCorrect,
 				contactNumberCorrect, StaffIDCorrect, loginIDCorrect,
 				passwordCorrect, medicalTeamCorrect);
-	
+
 	}
 
+	/**
+	 * Test constructor with Args - with Post Code not Implemented.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expected = Exception.class)
 	public void testConstructorWithArgsNoPostCode() throws Exception {
 		@SuppressWarnings("unused")
@@ -248,13 +345,14 @@ public class Doctortest{
 	}
 
 	/**
-	 * Method to amend record
+	 * The Method to amend record
 	 */
-	public static void amendRecord(){
-		}
-	/**
-	 * Method to extend treatment
-	 */
-	public static void extendTreatment(){
+	public static void amendRecord() {
 	}
-}
+
+	/**
+	 * The Method to extend treatment
+	 */
+	public static void extendTreatment() {
+	}
+} // Class End
