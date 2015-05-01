@@ -28,10 +28,10 @@ public class LoginController {
 	private Label message1;
 
 	@FXML
-	private Label message2;
+	private Label RequiredPass;
 
 	@FXML
-	private Label message;
+	private Label RequireUser;
 	
 	@FXML
 	private Label wrong;
@@ -78,6 +78,13 @@ public class LoginController {
 			@Override
 			public void handle(ActionEvent arg0) {
 				
+				if (username.getText().isEmpty()){
+					RequireUser.setText("*Required");
+				}
+				
+				if (password.getText().isEmpty()){
+					RequiredPass.setText("*Required");
+				}
 
 				Staff staff = new Staff();
 			
